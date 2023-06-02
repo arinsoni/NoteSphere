@@ -3,6 +3,7 @@ const User = require('../models/User');
 const JWT = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+// REGISTER
 const register = async (req, res) => {
     try {
         const { 
@@ -33,6 +34,8 @@ const register = async (req, res) => {
     }
 }
 
+
+//LOGIN
 const login = async (req, res) => {
     try {
         const {
@@ -55,13 +58,26 @@ const login = async (req, res) => {
           }
         const token = JWT.sign(data, process.env.JWT_SECRET);
         delete user.password;
-        res.status(200).json({ token, user });
+        res.status(200).json({ token });
     } catch (error) {
        res.status(500).json({ message: error.message });
     }
 }
 
+//GET USER
+const getUser = async (req, res) => {
+    try {
+        userId = req.user.id;
+        const user = await User.findById(userId).select("-password");
+        res.send(user);
+
+    } catch (error) {
+        res.status(500).send({ error: "Internal server error" });
+    }
+}
+
 module.exports = {
     register,
-    login
+    login,
+    getUser
 };
