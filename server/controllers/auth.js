@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const JWT = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const register = async (req, res) => {
     try {
@@ -10,12 +11,19 @@ const register = async (req, res) => {
             email,
             password
         } = req.body;
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password, salt);
+
+        const user = await User.findOne({ email })
+        if(user){
+            return res.status(400).json({error: "Sorry! A user with same email address already exist"  })
+        }
 
         const newUser = new User ({
             firstName, 
             lastName, 
             email, 
-            password
+            password: passwordHash
         });
 
         const savedUser = await newUser.save();
@@ -36,8 +44,9 @@ const login = async (req, res) => {
         if (!user) {
             res.status(400).json({ error: "Please try to login with correct credentials" });
         }
-        if (password !== user.password) {
-            return res.status(400).json({ success, error: "Please try to login with correct credentials" });
+        const isCorrect = await bcrypt.compare(password, user.password);
+        if (!isCorrect) {
+            return res.status(400).json({ error: "Please try to login with correct credentials" });
         }
         const data = {
             user: {
