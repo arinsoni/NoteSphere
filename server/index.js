@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth');
+const notesRoutes = require('./routes/notes');
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ app.use(express.json()); // parses incoming data (instructions and informations)
 
 //Routes
 app.use("/auth", authRoutes)
+app.use("/notes", notesRoutes)
 
 
 //MongoDB setup
