@@ -4,7 +4,7 @@ import { useState } from "react";
 const NoteState = (props)=>{
     const notesInitial = [
         {
-          "_id": "647aac398a3648f957bad594",
+          "_id": "647aac398a3ddfg648f957bad594",
           "user": "647a75c05a5ca5e0a815d576",
           "title": "Fake-1",
           "description": "Fake-1",
@@ -13,7 +13,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "647aac398a3648f957bad594",
+          "_id": "647aac398aerg36d48f957bad594",
           "user": "647a75c05a5ca5e0a815d576",
           "title": "Fake-1",
           "description": "Fake-1",
@@ -22,7 +22,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "647aac398a3648f957bad594",
+          "_id": "647aac3dg9d8a3648f957bad594",
           "user": "647a75c05a5ca5e0a815d576",
           "title": "Fake-1",
           "description": "Fake-1",
@@ -31,7 +31,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "647aac398a3648f957bad594",
+          "_id": "647aac398adggdd3648f957bad594",
           "user": "647a75c05a5ca5e0a815d576",
           "title": "Fake-1",
           "description": "Fake-1",
@@ -40,7 +40,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "647aac398a3648f957bad594",
+          "_id": "647aadc398adggd3648f957bad594",
           "user": "647a75c05a5ca5e0a815d576",
           "title": "Fake-1",
           "description": "Fake-1",
@@ -49,7 +49,7 @@ const NoteState = (props)=>{
           "__v": 0
         },
         {
-          "_id": "647b1efc3335f6b081d4c8c6",
+          "_id": "647b1efdc333dg5f6b081d4c8c6",
           "user": "647a75c05a5ca5e0a815d576",
           "title": "Fake-2",
           "description": "Fake-2",
