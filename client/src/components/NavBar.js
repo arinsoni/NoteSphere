@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
-import {
-    Link,
-    useLocation
-} from "react-router-dom";
-
+import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
+
     let location = useLocation();
-    useEffect(() =>{
+    useEffect(() => {
         console.log(location.pathname)
     }, [location]);
     return (
@@ -26,10 +23,24 @@ const NavBar = () => {
                             <Link className={`nav-link ${location.pathname === "about" ? "acitve" : "nav-link"}`} to="/about">About</Link>
                         </li>
                     </ul>
-                    <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success" type="submit">Search</button>
+                    <form className="d-flex">
+                        <input
+                            className="form-control me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                        // value={searchQuery}
+                        // onChange={(e) => setSearchQuery(e.target.value)}
+
+
+                        />
+                        <button className="btn btn-outline-success" type="submit">
+                            Search
+                        </button>
                     </form>
+
+
+
                 </div>
             </div>
         </nav>
