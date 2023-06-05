@@ -24,12 +24,9 @@ const addNotes = async (req, res) => {
 }
 //Read All Notes
 const getAllNotes = async (req, res) => {
-    try {
-        const notes = await Notes.find();
-        res.send(notes)
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    const { id } = req.user
+    const notes = await Notes.find({ user: id })
+    res.status(201).json(notes)
 }
 
 module.exports = {
