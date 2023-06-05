@@ -8,7 +8,6 @@ const NavBar = () => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/login')
-
     }
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -32,7 +31,7 @@ const NavBar = () => {
                         <Link className="btn btn-primary mx-2" role="button" to="/login" aria-disabled="true">Log In</Link>
                         <Link className="btn btn-primary mx-2" role="button" to="/signup" aria-disabled="true">Sign Up</Link>
 
-                    </form> : <Link className="btn btn-primary mx-2" role="button" onClick={handleLogout} aria-disabled="true">Log Out</Link> }
+                    </form> : <button className="btn btn-primary mx-2"  onClick={handleLogout} aria-disabled="true">Log Out</button> }
 
 
 
