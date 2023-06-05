@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 
 // REGISTER
 const register = async (req, res) => {
+    let success = false;
     try {
         const { 
             firstName, 
@@ -17,7 +18,7 @@ const register = async (req, res) => {
 
         const user = await User.findOne({ email })
         if(user){
-            return res.status(400).json({error: "Sorry! A user with same email address already exist"  })
+            return res.status(400).json({success, error: "Sorry! A user with same email address already exist"  })
         }
 
         const newUser = new User ({
@@ -28,7 +29,8 @@ const register = async (req, res) => {
         });
 
         const savedUser = await newUser.save();
-        res.status(201).json({ savedUser });
+        success = true
+        res.status(201).json({ success, savedUser });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
