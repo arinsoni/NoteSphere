@@ -6,7 +6,7 @@ const verifyToken = require('../middleware/auth')
 const router = express.Router();
 
 
-router.use("/getAllNotes", getAllNotes);
+router.use("/getAllNotes", verifyToken, getAllNotes);
 router.use("/addNotes", verifyToken, addNotes);
 router.use("/updateNote/:id", verifyToken, updateNote);
 router.use("/deleteNote/:id", verifyToken, deleteNote);

@@ -12,7 +12,7 @@ const NoteState = (props) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3Y2Q1MzQ2M2IyZmEyYjQ3ZDBlNjZjIn0sImlhdCI6MTY4NTkwMjY2OH0.00QN-XJyqOAfWohcLBdRObhKeK_yw_v_5Zhc8GWzhro'
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3ZDJlOGQ4MDg3NzY0NTg4YzcwYTY2In0sImlhdCI6MTY4NTkyNTUyMn0.KbZ91irz8jF14pfYjqExJ_SBjvLIzxQ-R2iBMILE9h8'
       }
     });
 
@@ -22,7 +22,15 @@ const NoteState = (props) => {
     setNotes(json)
   }
 
-  const addNote = (title, description, tag) => {
+  const addNote = async (title, description, tag) => {
+    const response = await fetch(`${host}/notes/addNotes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3ZDJlOGQ4MDg3NzY0NTg4YzcwYTY2In0sImlhdCI6MTY4NTkyNTUyMn0.KbZ91irz8jF14pfYjqExJ_SBjvLIzxQ-R2iBMILE9h8'
+      },
+      body: JSON.stringify({ title, description, tag })
+    });
     const note = {
       "_id": `647b1efdchjv333dg5f6b081d4c8c6${title}`,
       "user": "647a75c05a5ca5e0a815d576",
@@ -35,7 +43,15 @@ const NoteState = (props) => {
     setNotes([note, ...notes]);
 
   }
-  const deleteNote = (id) => {
+  const deleteNote = async (id) => {
+    const response = await fetch(`${host}/notes/deleteNote/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3ZDJlOGQ4MDg3NzY0NTg4YzcwYTY2In0sImlhdCI6MTY4NTkyNTUyMn0.KbZ91irz8jF14pfYjqExJ_SBjvLIzxQ-R2iBMILE9h8'
+      },
+    });
+    const json = response.json();
     const newNotes = notes.filter((note) => { return note._id !== id });
     setNotes(newNotes);
 
@@ -46,7 +62,7 @@ const NoteState = (props) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3YTc1YzA1YTVjYTVlMGE4MTVkNTc2In0sImlhdCI6MTY4NTc0ODMwNH0.a2rQEpJT8CMiDXo3bwB9Ubij-HcTJDvWORGllnMhE-M'
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ3ZDJlOGQ4MDg3NzY0NTg4YzcwYTY2In0sImlhdCI6MTY4NTkyNTUyMn0.KbZ91irz8jF14pfYjqExJ_SBjvLIzxQ-R2iBMILE9h8'
       },
       body: JSON.stringify({ title, description, tag })
     });

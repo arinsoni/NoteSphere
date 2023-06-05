@@ -76,7 +76,7 @@ const deleteNote = async (req, res) => {
         // Find the note to be deleted and delete it  
         let note = await Notes.findById(req.params.id);
         if(!note){
-            res.status(404).send("Not Found");
+            return res.status(404).send("Not Found");
         }
         // Allows deletion if user own this note
         if(note.user.toString() !== req.user.id){
