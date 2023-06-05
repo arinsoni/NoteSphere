@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import NoteState from './context/notes/NoteState';
 import Alert from './components/Alert';
+import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
           <div className="container">
             <Routes>
               <Route exact path="/" element={<Home />} />
-              <Route exact path="/About" element={<About />} />
+              <Route exact path="/about" element={<About />} />
+              <Route exact path="/login" element={<LogIn />} />
+              <Route exact path="/signup" element={<SignUp />} />
             </Routes>
           </div>
         </Router>

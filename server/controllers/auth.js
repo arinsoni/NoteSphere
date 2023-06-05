@@ -37,19 +37,21 @@ const register = async (req, res) => {
 
 //LOGIN
 const login = async (req, res) => {
+    let success = false;
     try {
         const {
             email, 
             password
         } = req.body;
+        
     
         const user = await User.findOne({ email });
         if (!user) {
-            res.status(400).json({ error: "Please try to login with correct credentials" });
+            return res.status(400).json({ error: "Please try to login with correct credentials email" });
         }
         const isCorrect = await bcrypt.compare(password, user.password);
         if (!isCorrect) {
-            return res.status(400).json({ error: "Please try to login with correct credentials" });
+            return res.status(400).json({ error: "Please try to login with correct credentials pass" });
         }
         const data = {
             user: {
@@ -58,7 +60,8 @@ const login = async (req, res) => {
           }
         const token = JWT.sign(data, process.env.JWT_SECRET);
         delete user.password;
-        res.status(200).json({ token });
+        success = true
+        res.status(200).json({ success, token });
     } catch (error) {
        res.status(500).json({ message: error.message });
     }
