@@ -10,6 +10,7 @@ const AddNote = () => {
     const handleClick = (e) =>{
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
+        setNote({ title: "", description: "", tag: "" })
     }
 
     const onChange = (e)=>{
@@ -23,16 +24,16 @@ const AddNote = () => {
             <form>
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Title</label>
-                    <input type="title" className="form-control" id="title" name="title" aria-describedby="emailHelp"onChange={onChange} />
+                    <input type="title" className="form-control" id="title" name="title" value={note.title} aria-describedby="emailHelp"onChange={onChange} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <input type="text" className="form-control" id="description" name="description" onChange={onChange} />
+                    <input type="text" className="form-control" id="description" value={note.description} name="description" onChange={onChange} />
                 </div>
                 
                 <div className="mb-3">
                     <label htmlFor="tag" className="form-label">Tag</label>
-                    <input type="text" className="form-control" id="tag" name="tag" onChange={onChange} />
+                    <input type="text" className="form-control" id="tag" value={note.tag}  name="tag" onChange={onChange} />
                 </div>
                 
                 <button type="submit" className="btn btn-primary" onClick={handleClick} >Submit</button>

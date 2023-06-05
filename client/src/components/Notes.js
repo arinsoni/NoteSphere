@@ -47,11 +47,11 @@ const Notes = () => {
               <form>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">  </label>
-                  <input type="etitle" className="form-control" id="etitle" name="etitle" value={note.etitle} aria-describedby="emailHelp" onChange={onChange} />
+                  <input type="etitle" className="form-control" id="etitle" name="etitle" value={note.etitle} aria-describedby="emailHelp" onChange={onChange} minLength={5} required  />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="edescription" className="form-label">Description</label>
-                  <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription}  onChange={onChange} />
+                  <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription}  onChange={onChange} minLength={5} required />
                 </div>
 
                 <div className="mb-3">
@@ -65,14 +65,14 @@ const Notes = () => {
             </div>
             <div className="modal-footer">
               <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary" onClick={handleClick} >Update Note</button>
+              <button disabled={note.etitle.length<5 || note.edescription.length<5} type="button" className="btn btn-primary" onClick={handleClick} >Update Note</button>
             </div>
           </div>
         </div>
       </div>
       <AddNote />
       <div className='row d-flex'>
-
+        {notes.length === 0 && "No notes available" }
         {notes.map((note) => {
           return <NoteItem key={note._id} note={note} updateNote={updateNote} />
         })}
