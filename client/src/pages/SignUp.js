@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 
-const SignUp = () => {
+const SignUp = (props) => {
     const [credentials, setCredentials] = useState({ firstName: "", email: "", password: "", cpassword: "" })
     let navigate = useNavigate();
     const handleSubmit = async (e) => {
@@ -22,9 +22,10 @@ const SignUp = () => {
             // Save token in local storage and redirect
             localStorage.setItem('token', json.token);
             navigate("/");
+            props.showAlert("Account created succesfully", "success")
         }
         else {
-            alert("Invakifd hiajkdfnc")
+            props.showAlert("Invalid details", "danger")
         }
     }
     const onChange = (e) => {
