@@ -11,7 +11,7 @@ const Notes = (props) => {
   useEffect(() => {
     if (localStorage.getItem('token')) {
         getNotes();
-        console.log(notes)
+        // console.log(notes)
     } else {
         navigate('/about')
     }
