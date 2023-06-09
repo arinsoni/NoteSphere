@@ -1,15 +1,46 @@
+import { Alert } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
+
 
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
+  const handleDelete = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/auth/deleteUser", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token")
+        }
+      });
+      
+      const json = await response.json();
+      
+      if (json.success) {
+        // User deletion successful, perform any necessary cleanup or redirects
+        localStorage.removeItem('token', json.token)
+        
+        navigate("/login");
+        props.showAlert("Deleted ", "success");
+        
+      } else {
+        // User deletion failed, display an error message or handle the failure
+        console.log(json.message);
+      }
+    } catch (error) {
+      // Error occurred during the deletion process, handle the error
+      console.log(error);
+    }
+  };
+  
 
 
   return (
@@ -64,8 +95,13 @@ const NavBar = () => {
               <button className="btn btn-primary mx-2" onClick={handleLogout} aria-disabled="true">
                 Log Out
               </button>
+              <button className="btn btn-primary mx-2" onClick={handleDelete} aria-disabled="true">
+                Delete Account
+              </button>
             </div>
           )}
+
+
         </div>
       </div>
     </nav>
