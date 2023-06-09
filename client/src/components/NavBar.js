@@ -10,7 +10,13 @@ const NavBar = (props) => {
 
 
   const { user } = useContext(userContext);
-  console.log(`user state : ${user}`)
+  const context = useContext(userContext);
+  const { getUser } = context;
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   
 
 
@@ -106,15 +112,8 @@ const NavBar = (props) => {
               </button>
             </div>
           )}
-          {user && (
-          <div className="d-flex align-items-center">
-            <span className="mx-2">Logged in as: {user.email}</span>
-            <button className="btn btn-primary mx-2" onClick={handleLogout} aria-disabled="true">
-              Log Out
-            </button>
-          </div>
-        )}
-
+   
+          {user}
 
         </div>
       </div>

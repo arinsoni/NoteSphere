@@ -25,9 +25,7 @@ const UserState = (props) => {
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  
 
   return (
     <UserContext.Provider value={{ user, getUser }}>
