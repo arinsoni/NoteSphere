@@ -12,6 +12,7 @@ import Alert from './components/Alert';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import { useState } from 'react';
+import UserState from './context/user/UserState';
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -26,6 +27,7 @@ function App() {
   }
   return (
     <>
+    <UserState>
       <NoteState>
         <Router>
           <NavBar showAlert={showAlert} />
@@ -40,6 +42,7 @@ function App() {
           </div>
         </Router>
       </NoteState>
+      </UserState>
     </>
   );
 }

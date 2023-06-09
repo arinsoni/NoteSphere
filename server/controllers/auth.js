@@ -75,10 +75,10 @@ const getUser = async (req, res) => {
     try {
         userId = req.user.id;
         const user = await User.findById(userId).select("-password");
-        res.send(user);
+        res.status(201).json(user)
 
     } catch (error) {
-        res.status(500).send({ error: "Internal server error" });
+        res.status(500).send({ error: error.message });
     }
 }
 

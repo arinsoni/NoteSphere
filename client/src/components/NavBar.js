@@ -1,11 +1,17 @@
 import { Alert } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {useContext} from 'react'
+import userContext from "../context/user/userContext"
 
 const NavBar = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+
+  const { user } = useContext(userContext);
+  console.log(`user state : ${user}`)
+  
 
 
   const handleLogout = () => {
@@ -100,6 +106,14 @@ const NavBar = (props) => {
               </button>
             </div>
           )}
+          {user && (
+          <div className="d-flex align-items-center">
+            <span className="mx-2">Logged in as: {user.email}</span>
+            <button className="btn btn-primary mx-2" onClick={handleLogout} aria-disabled="true">
+              Log Out
+            </button>
+          </div>
+        )}
 
 
         </div>
