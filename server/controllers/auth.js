@@ -2,13 +2,14 @@ const express = require('express');
 const User = require('../models/User');
 const JWT = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Notes = require('../models/Notes');
 
 // REGISTER
 const register = async (req, res) => {
     let success = false;
     try {
-        const { 
-            firstName, 
+        const {
+            firstName,
             lastName,
             email,
             password
@@ -17,14 +18,14 @@ const register = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const user = await User.findOne({ email })
-        if(user){
-            return res.status(400).json({success, error: "Sorry! A user with same email address already exist"  })
+        if (user) {
+            return res.status(400).json({ success, error: "Sorry! A user with same email address already exist" })
         }
 
-        const newUser = new User ({
-            firstName, 
-            lastName, 
-            email, 
+        const newUser = new User({
+            firstName,
+            lastName,
+            email,
             password: passwordHash
         });
 
@@ -42,11 +43,11 @@ const login = async (req, res) => {
     let success = false;
     try {
         const {
-            email, 
+            email,
             password
         } = req.body;
-        
-    
+
+
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ error: "Please try to login with correct credentials email" });
@@ -57,15 +58,15 @@ const login = async (req, res) => {
         }
         const data = {
             user: {
-              id: user.id
+                id: user.id
             }
-          }
+        }
         const token = JWT.sign(data, process.env.JWT_SECRET);
         delete user.password;
         success = true
         res.status(200).json({ success, token });
     } catch (error) {
-       res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 }
 
@@ -81,8 +82,22 @@ const getUser = async (req, res) => {
     }
 }
 
+
+//Delete A User
+
+const deleteUser = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      await Notes.deleteMany({ user: userId });
+      await User.findByIdAndDelete(userId);
+      res.status(200).json({ success: true, message: "User deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 module.exports = {
     register,
     login,
-    getUser
+    getUser,
+    deleteUser
 };
