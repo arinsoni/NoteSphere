@@ -10,6 +10,7 @@ const Notes = (props) => {
   const user_context = useContext(userContext);
   const { notes, getNotes, editNote } = context;
   const { user, getUser, deleteOrphanedNotes } = user_context;
+  // const [user, setUser] = useState(null);
   let navigate = useNavigate();
   const checkUserStatus = async () => {
     try {
@@ -29,11 +30,10 @@ const Notes = (props) => {
       console.log('Error checking user status:', error);
     }
   };
-
-
   useEffect(() => {
     const interval = setInterval(() => {
       checkUserStatus();
+      getUser();
     }, 1000); // Check every 1 seconds (adjust the interval as needed)
 
     return () => {
@@ -120,6 +120,8 @@ const Notes = (props) => {
           return <NoteItem key={note._id} note={note} showAlert={props.showAlert} updateNote={updateNote} />
         })}
         {user && user.firstName && <p>Name: {user.verified}</p>}
+        {user && user.firstName && <p>Name: {user.firstName}</p>}
+
       </div>
     </>
 
