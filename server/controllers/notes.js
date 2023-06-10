@@ -1,4 +1,5 @@
 const Notes = require('../models/Notes');
+const User = require('../models/User');
 
 //addNotes
 const addNotes = async (req, res) => {
@@ -86,10 +87,25 @@ const deleteNote = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
-
+///Delete orphaned notes
+const deleteOrphanedNotes = async (req, res) => {
+    try {
+      const orphanedNotes = await Notes.find({ user: { $nin: await User.distinct('_id') } });
+  
+      if (orphanedNotes.length > 0) {
+        await Notes.deleteMany({ _id: { $in: orphanedNotes.map(note => note._id) } });
+        res.json({ success: true, message: `${orphanedNotes.length} orphaned notes deleted.` });
+      } else {
+        res.json({ success: false, message: 'No orphaned notes found.' });
+      }
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  }
 module.exports = {
     getAllNotes,
     addNotes,
     updateNote,
-    deleteNote
+    deleteNote,
+    deleteOrphanedNotes
 };

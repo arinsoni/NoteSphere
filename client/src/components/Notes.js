@@ -9,7 +9,7 @@ const Notes = (props) => {
   const context = useContext(noteContext);
   const user_context = useContext(userContext);
   const { notes, getNotes, editNote } = context;
-  const { user, getUser } = user_context;
+  const { user, getUser, deleteOrphanedNotes } = user_context;
   let navigate = useNavigate();
   const checkUserStatus = async () => {
     try {
@@ -22,12 +22,15 @@ const Notes = (props) => {
       });
       const data = await response.json();
       if (!data.success) {
+        deleteOrphanedNotes();
         navigate('/signup'); // Redirect to the about page if user status is not successful
       }
     } catch (error) {
       console.log('Error checking user status:', error);
     }
   };
+
+
   useEffect(() => {
     const interval = setInterval(() => {
       checkUserStatus();

@@ -32,12 +32,47 @@ const UserState = (props) => {
     }
   };
 
+
+  const deleteOrphanedNotes = async () => {
+    // Make an API request to your backend server to delete orphaned notes
+    try {
+      const response = await fetch('http://localhost:5000/notes/deleteorphanednotes', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token'),
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('Orphaned notes deleted successfully');
+      } else {
+        console.log('Error deleting orphaned notes:', data.message);
+      }
+    } catch (error) {
+      console.log('Error deleting orphaned notes:', error);
+    }
+  };
+
+
   useEffect(() => {
     getUser(); // Fetch user data on component mount
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      deleteOrphanedNotes();
+    }, 1000); // Check every 1 seconds (adjust the interval as needed)
+
+    return () => {
+      clearInterval(interval); // Clear the interval on component unmount
+    };
+  });
+
   return (
-    <UserContext.Provider value={{ user, getUser}}>
+    <UserContext.Provider value={{ user, getUser, deleteOrphanedNotes}}>
       {props.children}
     </UserContext.Provider>
   );

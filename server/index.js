@@ -17,6 +17,9 @@ app.use(cors())
 app.use("/auth", authRoutes)
 app.use("/notes", notesRoutes)
 
+
+
+
 //MongoDB setup
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
