@@ -8,7 +8,7 @@ const userInitial = null;
 
 const UserState = (props) => {
   const [user, setUser] = useState(userInitial);
-  const [error, setError] = useState(null);
+
 
   const getUser = async () => {
     try {
@@ -24,10 +24,10 @@ const UserState = (props) => {
       }
       const json = await response.json();
       setUser(json);
-      setError(null);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      setError(error.message);
+     
+    } catch  {
+      console.log('Error fetching user data:');
+      
     }
   };
 
@@ -36,7 +36,7 @@ const UserState = (props) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, getUser, error }}>
+    <UserContext.Provider value={{ user, getUser}}>
       {props.children}
     </UserContext.Provider>
   );

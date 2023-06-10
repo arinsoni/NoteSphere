@@ -9,6 +9,6 @@ router.use("/login", login);
 router.use("/register", register);
 router.use("/getuser", verifyToken, getUser);
 router.delete('/deleteuser', verifyToken, deleteUser);
-router.delete('/deleteusedb', verifyToken, deleteUserDb);
+
 
 module.exports = router;
