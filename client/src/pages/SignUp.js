@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 
 
@@ -9,7 +14,19 @@ import * as Yup from "yup";
 const SignUp = (props) => {
     let navigate = useNavigate();
     const [email, setEmail] = useState("");
-    
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [showCPassword, setShowCPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowCPassword = () => setShowCPassword((show) => !show);
+  
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
+    const handleMouseDownCPassword = (event) => {
+      event.preventDefault();
+    };
+
 
     const registerSchema = Yup.object().shape({
         firstName: Yup.string().required().min(3).max(25).matches(/^[a-z0-9]+$/i, "Username should contain alphabets and numbers only"),
@@ -38,9 +55,9 @@ const SignUp = (props) => {
                 },
                 body: JSON.stringify({ firstName, email, password, cpassword })
             })
-            
+
             const json = await response.json()
-            
+
             if (json.success) {
                 navigate('/login?email=' + encodeURIComponent(values.email));
 
@@ -49,48 +66,73 @@ const SignUp = (props) => {
                 alert(json.message, "error")
                 props.showAlert("Invalid details", "danger")
             }
-    
+
         }
     })
     const { errors, touched, handleSubmit, getFieldProps, handleChange, values, handleBlur } = formik;
     useEffect(() => {
         if (values.email) {
-          setEmail("");
+            setEmail("");
         }
         document.getElementById("email").value = "";
-      }, [values.email]);
-      
+    }, [values.email]);
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
 
                 <div className="mb-4">
-                <label htmlFor="firstName" >Name</label>
+                    <label htmlFor="firstName" >Name</label>
                     <input {...getFieldProps('firstName')}
                         color="secondary" label="Name" variant="outlined" onChange={handleChange} onBlur={handleBlur} id="firstName" name='firstName' value={values.firstName} />
-                        { errors.firstName && touched.firstName ? <p className='form-error' >{errors.firstName}</p> : null}
+                    {errors.firstName && touched.firstName ? <p className='form-error' >{errors.firstName}</p> : null}
                 </div>
                 <div className="mb-4">
-                <label htmlFor="email" >Email</label>
+                    <label htmlFor="email" >Email</label>
                     <input {...getFieldProps('email')}
                         color="secondary" label="Email" variant="outlined" onChange={handleChange} onBlur={handleBlur} id="email" name='email' value={values.email} />
-                        { errors.email && touched.email ? <p className='form-error' >{errors.email}</p> : null}
-                </div>
-                
-                <div className="mb-4">
-                <label htmlFor="password" >password</label>
-                    <input {...getFieldProps('password')}
-                        color="secondary" label="Password" variant="outlined" onChange={handleChange} onBlur={handleBlur} id="password" name='password' value={values.password} />
-                        { errors.password && touched.password ? <p className='form-error' >{errors.password}</p> : null}
-                </div>
-                <div className="mb-4">
-                <label htmlFor="cpassword" >cpassword</label>
-                    <input {...getFieldProps('cpassword')}
-                        color="secondary" label="Password" variant="outlined" onChange={handleChange} onBlur={handleBlur} id="cpassword" name='cpassword' value={values.cpassword} />
-                        { errors.cpassword && touched.cpassword ? <p className='form-error' >{errors.cpassword}</p> : null}
+                    {errors.email && touched.email ? <p className='form-error' >{errors.email}</p> : null}
                 </div>
 
-    
+                <OutlinedInput {...getFieldProps('password')}
+                    id="password" name='password' onChange={handleChange} onBlur={handleBlur}
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                            >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                    label="Password"
+                />
+                {errors.password && touched.password ? <p className='form-error' >{errors.password}</p> : null}
+                <OutlinedInput {...getFieldProps('cpassword')}
+                    id="cpassword" name='cpassword' onChange={handleChange} onBlur={handleBlur}
+                    type={showCPassword ? "text" : "password"}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowCPassword}
+                                onMouseDown={handleMouseDownCPassword}
+                                edge="end"
+                            >
+                                {showCPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                    label="Confirm Password"
+                />
+                {errors.cpassword && touched.cpassword ? <p className='form-error' >{errors.cpassword}</p> : null}
+
+               
+
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         </div>
