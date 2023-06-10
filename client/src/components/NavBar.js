@@ -9,13 +9,13 @@ const NavBar = (props) => {
   const navigate = useNavigate();
 
 
-  const { user } = useContext(userContext);
-  const context = useContext(userContext);
-  const { getUser } = context;
+  // const { user } = useContext(userContext);
+  // const context = useContext(userContext);
+  // const { getUser } = context;
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
 
   
 
@@ -113,7 +113,7 @@ const NavBar = (props) => {
             </div>
           )}
    
-          {user}
+          {/* {user} */}
 
         </div>
       </div>
