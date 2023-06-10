@@ -10,48 +10,40 @@ const AddNote = (props) => {
     const [userIdFetched, setUserIdFetched] = useState(false);
     const user_context = useContext(userContext);
     const { user, getUser } = user_context;
-    useEffect(() => {
-        if (user && user._id) {
-            console.log("mil gai")
-            setUserIdFetched(true); // Update the flag when user ID is fetched
-        }
-    }, [user]);
-    useEffect(() => {
-        const getUser = () => {
-          // Implementation of getUser function
-        };
-    
-        const intervalId = setInterval(() => {
-          if (localStorage.getItem('token')) {
-            getUser();
-            setUserIdFetched(true);
-            // console.log(notes)
-          } else {
-            navigate('/signup');
-          }
-        }, 1000); // Interval time in milliseconds
-    
-        return () => {
-          clearInterval(intervalId); // Cleanup the interval on component unmount
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []); 
+    // useEffect(() => {
+    //     if (user && user._id) {
+    //         console.log("mil gai")
+    //         setUserIdFetched(true); // Update the flag when user ID is fetched
+    //     }
+    // }, [user]);
+    // useEffect(() => {
+    //     const getUser = () => {
+    //       // Implementation of getUser function
+    //     };
+
+    //     const intervalId = setInterval(() => {
+    //       if (localStorage.getItem('token')) {
+    //         getUser();
+    //         setUserIdFetched(true);
+    //         // console.log(notes)
+    //       } else {
+    //         navigate('/signup');
+    //       }
+    //     }, 1000); // Interval time in milliseconds
+
+    //     return () => {
+    //       clearInterval(intervalId); // Cleanup the interval on component unmount
+    //     };
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    //   }, []); 
 
     const context = useContext(noteContext);
     const { addNote } = context;
     const [note, setNote] = useState({ title: "", description: "", tag: "default " })
     const handleClick = async (e) => {
         e.preventDefault();
-        if (userIdFetched) {
-            console.log("aane de")
-            if (user && user._id) {
-                console.log("oh")
-                addNote(note.title, note.description, note.tag);
-            }
-            else{
-                navigate('/about')
-            }
-        }
+        console.log("oh")
+        addNote(note.title, note.description, note.tag);
         setNote({ title: "", description: "", tag: "" })
         props.showAlert("Added Succesfully", "success")
     }
