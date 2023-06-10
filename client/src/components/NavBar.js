@@ -7,15 +7,13 @@ import userContext from "../context/user/userContext"
 const NavBar = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const user_context = useContext(userContext);
+  const { user, getUser } = user_context;
 
 
-  // const { user } = useContext(userContext);
-  // const context = useContext(userContext);
-  // const { getUser } = context;
-
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
+  useEffect(() => {
+    getUser();
+  }, []);
 
   
 
@@ -92,7 +90,7 @@ const NavBar = (props) => {
               </Link>
             </li>
           </ul>
-          {!localStorage.getItem('token') ? (
+          {!localStorage.getItem('token') || !user ? (
             <form className="d-flex">
               <Link className="btn btn-primary mx-2" role="button" to="/login" aria-disabled="true">
                 Log In
