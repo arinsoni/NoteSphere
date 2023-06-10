@@ -42,9 +42,6 @@ const SignUp = (props) => {
             const json = await response.json()
             
             if (json.success) {
-                
-                
-                
                 navigate('/login?email=' + encodeURIComponent(values.email));
 
                 props.showAlert("Account created succesfully", "success")
