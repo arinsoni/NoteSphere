@@ -11,6 +11,32 @@ const Notes = (props) => {
   const { notes, getNotes, editNote } = context;
   const { user, getUser } = user_context;
   let navigate = useNavigate();
+  const checkUserStatus = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/auth/checkuserutatus', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token') // Include the user's token in the request headers
+        }
+      });
+      const data = await response.json();
+      if (!data.success) {
+        navigate('/signup'); // Redirect to the about page if user status is not successful
+      }
+    } catch (error) {
+      console.log('Error checking user status:', error);
+    }
+  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      checkUserStatus();
+    }, 1000); // Check every 1 seconds (adjust the interval as needed)
+
+    return () => {
+      clearInterval(interval); // Clear the interval on component unmount
+    };
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {

@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 const host = "http://localhost:5000";
 const userInitial = null;
 
+
 const UserState = (props) => {
   const [user, setUser] = useState(userInitial);
 
@@ -32,7 +33,7 @@ const UserState = (props) => {
   };
 
   useEffect(() => {
-    getUser();
+    getUser(); // Fetch user data on component mount
   }, []);
 
   return (

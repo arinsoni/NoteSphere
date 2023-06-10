@@ -3,7 +3,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const notesRoutes = require('./routes/notes');
-var cors = require('cors')
+var cors = require('cors');
+const User = require('./models/User');
+const verifyToken = require('./middleware/auth');
 
 dotenv.config();
 
@@ -14,7 +16,6 @@ app.use(cors())
 //Routes
 app.use("/auth", authRoutes)
 app.use("/notes", notesRoutes)
-
 
 //MongoDB setup
 mongoose.connect(process.env.MONGO_URL, {

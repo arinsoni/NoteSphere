@@ -27,7 +27,7 @@ const register = async (req, res) => {
             lastName,
             email,
             password: passwordHash,
-            verified : true
+            verified: true
         });
 
         const savedUser = await newUser.save();
@@ -88,17 +88,32 @@ const getUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-      const userId = req.user.id;
-      await Notes.deleteMany({ user: userId });
-      await User.findByIdAndDelete(userId);
-      res.status(200).json({ success: true, message: "User deleted successfully" });
+        const userId = req.user.id;
+        await Notes.deleteMany({ user: userId });
+        await User.findByIdAndDelete(userId);
+        res.status(200).json({ success: true, message: "User deleted successfully" });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-  };
+};
+const checkuserutatus = async (req, res) => {
+    try {
+        // Retrieve the user from the database based on the token
+        const user = await User.findById(req.user.id);
+        if (user) {
+            res.status(200).json({ success: true });
+        } else {
+            
+            res.status(200).json({ success: false });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 module.exports = {
     register,
     login,
     getUser,
-    deleteUser
+    deleteUser,
+    checkuserutatus
 };
