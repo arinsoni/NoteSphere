@@ -9,10 +9,13 @@ const userInitial = null;
 
 const UserState = (props) => {
   const [user, setUser] = useState(userInitial);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   const getUser = async () => {
+    
     try {
+      setIsLoading(true); //
       const response = await fetch(`${host}/auth/getuser`, {
         method: 'GET',
         headers: {
@@ -25,7 +28,7 @@ const UserState = (props) => {
       }
       const json = await response.json();
       setUser(json);
-     
+      setIsLoading(false); 
     } catch  {
       console.log('Error fetching user data:');
       
@@ -74,7 +77,7 @@ const UserState = (props) => {
   });
 
   return (
-    <UserContext.Provider value={{ user, getUser, deleteOrphanedNotes}}>
+    <UserContext.Provider value={{ user, isLoading,  getUser, deleteOrphanedNotes}}>
       {props.children}
     </UserContext.Provider>
   );

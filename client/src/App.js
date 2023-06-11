@@ -35,8 +35,8 @@ function App() {
           <Alert alert={alert}/>
           <div className="container">
             <Routes>
-              <Route exact path="/" element={<Home showAlert={showAlert} />} />
-              <Route exact path="/about" element={<About />} />
+              <Route exact path="/:id/noteboard" element={<Home showAlert={showAlert} />} />
+              <Route exact path="/" element={<About />} />
               <Route exact path="/login" element={<LogIn showAlert={showAlert} />} />
               <Route exact path="/signup" element={<SignUp showAlert={showAlert} />} />
               <Route exact path="/auth/:id/verify/:token" element={<EmailVerify/>} />

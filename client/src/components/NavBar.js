@@ -1,29 +1,25 @@
-import { Alert } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {useContext} from 'react'
-import userContext from "../context/user/userContext"
+import user_context from "../context/user/userContext"
 
 const NavBar = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [id, setId] = useState(null)
 
-
-  // const { user } = useContext(userContext);
-  // const context = useContext(userContext);
-  // const { getUser } = context;
-
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
-
-  
-
+  const userContext = useContext(user_context);
+  const { user } = userContext;
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
+  useEffect(() =>{
+    if (user && user._id){
+      setId(user._id)
+    }
+  })
   const handleDelete = async () => {
     try {
       const response = await fetch("http://localhost:5000/auth/deleteUser", {
@@ -78,7 +74,7 @@ const NavBar = (props) => {
               <Link
                 className={`nav-link ${location.pathname === 'home' ? 'active' : 'nav-link'}`}
                 aria-current="page"
-                to="/"
+                to={`/${id}/noteboard`}
               >
                 Home
               </Link>
@@ -86,7 +82,7 @@ const NavBar = (props) => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${location.pathname === 'about' ? 'active' : 'nav-link'}`}
-                to="/about"
+                to="/"
               >
                 About
               </Link>
@@ -110,6 +106,9 @@ const NavBar = (props) => {
               <button className="btn btn-primary mx-2" onClick={handleDelete} aria-disabled="true">
                 Delete Account
               </button>
+              {/* <button className="btn btn-primary mx-2" onClick={handleResetPassword} aria-disabled="true">
+                Reset Password
+              </button> */}
             </div>
           )}
    

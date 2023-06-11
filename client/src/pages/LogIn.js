@@ -1,23 +1,36 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import user_context from "../context/user/userContext"
 
 const LogIn = (props) => {
-    const [showPassword, setShowPassword] = React.useState(false);
+  const userContext = useContext(user_context);
+  const { user } = userContext;
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-  
-    const handleMouseDownPassword = (event) => {
-      event.preventDefault();
-    };
+  const [userId, setUserId] = useState(null);
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let navigate = useNavigate();
   const location = useLocation();
+
+  // useEffect(() =>{
+  //   if(user && user._id){
+  //     userId = user._id
+  //     setIsLoading(false)
+  //   }
+  // },[user])
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -46,12 +59,21 @@ const LogIn = (props) => {
       // Save token and email in local storage and redirect
       localStorage.setItem('token', json.token);
       localStorage.setItem('email', credentials.email);
-      navigate("/");
+    
+        if(user && user._id){
+          navigate(`/${user._id}/noteboard`);
+        }
+
+
+      
       props.showAlert("Logged In successfully", "success");
     } else {
       props.showAlert("Invalid Credentials", "danger");
     }
+    setIsLoading(false)
   };
+
+ 
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -59,31 +81,39 @@ const LogIn = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      {
+        isLoading ? <p>Loading ....</p> 
+        :
+      
+      
+        <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email address</label>
           <input type="email" className="form-control" id="email" name='email' value={credentials.email} aria-describedby="emailHelp" onChange={onChange} />
           <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
         </div>
         <OutlinedInput
-            id="password" name='password' onChange={onChange}
-            type={showPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
+          id="password" name='password' onChange={onChange}
+          type={showPassword ? "text" : "password"}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
+          label="Password"
+        />
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
+ 
+        }
+      
     </div>
   );
 };

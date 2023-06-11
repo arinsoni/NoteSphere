@@ -17,6 +17,7 @@ app.use(express.json()); // parses incoming data (instructions and informations)
 app.use(cors())
 //Routes
 app.use("/auth", authRoutes)
+
 app.use("/notes", notesRoutes)
 
 
