@@ -6,6 +6,8 @@ const notesRoutes = require('./routes/notes');
 var cors = require('cors');
 const User = require('./models/User');
 const verifyToken = require('./middleware/auth');
+const uniqueString = require('./models/Token')
+
 
 dotenv.config();
 
@@ -19,6 +21,34 @@ app.use("/notes", notesRoutes)
 
 
 
+app.get("/auth/:id/verify/:token/", async (req, res) => {
+    console.log("Inside register function");
+	try {
+        
+		const user = await User.findOne({ _id: req.params.id });
+		if (!user) return res.status(400).send({ message: "Invalid link" });
+		const secret = await uniqueString.findOne({
+			userId: user._id,
+			eToken: req.params.token,
+		});
+        // console.log(`after : userid: ${user._id} and token : ${req.params.token}`)
+        console.log(`${secret}`)
+		if (!secret) {
+			return res.status(400).json({error: "invalid link"});
+		}
+        console.log(`before: ${user.verified}`)
+		await User.updateOne({ _id: user._id, verified: true });
+		await user.save();
+        console.log(`after: ${user.verified}`)
+
+		// await secret.remove();
+        await uniqueString.deleteOne({ _id: secret._id });
+
+		res.status(200).send({ message: "Email verified successfully" });
+	} catch (error) {
+		res.status(500).send({ message: error.message });
+	}
+});
 
 //MongoDB setup
 mongoose.connect(process.env.MONGO_URL, {

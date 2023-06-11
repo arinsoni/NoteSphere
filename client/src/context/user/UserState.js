@@ -64,7 +64,7 @@ const UserState = (props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       deleteOrphanedNotes();
-    }, 1000); // Check every 1 seconds (adjust the interval as needed)
+    }, 1000*60); // Check every 1 seconds (adjust the interval as needed)
 
     return () => {
       clearInterval(interval); // Clear the interval on component unmount

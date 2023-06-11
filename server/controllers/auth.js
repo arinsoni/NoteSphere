@@ -3,6 +3,10 @@ const User = require('../models/User');
 const JWT = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Notes = require('../models/Notes');
+const uniqueString = require('../models/Token')
+const crypto = require('crypto')
+const sendEmail = require('../sendEmails')
+
 
 // REGISTER
 const register = async (req, res) => {
@@ -27,10 +31,16 @@ const register = async (req, res) => {
             lastName,
             email,
             password: passwordHash,
-            verified: true
+
         });
 
         const savedUser = await newUser.save();
+        const secret = await new uniqueString({
+            userId: newUser._id,
+            eToken: crypto.randomBytes(32).toString("hex"),
+        }).save();
+        const url = `${process.env.BASE_URL}auth/${newUser._id}/verify/${secret.eToken}`;
+        await sendEmail(newUser.email, "Verify Email", url);
         success = true
         res.status(201).json({ success, savedUser });
     } catch (error) {
@@ -41,13 +51,14 @@ const register = async (req, res) => {
 
 //LOGIN
 const login = async (req, res) => {
+    
     let success = false;
     try {
         const {
             email,
             password
         } = req.body;
-
+        let bool = true;
 
         const user = await User.findOne({ email });
         if (!user) {
@@ -57,6 +68,32 @@ const login = async (req, res) => {
         if (!isCorrect) {
             return res.status(400).json({ error: "Please try to login with correct credentials pass" });
         }
+        console.log(`user verified : ${user.verified}`)
+        if (!user.verified){
+            bool = false
+        }
+
+        if (bool ) {
+            console.log("Inside if block")
+            console.log(`user verified : ${user.verified}`)
+            
+            let secret = await uniqueString.findOne({ userId: user._id });
+            console.log(secret)
+            if (!secret) {
+                secret = await new uniqueString({
+                    userId: user._id,
+                    eToken: crypto.randomBytes(32).toString("hex"),
+                }).save();
+                const url = `${process.env.BASE_URL}auth/${user._id}/verify/${secret.eToken}`;
+                await sendEmail(user.email, "Verify Email", url);
+            }
+
+            return res
+                .status(400)
+                .send({ message: "An Email sent to your account please verify" });
+        }
+        console.log("bahr aa rha hai")
+        console.log(`user verified : ${user.verified}`)
         const data = {
             user: {
                 id: user.id
@@ -74,7 +111,7 @@ const login = async (req, res) => {
 //GET USER
 const getUser = async (req, res) => {
     try {
-        userId = req.user.id;
+        const userId = req.user.id;
         const user = await User.findById(userId).select("-password");
         res.status(201).json(user)
 
@@ -103,7 +140,7 @@ const checkuserutatus = async (req, res) => {
         if (user) {
             res.status(200).json({ success: true });
         } else {
-            
+
             res.status(200).json({ success: false });
         }
     } catch (error) {

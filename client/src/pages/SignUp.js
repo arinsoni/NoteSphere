@@ -47,6 +47,7 @@ const SignUp = (props) => {
 
         validationSchema: registerSchema,
         onSubmit: async (values, action) => {
+            console.log("inside register function")
             const { firstName, email, password, cpassword } = values
             const response = await fetch("http://localhost:5000/auth/register", {
                 method: 'POST',
@@ -58,24 +59,24 @@ const SignUp = (props) => {
 
             const json = await response.json()
 
-            if (json.success) {
-                navigate('/login?email=' + encodeURIComponent(values.email));
+            // if (json.success) {
+            //     navigate('/login?email=' + encodeURIComponent(values.email));
 
-                props.showAlert("Account created succesfully", "success")
-            } else {
-                alert(json.message, "error")
-                props.showAlert("Invalid details", "danger")
-            }
+            //     props.showAlert("Account created succesfully", "success")
+            // } else {
+            //     alert(json.message, "error")
+            //     props.showAlert("Invalid details", "danger")
+            // }
 
         }
     })
     const { errors, touched, handleSubmit, getFieldProps, handleChange, values, handleBlur } = formik;
-    useEffect(() => {
-        if (values.email) {
-            setEmail("");
-        }
-        document.getElementById("email").value = "";
-    }, [values.email]);
+    // useEffect(() => {
+    //     if (values.email) {
+    //         setEmail("");
+    //     }
+    //     document.getElementById("email").value = "";
+    // }, [values.email]);
 
     return (
         <div>
