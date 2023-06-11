@@ -51,14 +51,14 @@ const register = async (req, res) => {
 
 //LOGIN
 const login = async (req, res) => {
-    
+
     let success = false;
     try {
         const {
             email,
             password
         } = req.body;
-        let bool = true;
+
 
         const user = await User.findOne({ email });
         if (!user) {
@@ -68,32 +68,30 @@ const login = async (req, res) => {
         if (!isCorrect) {
             return res.status(400).json({ error: "Please try to login with correct credentials pass" });
         }
-        console.log(`user verified : ${user.verified}`)
-        if (!user.verified){
-            bool = false
-        }
+        // console.log(`user verified : ${user.verified}`)
 
-        if (bool ) {
-            console.log("Inside if block")
-            console.log(`user verified : ${user.verified}`)
-            
-            let secret = await uniqueString.findOne({ userId: user._id });
-            console.log(secret)
-            if (!secret) {
-                secret = await new uniqueString({
-                    userId: user._id,
-                    eToken: crypto.randomBytes(32).toString("hex"),
-                }).save();
-                const url = `${process.env.BASE_URL}auth/${user._id}/verify/${secret.eToken}`;
-                await sendEmail(user.email, "Verify Email", url);
-            }
+
+        if (!user.verified) {
+            // console.log("Inside if block")
+            // console.log(`user verified : ${user.verified}`)
+
+            // let secret = await uniqueString.findOne({ userId: user._id });
+            // console.log(secret)
+            // if (!secret) {
+            //     secret = await new uniqueString({
+            //         userId: user._id,
+            //         eToken: crypto.randomBytes(32).toString("hex"),
+            //     }).save();
+            //     const url = `${process.env.BASE_URL}auth/${user._id}/verify/${secret.eToken}`;
+            //     await sendEmail(user.email, "Verify Email", url);
+            // }
 
             return res
                 .status(400)
                 .send({ message: "An Email sent to your account please verify" });
         }
-        console.log("bahr aa rha hai")
-        console.log(`user verified : ${user.verified}`)
+        // console.log("bahr aa rha hai")
+        // console.log(`user verified : ${user.verified}`)
         const data = {
             user: {
                 id: user.id
@@ -102,7 +100,10 @@ const login = async (req, res) => {
         const token = JWT.sign(data, process.env.JWT_SECRET);
         delete user.password;
         success = true
+        let secret = await uniqueString.findOne({ userId: user._id });
+        
         res.status(200).json({ success, token });
+       
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

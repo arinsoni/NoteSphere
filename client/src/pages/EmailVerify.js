@@ -5,8 +5,10 @@ import { useParams, Link } from "react-router-dom";
 const EmailVerify = () => {
 	const [validUrl, setValidUrl] = useState(true);
 	const param = useParams();
+	let i = 0
 
 	useEffect(() => {
+		if (i == 0){
 		console.log("Effect triggered");
 		const verifyEmailUrl = async () => {
 			try {
@@ -27,7 +29,9 @@ const EmailVerify = () => {
 			}
 		};
 		verifyEmailUrl();
-	}, []);
+		i ++
+	}
+	}, [param]);
 
 	return (
 	<>

@@ -58,7 +58,9 @@ const UserState = (props) => {
 
 
   useEffect(() => {
-    getUser(); // Fetch user data on component mount
+    if(localStorage.getItem('token')){
+      getUser(); // Fetch user data on component mount
+    }
   }, []);
 
   useEffect(() => {
