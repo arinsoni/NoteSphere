@@ -10,6 +10,7 @@ const NavBar = (props) => {
 
   const userContext = useContext(user_context);
   const { user } = userContext;
+  const [email, setEmail] = useState("");
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -18,8 +19,51 @@ const NavBar = (props) => {
   useEffect(() =>{
     if (user && user._id){
       setId(user._id)
+      setEmail(user.email)
+
     }
   })
+
+
+
+ const handlePasswordChange = async (e) => {
+  e.preventDefault();
+
+
+  console.log(`${localStorage.getItem('token')} - navbar after`)
+
+
+
+
+  // Send the password change request to the backend
+  const response = await  fetch("http://localhost:5000/auth/reset-password", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      'auth-token': localStorage.getItem('token')
+    },
+    body: JSON.stringify({ email }),
+  })
+  const json = await response.json();
+
+
+
+
+  if (json.success) {
+    // localStorage.setItem('verificationToken', json.verificationToken)
+    // console.log(`verificationToken: ${localStorage.setItem('verificationToken', json.verificationToken)}`)
+    props.showAlert(json.message, "success");
+
+
+  } else {
+    props.showAlert(json.message, "error");
+  }
+
+
+
+
+};
+
   const handleDelete = async () => {
     try {
       const response = await fetch("http://localhost:5000/auth/deleteUser", {
@@ -106,9 +150,10 @@ const NavBar = (props) => {
               <button className="btn btn-primary mx-2" onClick={handleDelete} aria-disabled="true">
                 Delete Account
               </button>
-              {/* <button className="btn btn-primary mx-2" onClick={handleResetPassword} aria-disabled="true">
-                Reset Password
-              </button> */}
+              <button className="btn btn-primary mx-2" onClick={handlePasswordChange} aria-disabled="true">
+               Change Pass
+             </button>
+
             </div>
           )}
    

@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp';
 import EmailVerify from './pages/EmailVerify';
 import { useState } from 'react';
 import UserState from './context/user/UserState';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -40,6 +41,8 @@ function App() {
               <Route exact path="/login" element={<LogIn showAlert={showAlert} />} />
               <Route exact path="/signup" element={<SignUp showAlert={showAlert} />} />
               <Route exact path="/auth/:id/verify/:token" element={<EmailVerify/>} />
+              <Route exact path="/auth/reset-password/:resetToken" element={<ResetPassword/>} />
+
        
             </Routes>
           </div>

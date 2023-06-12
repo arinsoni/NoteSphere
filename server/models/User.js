@@ -27,7 +27,8 @@ const userSchema = mongoose.Schema({
   verified: {
     type: String,
     default: false
-  }
+  },
+  resetPasswordToken: String
 });
 
 userSchema.pre('remove', async function(next) {

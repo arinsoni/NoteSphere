@@ -95,7 +95,7 @@ const login = async (req, res) => {
         const data = {
             user: {
                 id: user.id
-                
+
             }
         }
         console.log(`datab login: ${data.user.email}`)
@@ -103,9 +103,9 @@ const login = async (req, res) => {
         delete user.password;
         success = true
         let secret = await uniqueString.findOne({ userId: user._id });
-        
+
         res.status(200).json({ success, token, data });
-       
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -150,10 +150,45 @@ const checkuserutatus = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// resetpass
+
+
+const requestPasswordReset = async (req, res) => {
+    try {
+        const { email } = req.body;
+        console.log(`email: ${email}`)
+        const user = await User.findOne({ email });
+        console.log(`${req.header('auth-token')} - reset`)
+        if (!user) {
+            return res.status(404).json({ success: false });
+        }
+
+
+        const resetToken = crypto.randomBytes(20).toString("hex");
+        user.resetPasswordToken = resetToken;
+        await user.save();
+
+
+        const url = `${process.env.BASE_URL}auth/reset-password/${resetToken}`;
+        await sendEmail(user.email, "Token Reset", url);
+
+
+
+
+
+
+        res.status(200).json({ success: true, message: 'Password reset request sent' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+
+    }
+}
 module.exports = {
     register,
     login,
     getUser,
     deleteUser,
-    checkuserutatus
+    checkuserutatus,
+    requestPasswordReset
 };
