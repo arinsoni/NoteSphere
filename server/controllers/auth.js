@@ -95,14 +95,16 @@ const login = async (req, res) => {
         const data = {
             user: {
                 id: user.id
+                
             }
         }
+        console.log(`datab login: ${data.user.email}`)
         const token = JWT.sign(data, process.env.JWT_SECRET);
         delete user.password;
         success = true
         let secret = await uniqueString.findOne({ userId: user._id });
         
-        res.status(200).json({ success, token });
+        res.status(200).json({ success, token, data });
        
     } catch (error) {
         res.status(500).json({ message: error.message });

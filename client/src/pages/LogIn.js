@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
@@ -12,25 +11,15 @@ const LogIn = (props) => {
   const userContext = useContext(user_context);
   const { user } = userContext;
   const [isLoading, setIsLoading] = useState(false);
-
   const [userId, setUserId] = useState(null);
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let navigate = useNavigate();
   const location = useLocation();
-
-  // useEffect(() =>{
-  //   if(user && user._id){
-  //     userId = user._id
-  //     setIsLoading(false)
-  //   }
-  // },[user])
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -43,9 +32,10 @@ const LogIn = (props) => {
     }
   }, [location]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+  
     const response = await fetch("http://localhost:5000/auth/login", {
       method: 'POST',
       headers: {
@@ -53,27 +43,29 @@ const LogIn = (props) => {
       },
       body: JSON.stringify({ email: credentials.email, password: credentials.password }),
     });
+  
     const json = await response.json();
-    console.log(json);
+    console.log(json, json.token);
+  
     if (json.success) {
-      // Save token and email in local storage and redirect
       localStorage.setItem('token', json.token);
       localStorage.setItem('email', credentials.email);
-    
-        if(user && user._id){
-          navigate(`/${user._id}/noteboard`);
-        }
-
-
-      
+      console.log(`${localStorage.getItem('token')} - login`);
       props.showAlert("Logged In successfully", "success");
+      
+      // Fetch user data after successful login
+      await userContext.getUser();
+      console.log(`id: ${json.data.user.id}`)
+      if (json.data.user.id) {
+        navigate(`/${json.data.user.id}/noteboard`);
+      }
     } else {
       props.showAlert("Invalid Credentials", "danger");
     }
-    setIsLoading(false)
+  
+    setIsLoading(false);
   };
-
- 
+  
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -81,39 +73,35 @@ const LogIn = (props) => {
 
   return (
     <div>
-      {
-        isLoading ? <p>Loading ....</p> 
-        :
-      
-      
+      {isLoading ? (
+        <p>Loading ....</p>
+      ) : (
         <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="email" name='email' value={credentials.email} aria-describedby="emailHelp" onChange={onChange} />
-          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <OutlinedInput
-          id="password" name='password' onChange={onChange}
-          type={showPassword ? "text" : "password"}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          label="Password"
-        />
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
- 
-        }
-      
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email address</label>
+            <input type="email" className="form-control" id="email" name='email' value={credentials.email} aria-describedby="emailHelp" onChange={onChange} />
+            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <OutlinedInput
+            id="password" name='password' onChange={onChange}
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+          <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
+      )}
     </div>
   );
 };
