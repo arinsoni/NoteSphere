@@ -47,6 +47,7 @@ const SignUp = (props) => {
 
         validationSchema: registerSchema,
         onSubmit: async (values, action) => {
+            props.setProgress(30)
             console.log("inside register function")
             const { firstName, email, password, cpassword } = values
             const response = await fetch("http://localhost:5000/auth/register", {
@@ -56,6 +57,7 @@ const SignUp = (props) => {
                 },
                 body: JSON.stringify({ firstName, email, password, cpassword })
             })
+            props.setProgress(60)
 
             const json = await response.json()
 
@@ -67,8 +69,9 @@ const SignUp = (props) => {
             //     alert(json.message, "error")
             //     props.showAlert("Invalid details", "danger")
             // }
-
+            props.setProgress(100)
         }
+       
     })
     const { errors, touched, handleSubmit, getFieldProps, handleChange, values, handleBlur } = formik;
     // useEffect(() => {

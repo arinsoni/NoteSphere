@@ -42,7 +42,6 @@ const AddNote = (props) => {
     const [note, setNote] = useState({ title: "", description: "", tag: "default " })
     const handleClick = async (e) => {
         e.preventDefault();
-        console.log("oh")
         addNote(note.title, note.description, note.tag);
         setNote({ title: "", description: "", tag: "" })
         props.showAlert("Added Succesfully", "success")

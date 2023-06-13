@@ -1,7 +1,7 @@
 
 import UserContext from './userContext';
 import { useState, useEffect } from 'react';
-
+import LoadingBar from 'react-top-loading-bar'
 
 const host = "http://localhost:5000";
 const userInitial = null;
@@ -9,7 +9,10 @@ const userInitial = null;
 
 const UserState = (props) => {
   const [user, setUser] = useState(userInitial);
+  const [progress, setProgress] = useState(0)
   const [isLoading, setIsLoading] = useState(true);
+  const [isLogin, setIsLogin] = useState(false)
+
 
 
   const getUser = async () => {
@@ -65,6 +68,14 @@ const UserState = (props) => {
       getUser(); // Fetch user data on component mount
     }
   }, []);
+  useEffect(() =>{
+    if(user && user._id){
+      setIsLogin(true);
+      console.log(` islogin: ${isLogin}`);
+    } else{
+      setIsLogin(false)
+    }
+  }, [user])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -77,7 +88,7 @@ const UserState = (props) => {
   });
 
   return (
-    <UserContext.Provider value={{ user, isLoading,  getUser, deleteOrphanedNotes}}>
+    <UserContext.Provider value={{ user, isLoading,  getUser, deleteOrphanedNotes, progress, setProgress, isLogin, setIsLogin}}>
       {props.children}
     </UserContext.Provider>
   );

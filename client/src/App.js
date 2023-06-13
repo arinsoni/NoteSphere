@@ -15,9 +15,13 @@ import EmailVerify from './pages/EmailVerify';
 import { useState } from 'react';
 import UserState from './context/user/UserState';
 import ResetPassword from './pages/ResetPassword';
+import LoadingBar from 'react-top-loading-bar'
+
 
 function App() {
   const [alert, setAlert] = useState(null);
+  const [progress, setProgress] = useState(0)
+;
   const showAlert = (message, type) =>{
     setAlert({
       msg: message,
@@ -27,21 +31,27 @@ function App() {
       setAlert(null)
     }, 1500);
   }
+  
   return (
     <>
-   <UserState>
-      <NoteState>
+   <UserState setProgress={setProgress} >
+      <NoteState setProgress = {setProgress} >
         <Router>
           <NavBar showAlert={showAlert} />
+          <LoadingBar
+            height={5}
+            color='#f11946'
+            progress={progress}
+          />
           <Alert alert={alert}/>
           <div className="container">
             <Routes>
-              <Route exact path="/:id/noteboard" element={<Home showAlert={showAlert} />} />
+              <Route exact path="/:id/noteboard" element={<Home showAlert={showAlert} setProgress={setProgress}  />} />
               <Route exact path="/" element={<About />} />
-              <Route exact path="/login" element={<LogIn showAlert={showAlert} />} />
-              <Route exact path="/signup" element={<SignUp showAlert={showAlert} />} />
-              <Route exact path="/auth/:id/verify/:token" element={<EmailVerify/>} />
-              <Route exact path="/auth/reset-password/:resetToken" element={<ResetPassword/>} />
+              <Route exact path="/login" element={<LogIn setProgress={setProgress}  showAlert={showAlert} />} />
+              <Route exact path="/signup" element={<SignUp setProgress={setProgress} showAlert={showAlert} />} />
+              <Route exact path="/auth/:id/verify/:token" element={<EmailVerify setProgress={setProgress} />} />
+              <Route exact path="/auth/reset-password/:resetToken" element={<ResetPassword setProgress={setProgress} />} />
 
        
             </Routes>

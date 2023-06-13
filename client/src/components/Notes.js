@@ -12,7 +12,9 @@ const Notes = (props) => {
   const { user, getUser, deleteOrphanedNotes } = user_context;
   // const [user, setUser] = useState(null);
   let navigate = useNavigate();
-  const checkUserStatus = async () => {
+  const checkUserStatus = async (e) => {
+   
+
     try {
       const response = await fetch('http://localhost:5000/auth/checkuserutatus', {
         method: 'GET',
@@ -21,7 +23,9 @@ const Notes = (props) => {
           'auth-token': localStorage.getItem('token') // Include the user's token in the request headers
         }
       });
+   
       const data = await response.json();
+      
       if (!data.success) {
         deleteOrphanedNotes();
         navigate('/signup'); // Redirect to the about page if user status is not successful
@@ -29,6 +33,7 @@ const Notes = (props) => {
     } catch (error) {
       console.log('Error checking user status:', error);
     }
+   
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,7 +49,6 @@ const Notes = (props) => {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       getNotes();
-      // console.log(notes)
     } else {
       navigate('/')
     }

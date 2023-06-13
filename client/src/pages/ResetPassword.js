@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import userContext from '../context/user/userContext';
+import LoadingBar from 'react-top-loading-bar'
 
 
 const ResetPassword = (props) => {
@@ -10,7 +11,8 @@ const ResetPassword = (props) => {
    const [email, setEmail] = useState("");
    const [confirmPassword, setConfirmPassword] = useState("");
    const user_context = useContext(userContext);
-   const { user } = user_context;
+
+   const { user, setProgress } = user_context;
    useEffect(() => {
        if (user && user.email){
            setEmail(user.email)
@@ -20,6 +22,7 @@ const ResetPassword = (props) => {
 
    const handleSubmit = async (e) => {
        e.preventDefault();
+       setProgress(30)
        // console.log(`${localStorage.getItem('token')} - reset`)
        // Send the password reset request to the backend
        const response = await fetch(`http://localhost:5000/auth/resetPassword/${resetToken}`, {
@@ -30,27 +33,27 @@ const ResetPassword = (props) => {
            },
            body: JSON.stringify({ confirmPassword, email, resetToken }),
        })
+       setProgress(60)
        const json = await response.json();
 
-
+       setProgress(80)
        if (json.success) {
-
-
            alert("success");
            localStorage.setItem('token', json.token);
            navigate("/login");
        } else {
            alert(`${json.message}`);
-
-
        }
-
+       setProgress(100)
 
    };
 
 
    return (
+    <>
+ 
        <div>
+        
            <h2>Reset Password</h2>
            <form onSubmit={handleSubmit}>
                <div>
@@ -71,7 +74,10 @@ const ResetPassword = (props) => {
                </div>
                <button type="submit">Reset Password</button>
            </form>
+     
        </div>
+    
+       </>
    );
 }
 

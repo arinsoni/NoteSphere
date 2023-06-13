@@ -9,9 +9,7 @@ import user_context from "../context/user/userContext"
 
 const LogIn = (props) => {
   const userContext = useContext(user_context);
-  const { user } = userContext;
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState(null);
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -34,7 +32,7 @@ const LogIn = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    props.setProgress(30)
   
     const response = await fetch("http://localhost:5000/auth/login", {
       method: 'POST',
@@ -43,19 +41,19 @@ const LogIn = (props) => {
       },
       body: JSON.stringify({ email: credentials.email, password: credentials.password }),
     });
+    props.setProgress(60)
   
     const json = await response.json();
-    console.log(json, json.token);
+    props.setProgress(80)
+   
   
     if (json.success) {
       localStorage.setItem('token', json.token);
       localStorage.setItem('email', credentials.email);
-      console.log(`${localStorage.getItem('token')} - login`);
       props.showAlert("Logged In successfully", "success");
       
       // Fetch user data after successful login
       await userContext.getUser();
-      console.log(`id: ${json.data.user.id}`)
       if (json.data.user.id) {
         navigate(`/${json.data.user.id}/noteboard`);
       }
@@ -63,7 +61,7 @@ const LogIn = (props) => {
       props.showAlert("Invalid Credentials", "danger");
     }
   
-    setIsLoading(false);
+    props.setProgress(100)
   };
   
 

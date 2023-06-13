@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
 
-const EmailVerify = () => {
+const EmailVerify = (props) => {
 	const [validUrl, setValidUrl] = useState(true);
 	const param = useParams();
 	let i = 0
 
 	useEffect(() => {
 		if (i == 0){
-		console.log("Effect triggered");
-		const verifyEmailUrl = async () => {
+		const verifyEmailUrl = async (e) => {
+			e.preventDefault();
+			props.setProgress(30)
 			try {
 				const url = `http://localhost:5000/auth/${param.id}/verify/${param.token}`;
                 const response = await fetch(url, {
@@ -20,13 +21,14 @@ const EmailVerify = () => {
                     },
                     
                 })
+				props.setProgress(60)
                 const data = await response.json()
-				console.log(data);
 				setValidUrl(true);
 			} catch (error) {
 				console.log(error);
 				setValidUrl(false);
 			}
+			props.setProgress(100)
 		};
 		verifyEmailUrl();
 		i ++
