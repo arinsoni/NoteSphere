@@ -16,6 +16,8 @@ import { useState } from 'react';
 import UserState from './context/user/UserState';
 import ResetPassword from './pages/ResetPassword';
 import LoadingBar from 'react-top-loading-bar'
+import ForgotPassword from './pages/ForgotPassword';
+import CreatePassword from './pages/createPassword';
 
 
 function App() {
@@ -52,6 +54,8 @@ function App() {
               <Route exact path="/signup" element={<SignUp setProgress={setProgress} showAlert={showAlert} />} />
               <Route exact path="/auth/:id/verify/:token" element={<EmailVerify setProgress={setProgress} />} />
               <Route exact path="/auth/reset-password/:resetToken" element={<ResetPassword setProgress={setProgress} />} />
+              <Route exact path="/auth/forgot-password" element={<ForgotPassword showAlert={showAlert}  setProgress={setProgress} />} />
+              <Route exact path="/auth/create-password/:createPasswordToken" element={<CreatePassword showAlert={showAlert}  setProgress={setProgress} />} />
 
        
             </Routes>

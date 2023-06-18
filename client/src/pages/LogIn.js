@@ -5,7 +5,9 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import user_context from "../context/user/userContext"
+import user_context from "../context/user/userContext";
+import { Link } from 'react-router-dom';
+
 
 const LogIn = (props) => {
   const userContext = useContext(user_context);
@@ -29,6 +31,8 @@ const LogIn = (props) => {
       }));
     }
   }, [location]);
+
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,6 +101,13 @@ const LogIn = (props) => {
             }
             label="Password"
           />
+           <Link
+                 
+                    aria-current="page"
+                    to={'/auth/forgot-password'}
+                  >
+                    forgot password
+                  </Link>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       )}

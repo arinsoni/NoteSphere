@@ -9,7 +9,7 @@ const NavBar = (props) => {
   const navigate = useNavigate();
   const [id, setId] = useState(null)
   const userContext = useContext(user_context);
-  const { user, progress, setProgress, isLogin, setIsLogin, isFetching, setIsFetching } = userContext;
+  const { user, progress, setProgress, isLogin, setIsLogin } = userContext;
   const [email, setEmail] = useState("");
 
 
@@ -51,7 +51,7 @@ const NavBar = (props) => {
     if (json.success) {
       // localStorage.setItem('verificationToken', json.verificationToken)
       props.showAlert(json.message, "success");
-      localStorage.removeItem('token')
+      localStorage.removeItem('token'); // user cant naviagte back to notes page
       handleLogout()
       setIsLogin(false)
       navigate('/')
@@ -156,6 +156,7 @@ const NavBar = (props) => {
                   <button className="btn btn-primary mx-2" onClick={handlePasswordChange} aria-disabled="true">
                     Change Pass
                   </button>
+                 
 
                 </div>
               )}
