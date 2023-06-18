@@ -10,8 +10,8 @@ const EmailVerify = (props) => {
 	useEffect(() => {
 		if (i == 0){
 		const verifyEmailUrl = async (e) => {
-			e.preventDefault();
-			props.setProgress(30)
+			// e.preventDefault();
+			
 			try {
 				const url = `http://localhost:5000/auth/${param.id}/verify/${param.token}`;
                 const response = await fetch(url, {
@@ -21,14 +21,14 @@ const EmailVerify = (props) => {
                     },
                     
                 })
-				props.setProgress(60)
+				
                 const data = await response.json()
 				setValidUrl(true);
 			} catch (error) {
 				console.log(error);
 				setValidUrl(false);
 			}
-			props.setProgress(100)
+		
 		};
 		verifyEmailUrl();
 		i ++

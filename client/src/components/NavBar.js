@@ -8,9 +8,8 @@ const NavBar = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [id, setId] = useState(null)
-  const [bool, setBool] = useState(false)
   const userContext = useContext(user_context);
-  const { user, progress, setProgress, isLogin, setIsLogin } = userContext;
+  const { user, progress, setProgress, isLogin, setIsLogin, isFetching, setIsFetching } = userContext;
   const [email, setEmail] = useState("");
 
 
@@ -96,7 +95,7 @@ const NavBar = (props) => {
 
   return (
     <>
-
+     
 
 
       <div>

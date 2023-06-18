@@ -8,12 +8,12 @@ import { useNavigate } from 'react-router-dom';
 const Notes = (props) => {
   const context = useContext(noteContext);
   const user_context = useContext(userContext);
-  const { notes, getNotes, editNote } = context;
+  const { notes, getNotes, editNote, isFetching, setIsFetching } = context;
   const { user, getUser, deleteOrphanedNotes } = user_context;
   // const [user, setUser] = useState(null);
   let navigate = useNavigate();
   const checkUserStatus = async (e) => {
-   
+
 
     try {
       const response = await fetch('http://localhost:5000/auth/checkuserutatus', {
@@ -23,9 +23,9 @@ const Notes = (props) => {
           'auth-token': localStorage.getItem('token') // Include the user's token in the request headers
         }
       });
-   
+
       const data = await response.json();
-      
+
       if (!data.success) {
         deleteOrphanedNotes();
         navigate('/signup'); // Redirect to the about page if user status is not successful
@@ -33,7 +33,7 @@ const Notes = (props) => {
     } catch (error) {
       console.log('Error checking user status:', error);
     }
-   
+
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -78,55 +78,59 @@ const Notes = (props) => {
   }
   return (
     <>
-      <button style={{ display: 'none' }} ref={ref} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
-      </button>
+      {isFetching ? <p>Loading...</p> :
+        <div>
+          <button style={{ display: 'none' }} ref={ref} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+          </button>
 
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              {/* / */}
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="exampleInputEmail1" className="form-label">  </label>
-                  <input type="etitle" className="form-control" id="etitle" name="etitle" value={note.etitle} aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
+          <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="edescription" className="form-label">Description</label>
-                  <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription} onChange={onChange} minLength={5} required />
+                <div className="modal-body">
+                  {/* / */}
+                  <form>
+                    <div className="mb-3">
+                      <label htmlFor="exampleInputEmail1" className="form-label">  </label>
+                      <input type="etitle" className="form-control" id="etitle" name="etitle" value={note.etitle} aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="edescription" className="form-label">Description</label>
+                      <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription} onChange={onChange} minLength={5} required />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="etag" className="form-label">Tag</label>
+                      <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange} />
+                    </div>
+
+
+                  </form>
+                  {/*  */}
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="etag" className="form-label">Tag</label>
-                  <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange} />
+                <div className="modal-footer">
+                  <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-primary" onClick={handleClick} >Update Note</button>
                 </div>
-
-
-              </form>
-              {/*  */}
-            </div>
-            <div className="modal-footer">
-              <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-primary" onClick={handleClick} >Update Note</button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <AddNote showAlert={props.showAlert} />
-      <div className='row d-flex'>
-        {notes.length === 0 && "No notes available"}
-        {notes.map((note) => {
-          return <NoteItem key={note._id} note={note} showAlert={props.showAlert} updateNote={updateNote} />
-        })}
-        {user && user.firstName && <p>Name: {user.verified}</p>}
-        {user && user.firstName && <p>Name: {user.firstName}</p>}
+          <AddNote showAlert={props.showAlert} />
+          <div className='row d-flex'>
+            {notes.length === 0 && "No notes available"}
+            {notes.map((note) => {
+              return <NoteItem key={note._id} note={note} showAlert={props.showAlert} updateNote={updateNote} />
+            })}
+            {user && user.firstName && <p>Name: {user.verified}</p>}
+            {user && user.firstName && <p>Name: {user.firstName}</p>}
 
-      </div>
+          </div>
+        </div>
+      }
     </>
 
   )

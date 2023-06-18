@@ -11,6 +11,7 @@ const UserState = (props) => {
   const [user, setUser] = useState(userInitial);
   const [progress, setProgress] = useState(0)
   const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
   const [isLogin, setIsLogin] = useState(false)
 
 
@@ -71,9 +72,12 @@ const UserState = (props) => {
   useEffect(() =>{
     if(user && user._id){
       setIsLogin(true);
-      console.log(` islogin: ${isLogin}`);
+      setIsFetching(false)
+      console.log(`fetch if: ${isFetching}`)
     } else{
       setIsLogin(false)
+      setIsFetching(true)
+      console.log(`fetch else: ${isFetching}`)
     }
   }, [user])
 
@@ -88,7 +92,7 @@ const UserState = (props) => {
   });
 
   return (
-    <UserContext.Provider value={{ user, isLoading,  getUser, deleteOrphanedNotes, progress, setProgress, isLogin, setIsLogin}}>
+    <UserContext.Provider value={{ user, isLoading,  getUser, deleteOrphanedNotes, progress, setProgress, isLogin, setIsLogin, isFetching, setIsFetching}}>
       {props.children}
     </UserContext.Provider>
   );
