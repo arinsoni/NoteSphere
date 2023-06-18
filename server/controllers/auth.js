@@ -68,37 +68,21 @@ const login = async (req, res) => {
         if (!isCorrect) {
             return res.status(400).json({ error: "Please try to login with correct credentials pass" });
         }
-        // console.log(`user verified : ${user.verified}`)
+       
 
 
         if (!user.verified) {
-            // console.log("Inside if block")
-            // console.log(`user verified : ${user.verified}`)
-
-            // let secret = await uniqueString.findOne({ userId: user._id });
-            // console.log(secret)
-            // if (!secret) {
-            //     secret = await new uniqueString({
-            //         userId: user._id,
-            //         eToken: crypto.randomBytes(32).toString("hex"),
-            //     }).save();
-            //     const url = `${process.env.BASE_URL}auth/${user._id}/verify/${secret.eToken}`;
-            //     await sendEmail(user.email, "Verify Email", url);
-            // }
-
             return res
                 .status(400)
                 .send({ message: "An Email sent to your account please verify" });
         }
-        // console.log("bahr aa rha hai")
-        // console.log(`user verified : ${user.verified}`)
+   
         const data = {
             user: {
                 id: user.id
 
             }
         }
-        console.log(`datab login: ${data.user.email}`)
         const token = JWT.sign(data, process.env.JWT_SECRET);
         delete user.password;
         success = true
@@ -157,9 +141,7 @@ const checkuserutatus = async (req, res) => {
 const requestPasswordReset = async (req, res) => {
     try {
         const { email } = req.body;
-        console.log(`email: ${email}`)
         const user = await User.findOne({ email });
-        console.log(`${req.header('auth-token')} - reset`)
         if (!user) {
             return res.status(404).json({ success: false });
         }
@@ -168,27 +150,41 @@ const requestPasswordReset = async (req, res) => {
         const resetToken = crypto.randomBytes(20).toString("hex");
         user.resetPasswordToken = resetToken;
         await user.save();
-
-
         const url = `${process.env.BASE_URL}auth/reset-password/${resetToken}`;
         await sendEmail(user.email, "Token Reset", url);
-
-
-
-
-
-
         res.status(200).json({ success: true, message: 'Password reset request sent' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
 
     }
 }
+const requestForgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ success: false });
+        }
+
+
+        const createPasswordToken = crypto.randomBytes(20).toString("hex");
+        user.requestForgotPassword = createPasswordToken;
+        await user.save();
+        const url = `${process.env.BASE_URL}auth/create-password/${createPasswordToken}`;
+        await sendEmail(user.email, "Change password", url);
+        res.status(200).json({ success: true, message: 'Change password req has been sent' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+
+    }
+}
+
 module.exports = {
     register,
     login,
     getUser,
     deleteUser,
     checkuserutatus,
-    requestPasswordReset
+    requestPasswordReset,
+    requestForgotPassword
 };
