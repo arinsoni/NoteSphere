@@ -5,8 +5,11 @@
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@fontsource/montserrat": "^5.0.3",
+    "@fontsource/poppins": "^5.0.3",
+    "@fontsource/roboto": "^5.0.3",
     "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.4",
+    "@mui/material": "^5.13.5",
     "@mui/x-data-grid-generator": "^6.7.0",
     "@mui/x-data-grid-pro": "^6.7.0",
     "@testing-library/jest-dom": "^5.16.5",

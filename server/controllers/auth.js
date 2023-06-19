@@ -158,6 +158,8 @@ const requestPasswordReset = async (req, res) => {
 
     }
 }
+
+// forgot password
 const requestForgotPassword = async (req, res) => {
     try {
         const { email } = req.body;

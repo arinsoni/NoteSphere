@@ -133,6 +133,12 @@ const NavBar = (props) => {
                   >
                     About
                   </Link>
+                  <Link
+                    className={`nav-link ${location.pathname === 'about' ? 'active' : 'nav-link'}`}
+                    to="/profile"
+                  >
+                    Profile
+                  </Link>
                 </li>
               </ul>
               {!isLogin ? (
@@ -156,6 +162,7 @@ const NavBar = (props) => {
                   <button className="btn btn-primary mx-2" onClick={handlePasswordChange} aria-disabled="true">
                     Change Pass
                   </button>
+                 
                  
 
                 </div>
