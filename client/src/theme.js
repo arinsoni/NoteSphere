@@ -35,7 +35,7 @@ export const colorTokens = {
     50: "#344767", //used
     100: "#202940", //used
     200: "#7b809A", //used
-    300: "#f8f9fa", //used
+    300: "#f5f5f5", //used
     400: "#33DDFB",
     500: "#00D5FA",
     600: "#00A0BC",
@@ -128,7 +128,8 @@ export const themeSettings = (mode) => {
       },
       h6: {
         fontFamily: ['Montserrat', 'sans-serif'].join(','),
-        fontSize: 14,
+        fontSize: 10,
+        fontWeight: 500
       },
     },
   };
