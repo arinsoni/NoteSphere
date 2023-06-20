@@ -16,11 +16,12 @@ import '@fontsource/montserrat/700.css';
 // color design tokens export
 export const colorTokens = {
   grey: {
-    0: "#FFFFFF",
-    10: "#F6F6F6",
+    0: "#FFFFFF", //used
+    10: "#f8f9fa", 
     50: "#F0F0F0",
-    100: "#ffffffcc",
-    200: "#C2C2C2",
+    100: "#ffffffcc", //used
+    200: "#f8f9fa",
+
     300: "#A3A3A3",
     400: "#858585",
     500: "#666666",
@@ -31,16 +32,16 @@ export const colorTokens = {
     1000: "#000000",
   },
   primary: {
-    50: "#344767",
-    100: "#202940",
-    200: "#7b809A",
-    300: "#66E6FC",
+    50: "#344767", //used
+    100: "#202940", //used
+    200: "#7b809A", //used
+    300: "#f8f9fa", //used
     400: "#33DDFB",
     500: "#00D5FA",
     600: "#00A0BC",
     700: "#006B7D",
     800: "#00353F",
-    900: "#001519",
+    900: "#202940", //userd
   },
 
 };
@@ -54,12 +55,12 @@ export const themeSettings = (mode) => {
         ? {
           // palette values for dark mode
           primary: {
-            dark: colorTokens.primary[100],
-            main: colorTokens.primary[500],
+            dark: colorTokens.primary[100], //used
+            main: colorTokens.primary[900], //used
             light: colorTokens.primary[100],
           },
           neutral: {
-            dark: colorTokens.grey[100],
+            dark: colorTokens.grey[10],
             main: colorTokens.grey[200],
             mediumMain: colorTokens.grey[300],
             medium: colorTokens.grey[400],
@@ -70,16 +71,16 @@ export const themeSettings = (mode) => {
             alt: colorTokens.grey[800],
           },
           font: {
-            main: colorTokens.grey[0],
-            light: colorTokens.grey[100]
+            main: colorTokens.grey[0], // used
+            light: colorTokens.grey[100] // used
           }
         }
         : {
           // palette values for light mode
           primary: {
-            dark: colorTokens.grey[0],
-            main: colorTokens.primary[500],
-            light: colorTokens.primary[50],
+            dark: colorTokens.grey[0], //used
+            main: colorTokens.primary[300], // used
+            light: colorTokens.primary[50], 
           },
           neutral: {
             dark: colorTokens.grey[700],
@@ -93,8 +94,8 @@ export const themeSettings = (mode) => {
             alt: colorTokens.grey[0],
           },
           font: {
-            dark: colorTokens.primary[50],
-            light: colorTokens.primary[200]
+            main: colorTokens.primary[50], // used
+            light: colorTokens.primary[200] //used
           }
         }),
     },

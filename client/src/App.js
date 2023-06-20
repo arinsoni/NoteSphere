@@ -22,7 +22,7 @@ import ResetPassword from './pages/ResetPassword';
 import LoadingBar from 'react-top-loading-bar'
 import ForgotPassword from './pages/ForgotPassword';
 import CreatePassword from './pages/createPassword';
-import Profile from './pages/Profile';
+import Profile from './pages/Profile/Profile';
 
 
 function App() {
