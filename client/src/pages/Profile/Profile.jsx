@@ -14,7 +14,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box, Divider } from "@mui/material";
 
 // Profile Components
-import PlatformSettings from "./components/PlatformSettings";
+import AccountSettings from "./components/AccountSettings";
+import ProfileInfoCard from "./components/ProfileInfoCard";
+
 
 // My assets
 import dp from "../../assets/images/dp.jpeg";
@@ -28,7 +30,6 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 //theme
 import app_context from "../../context/app/appContext";
-import ProfileInfoCard from "./components/ProfileInfoCard";
 
 const Profile = () => {
   //context
@@ -222,7 +223,7 @@ const Profile = () => {
         <Box mt={5} mb={3}>
           <Grid container spacing={1} >
             <Grid item xs={12} md={6} xl={4} >
-              <PlatformSettings />
+              <AccountSettings />
             </Grid>
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex"}}>
               <Divider orientation="vertical" />
