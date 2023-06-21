@@ -16,7 +16,7 @@ import { Box, Divider } from "@mui/material";
 // Profile Components
 import AccountSettings from "./components/AccountSettings";
 import ProfileInfoCard from "./components/ProfileInfoCard";
-
+import AdditionalFeatures from "./components/AdditionalFeatures";
 
 // My assets
 import dp from "../../assets/images/dp.jpeg";
@@ -222,13 +222,21 @@ const Profile = () => {
         </Grid>
         <Box mt={5} mb={3}>
           <Grid container spacing={1} >
+
             <Grid item xs={12} md={6} xl={4} >
               <AccountSettings />
             </Grid>
+
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex"}}>
               <Divider orientation="vertical" />
               <ProfileInfoCard />
             </Grid>
+
+            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex"}}>
+              <Divider orientation="vertical" />
+              <AdditionalFeatures />
+            </Grid>
+
           </Grid>
         </Box>
       </Card>
