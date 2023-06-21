@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { Card, Box, Grid } from "@mui/material";
 //icons
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
-import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
+import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 
 //My Components
 import MyBox from "../../../components/MyBox";
@@ -21,6 +21,23 @@ const ProfileInfoCard = () => {
   let iconStyle = {
     verticalAlign: "middle",
     marginRight: "0.5rem",
+  };
+
+  //Info Box
+  const InfoBox = ({ children, ...rest }) => {
+    return (
+      <Box
+        color={theme.palette.font.main}
+        fontSize={theme.typography.subHeading.fontSize}
+        fontFamily={theme.typography.h5.fontFamily}
+        fontWeight={theme.typography.h5.fontWeight}
+        right="0"
+        pt={2}
+        {...rest} // Spread the additional props here
+      >
+        {children}
+      </Box>
+    );
   };
   return (
     <Card
@@ -53,82 +70,39 @@ const ProfileInfoCard = () => {
         </Box>
       </Box>
       <Box p={2} letterSpacing={1}>
-        <Box
-          color={theme.palette.font.main}
-          fontSize={theme.typography.subHeading.fontSize}
-          fontFamily={theme.typography.h5.fontFamily}
-          fontWeight={theme.typography.h5.fontWeight}
-         
-          right="0"
-        >
-          Hey there, I'm Arin Soni, I'm Kota, Rajasthan. Ya the so called "Education" city :),
-          Now I'm in IITB persuing Mech (just persuing, love coding though) anyways, if I'm not coding then you can find me playing Table tennis or maybe talking to my gf ;)
-        </Box>
-        <Box
-          color={theme.palette.font.main}
-          fontSize={theme.typography.subHeading.fontSize}
-          fontFamily={theme.typography.h5.fontFamily}
-          fontWeight={theme.typography.h5.fontWeight}
-          textTransform="capitalize"
-          right="0"
-          pt={2}
-        >
+
+        <InfoBox pt={-2} >
+          Hey there, I'm Arin Soni, I'm Kota, Rajasthan. Ya the so called
+          "Education" city :), Now I'm in IITB persuing Mech (just persuing,
+          love coding though) anyways, if I'm not coding then you can find me
+          playing Table tennis or maybe talking to my gf ;)
+        </InfoBox>
+
+        <InfoBox textTransform="capitalize">
           <b>Full Name: </b> Arin Soni
-        </Box>
-        <Box
-          color={theme.palette.font.main}
-          fontSize={theme.typography.subHeading.fontSize}
-          fontFamily={theme.typography.h5.fontFamily}
-          fontWeight={theme.typography.h5.fontWeight}
-          textTransform="capitalize"
-          right="0"
-          pt={2}
-        >
+        </InfoBox>
+
+        <InfoBox textTransform="capitalize">
           <b>Mobile: </b> 76658 52977
-        </Box>
-        <Box
-          color={theme.palette.font.main}
-          fontSize={theme.typography.subHeading.fontSize}
-          fontFamily={theme.typography.h5.fontFamily}
-          fontWeight={theme.typography.h5.fontWeight}
-          right="0"
-          pt={2}
-        >
+        </InfoBox>
+
+        <InfoBox>
           <b>Email: </b> arinsoni2809@gmail.com
-        </Box>
-        <Box
-          color={theme.palette.font.main}
-          fontSize={theme.typography.subHeading.fontSize}
-          fontFamily={theme.typography.h5.fontFamily}
-          fontWeight={theme.typography.h5.fontWeight}
-          textTransform="capitalize"
-          right="0"
-          pt={2}
-        >
+        </InfoBox>
+
+        <InfoBox>
           <b>Location: </b> Kota, Rajasthan
-        </Box>
-        <Box
-          color={theme.palette.font.main}
-          fontSize={theme.typography.subHeading.fontSize}
-          fontFamily={theme.typography.h5.fontFamily}
-          fontWeight={theme.typography.h5.fontWeight}
-          textTransform="capitalize"
-          right="0"
-          pt={2}
-          display="flex"
-          alignItems="center"
-          
+        </InfoBox>
 
-        >
-            <Box>
+        <InfoBox display="flex" alignItems="center">
+          <Box>
             <b>Social: </b>
-            </Box>
+          </Box>
+          <Box pl={1}>
+            <FacebookRoundedIcon />
+          </Box>
+        </InfoBox>
 
-            <Box pl={1}>
-            <FacebookRoundedIcon/>
-            </Box>
-           
-        </Box>
       </Box>
     </Card>
   );
