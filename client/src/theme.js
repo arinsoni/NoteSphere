@@ -12,6 +12,7 @@ import '@fontsource/montserrat/300.css';
 import '@fontsource/montserrat/400.css';
 import '@fontsource/montserrat/500.css';
 import '@fontsource/montserrat/700.css';
+import { pxToRem } from './assets/functions/pxToRem';
 
 // color design tokens export
 export const colorTokens = {
@@ -35,7 +36,7 @@ export const colorTokens = {
     50: "#344767", //used
     100: "#202940", //used
     200: "#7b809A", //used
-    300: "#f5f5f5", //used
+    300: "#f8f9fa", //used
     400: "#33DDFB",
     500: "#00D5FA",
     600: "#00A0BC",
@@ -100,6 +101,12 @@ export const themeSettings = (mode) => {
         }),
     },
     typography: {
+      heading:{
+        fontSize:18
+      },
+      subHeading:{
+        fontSize: 14
+      },
       fontFamily: ['Montserrat', 'sans-serif'].join(','),
       fontSize: 12,
       h1: {

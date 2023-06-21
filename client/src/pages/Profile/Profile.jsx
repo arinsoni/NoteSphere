@@ -3,11 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 // My Components
 import MyBox from "../../components/MyBox";
 
-// My assets
-import dp from "../../assets/images/dp.jpeg";
-import bg from "../../assets/images/bg.jpg";
-import breakpoints from "../../assets/base/breakpoints";
-
 // Material UI components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -16,6 +11,15 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Box, Divider } from "@mui/material";
+
+// Profile Components
+import PlatformSettings from "./components/PlatformSettings";
+
+// My assets
+import dp from "../../assets/images/dp.jpeg";
+import bg from "../../assets/images/bg.jpg";
+import breakpoints from "../../assets/base/breakpoints";
 
 //icons
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -24,6 +28,7 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 //theme
 import app_context from "../../context/app/appContext";
+import ProfileInfoCard from "./components/ProfileInfoCard";
 
 const Profile = () => {
   //context
@@ -33,7 +38,6 @@ const Profile = () => {
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  const [prevTabValue, setPrevTabValue] = useState(0);
   useEffect(() => {
     const handleTabsOrientation = () => {
       if (window.innerWidth < breakpoints.values.sm) {
@@ -54,7 +58,6 @@ const Profile = () => {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => {
-    setPrevTabValue(tabValue);
     setTabValue(newValue);
   };
 
@@ -71,27 +74,25 @@ const Profile = () => {
     verticalAlign: "middle",
     marginRight: "0.5rem",
   };
-  // tabIndicatorProps
-  const indicatorHeight = "100%";
 
   //styels
-  const tabHeight = "30px";
+
   const myStyle = createTheme({
     components: {
       MuiTab: {
         styleOverrides: {
           root: {
-            minHeight: "30px",
-
+            minHeight: "25px",
+            borderRadius: "8px",
             height: "30px",
-            borderRadius: "10px",
-            top: `calc(50% - (${tabHeight} / 2))`,
             backgroundColor: "transparent",
             opacity: "1",
+            margin: "4px",
             "&.Mui-selected": {
               backgroundColor: "white",
               transition: "background-color 0.8s ease-in-out",
               color: theme.palette.font.main,
+              boxShadow: "0.02px"
             },
           },
         },
@@ -150,16 +151,19 @@ const Profile = () => {
             </MyBox>
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
+          {/* For header */}
+
+          {/* For Extra Small: 12 cls, medium: 6 clms, large: 4 clms*/}
+          <Grid item xs={12} md={6} xl={4} sx={{ ml: "auto" }}>
             {/* Static: scroll with the content */}
             <AppBar
               position="static"
               sx={{
                 backgroundColor: theme.palette.primary.main,
-                borderRadius: "10px",
-                boxShadow: "0.02px",
-                padding: "1px",
-                height: "35px",
+                borderRadius: "8px",
+                boxShadow: "none",
+                
+                // boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
               }}
             >
               <Tabs
@@ -167,21 +171,16 @@ const Profile = () => {
                 value={tabValue}
                 onChange={handleSetTabValue}
                 sx={{
-                  minHeight: "100%", // will occupy 100% heigh of 30px (AppBar)
                   alignItems: "center",
                   display: "flex",
-                  justifyContent: "space-around",
                   boxSizing: "border-box",
+                  minHeight: "100%",
                 }}
                 TabIndicatorProps={{
                   style: {
-                    bottom: "0",
-                    backgroundColor: "transparent",
-                    border: "1px solid",
+                    backgroundColor: theme.palette.font.main,
                     borderColor: theme.palette.font.main,
-                    height: indicatorHeight,
-                    top: `calc(50% - (${indicatorHeight} / 2))`,
-                    borderRadius: "10px",
+                    borderRadius: "100px",
                   },
                 }}
               >
@@ -220,6 +219,17 @@ const Profile = () => {
             </AppBar>
           </Grid>
         </Grid>
+        <Box mt={5} mb={3}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6} xl={4}>
+              <PlatformSettings />
+            </Grid>
+            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
+              <Divider orientation="vertical" />
+              <ProfileInfoCard />
+            </Grid>
+          </Grid>
+        </Box>
       </Card>
     </ThemeProvider>
   );

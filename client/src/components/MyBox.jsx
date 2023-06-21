@@ -28,6 +28,7 @@ const MyBox = ({
   border,
   borderRadius,
   boxShadow,
+  textTransform,
   sx,
   ...restProps // will allow to add additional valid props to MuiBox
 }) => {
@@ -54,6 +55,7 @@ const MyBox = ({
         border: border,
         borderRadius: borderRadius,
         boxShadow: boxShadow,
+        textTransform: textTransform,
         ...sx, // spreading the sx prop to merge the custom styles
       }}
       {...restProps}
