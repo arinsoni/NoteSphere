@@ -107,6 +107,9 @@ export const themeSettings = (mode) => {
       subHeading:{
         fontSize: 14
       },
+      para:{
+        fontSize: 12
+      },
       fontFamily: ['Montserrat', 'sans-serif'].join(','),
       fontSize: 12,
       h1: {
