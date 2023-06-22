@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 // My Components
 import MyBox from "../../components/MyBox";
 
@@ -30,7 +30,7 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 //theme
 import app_context from "../../context/app/appContext";
-import { useNavigate } from "react-router-dom";
+
 
 const Profile = (props) => {
   //navigation

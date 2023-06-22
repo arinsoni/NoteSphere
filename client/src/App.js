@@ -24,6 +24,7 @@ import LoadingBar from 'react-top-loading-bar'
 import ForgotPassword from './pages/ForgotPassword';
 import CreatePassword from './pages/createPassword';
 import Profile from './pages/Profile/Profile';
+import MainPage from './pages/mainPage';
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
                   <Route exact path="/auth/forgot-password" element={<ForgotPassword showAlert={showAlert} setProgress={setProgress} />} />
                   <Route exact path="/auth/create-password/:createPasswordToken" element={<CreatePassword showAlert={showAlert} setProgress={setProgress} />} />
                   <Route exact path="/profile" element={<Profile showAlert={showAlert} setProgress={setProgress} setShowNav={setShowNav} />} />
+                  <Route exact path="/mainpage" element={<MainPage showAlert={showAlert} setProgress={setProgress} setShowNav={setShowNav} />} />
                 </Routes>
               </div>
            
