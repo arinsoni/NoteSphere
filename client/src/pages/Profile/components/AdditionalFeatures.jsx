@@ -1,9 +1,17 @@
 import React, { useContext } from "react";
 
 // MUi Components
-import { Card, Box, createTheme, ThemeProvider } from "@mui/material";
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {
+  Card,
+  Box,
+  createTheme,
+  ThemeProvider,
+  withStyles,
+} from "@mui/material";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+//icons
+import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
 
 //theme
 import app_context from "../../../context/app/appContext";
@@ -22,76 +30,67 @@ const AdditionalFeatures = () => {
   //#42424a
   // Custom theme
 
-const myTheme = createTheme({
-  components: {
-    MuiSwitch: {
-      styleOverrides: {
-        switchBase: {
-          color: "white",
-          "&.Mui-checked": {
-            border: "#42424a",
-            color: "white"
-          },
-          "&.Mui-checked + .MuiSwitch-track": {
-            backgroundColor: "#42424a",
-            opacity: "1"
-
+  const myTheme = createTheme({
+    components: {
+      MuiSwitch: {
+        styleOverrides: {
+          switchBase: {
+            color: "white",
+            "&.Mui-checked": {
+              border: "#42424a",
+              color: "white",
+            },
+            "&.Mui-checked + .MuiSwitch-track": {
+              backgroundColor: "#42424a",
+              opacity: "1",
+            },
           },
         },
       },
     },
-  },
-});
-
-  
-  
-  
+  });
 
   return (
-<ThemeProvider theme={myTheme}>
-    <Card sx={{ boxShadow: "none" }}>
-      <Box p={2}>
+    <ThemeProvider theme={myTheme}>
+      <Card sx={{ boxShadow: "none", width: "100%", marginRight: "7px" }}>
+        <Box p={2}>
+          <StyleBox
+            textTransform="capitalize"
+            fontSize={theme.typography.heading.fontSize}
+          >
+            Additional Features
+          </StyleBox>
+        </Box>
         <StyleBox
-          textTransform="capitalize"
-          fontSize={theme.typography.heading.fontSize}
+          p={2}
+          textTransform="uppercase"
+          fontSize={theme.typography.para.fontSize}
         >
-          Account Settings
+          account
         </StyleBox>
-      </Box>
-      <StyleBox p={2} textTransform="uppercase" fontSize={theme.typography.para.fontSize}>
-        account
-      </StyleBox>
-      
-      <Box pr={2} pl={2} >
-        
-        <Box display="flex" justifyContent="space-between"  >
 
-        <FormControlLabel control={<Switch defaultChecked />} label="Label" />
-
-
-          <StyleBox textTransform="capitalize">
-           
+        <Box
+          pr={2}
+          pl={2}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <StyleBox textTransform="capitalize">Light Mode</StyleBox>
+          <StyleBox marginRight="0">
+            <Switch defaultChecked />
           </StyleBox>
         </Box>
 
-      </Box>
-
-    </Card>
+        <Box pr={2} pl={2} display="flex" justifyContent="space-between">
+          <StyleBox textTransform="capitalize">Notifications</StyleBox>
+          <StyleBox>
+            <NotificationsActiveRoundedIcon />
+          </StyleBox>
+        </Box>
+      </Card>
     </ThemeProvider>
   );
 };
 
 export default AdditionalFeatures;
-
-
-
-// 1. Theme Selection:
-
-// 2. Display Settings:
-// - Provide options for users to customize the display settings such as font size, layout, or background color.
-
-
-
-// 10. Help and Support:
-// - Include links or resources for accessing help, support, or FAQs related to the platform and its features.
-
