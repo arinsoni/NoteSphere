@@ -6,6 +6,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  useLocation,
 } from "react-router-dom";
 // Context
 import NoteState from './context/notes/NoteState';
@@ -39,18 +40,18 @@ function App() {
     }, 1500);
   }
 
+  // hiding navbar on profile page
+  const [showNav, setShowNav] = useState(true)
+
   return (
-    <>
+     <>
+     <Router>
       <AppState>
-        <UserState setProgress={setProgress} >
-          <NoteState setProgress={setProgress} >
-            <Router>
-              <NavBar showAlert={showAlert} />
-              <LoadingBar
-                height={5}
-                color='#f11946'
-                progress={progress}
-              />
+        <UserState setProgress={setProgress}>
+          <NoteState setProgress={setProgress}>
+            
+               { showNav && <NavBar showAlert={showAlert} />}
+              <LoadingBar height={5} color='#f11946' progress={progress} />
               <Alert alert={alert} />
               <div className="container">
                 <Routes>
@@ -62,15 +63,14 @@ function App() {
                   <Route exact path="/auth/reset-password/:resetToken" element={<ResetPassword showAlert={showAlert} setProgress={setProgress} />} />
                   <Route exact path="/auth/forgot-password" element={<ForgotPassword showAlert={showAlert} setProgress={setProgress} />} />
                   <Route exact path="/auth/create-password/:createPasswordToken" element={<CreatePassword showAlert={showAlert} setProgress={setProgress} />} />
-                  <Route exact path="/profile" element={<Profile showAlert={showAlert} setProgress={setProgress} />} />
-
-
+                  <Route exact path="/profile" element={<Profile showAlert={showAlert} setProgress={setProgress} setShowNav={setShowNav} />} />
                 </Routes>
               </div>
-            </Router>
+           
           </NoteState>
         </UserState>
       </AppState>
+      </Router>
     </>
   );
 }

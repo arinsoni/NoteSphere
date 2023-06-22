@@ -31,20 +31,25 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 //theme
 import app_context from "../../context/app/appContext";
 
-const Profile = () => {
+const Profile = (props) => {
   //context
   const AppContext = useContext(app_context);
   const { theme } = AppContext;
+  props.setShowNav(false)
 
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  // divider
+  const [showDivider, setShowDivider] = useState(true)
   useEffect(() => {
     const handleTabsOrientation = () => {
       if (window.innerWidth < breakpoints.values.sm) {
         setTabsOrientation("vertical");
+        setShowDivider(false)
       } else {
         setTabsOrientation("horizontal");
+        setShowDivider(true)
       }
     };
 
@@ -56,7 +61,7 @@ const Profile = () => {
 
     // removing event listener on unmounting
     return () => window.removeEventListener("resize", handleTabsOrientation);
-  }, [tabsOrientation]);
+  }, [tabsOrientation, showDivider]);
 
   const handleSetTabValue = (event, newValue) => {
     setTabValue(newValue);
@@ -105,7 +110,7 @@ const Profile = () => {
     <ThemeProvider theme={myStyle}>
       <MyBox
         width="100%"
-        height="300px"
+        height="400px"
         display="flex"
         alignItems="center" // Optional: Adjust the alignment of the content vertically
         justifyContent="center" // Optional: Adjust the alignment of the content horizontally
@@ -228,12 +233,13 @@ const Profile = () => {
             </Grid>
 
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex"}}>
-              <Divider orientation="vertical" />
+            {showDivider && <Divider orientation="vertical"   />}
               <ProfileInfoCard />
             </Grid>
 
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex"}}>
-              <Divider orientation="vertical" />
+              {showDivider && <Divider orientation="vertical"   />}
+         
               <AdditionalFeatures />
             </Grid>
 
