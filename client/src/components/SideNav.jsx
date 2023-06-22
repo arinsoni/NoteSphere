@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 //My components
 import StyleBox from "../pages/Profile/components/StyleBox";
@@ -14,7 +14,9 @@ import breakpoints from "../assets/base/breakpoints";
 
 const SideNav = (props) => {
   //props
-  const { showSideNav, setShowSideNav } = props;
+
+
+  console.log("sidenav: " + props.isSideNavOpen)
 
   //context
   const AppContext = useContext(app_context);
@@ -50,8 +52,8 @@ const SideNav = (props) => {
         bottom: 0,
         margin: "2%",
         
-        [breakpoints.down("lg")]: {
-            display: "none"
+        [breakpoints.down("xl")]: {
+            display: props.showSideNav ? "block" : "none"
         },
         zIndex: "1"
       })}
