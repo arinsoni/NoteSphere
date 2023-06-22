@@ -30,26 +30,35 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 //theme
 import app_context from "../../context/app/appContext";
+import { useNavigate } from "react-router-dom";
 
 const Profile = (props) => {
+  //navigation
+  let navigate = useNavigate();
   //context
   const AppContext = useContext(app_context);
-  const { theme } = AppContext;
-  props.setShowNav(false)
+  const { theme, toggleTheme } = AppContext;
+  // hide Navbar
+  useEffect(() => {
+    props.setShowNav(false);
+    return () => {
+      props.setShowNav(true);
+    };
+  }, [props]);
 
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
   // divider
-  const [showDivider, setShowDivider] = useState(true)
+  const [showDivider, setShowDivider] = useState(true);
   useEffect(() => {
     const handleTabsOrientation = () => {
       if (window.innerWidth < breakpoints.values.sm) {
         setTabsOrientation("vertical");
-        setShowDivider(false)
+        setShowDivider(false);
       } else {
         setTabsOrientation("horizontal");
-        setShowDivider(true)
+        setShowDivider(true);
       }
     };
 
@@ -95,16 +104,24 @@ const Profile = (props) => {
             opacity: "1",
             margin: "4px",
             "&.Mui-selected": {
-              backgroundColor: "white",
-              transition: "background-color 0.8s ease-in-out",
+              backgroundColor: theme.palette.secondary.main,
+              transition: "background-color 0s ease-in-out ",
               color: theme.palette.font.main,
-              boxShadow: "0.02px"
             },
           },
         },
       },
+      MuiDivider:{
+        styleOverrides:{
+          root:{
+            opacity: "0.5",
+          }
+        }
+      },
     },
   });
+
+  // change body bg
 
   return (
     <ThemeProvider theme={myStyle}>
@@ -129,7 +146,7 @@ const Profile = (props) => {
           mx: 3, // margin left and margin right
           px: 2,
           py: 2,
-          backgroundColor: theme.palette.primary.dark,
+          backgroundColor: theme.palette.primary.main,
         }}
       >
         {/* container for all grid items with spacing between them 3 and vertically centered */}
@@ -165,10 +182,10 @@ const Profile = (props) => {
             <AppBar
               position="static"
               sx={{
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: theme.palette.primary.light,
                 borderRadius: "8px",
                 boxShadow: "none",
-                
+
                 // boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
               }}
             >
@@ -184,7 +201,7 @@ const Profile = (props) => {
                 }}
                 TabIndicatorProps={{
                   style: {
-                    backgroundColor: theme.palette.font.main,
+                    backgroundColor: theme.palette.secondary.dark,
                     borderColor: theme.palette.font.main,
                     borderRadius: "100px",
                   },
@@ -198,7 +215,14 @@ const Profile = (props) => {
                   label={
                     <div style={{ display: "inline-block" }}>
                       <HomeRoundedIcon style={iconStyle} />
-                      <span style={{ verticalAlign: "middle" }}>Home</span>
+                      <span
+                        style={{
+                          verticalAlign: "middle",
+                          color: theme.palette.font.main,
+                        }}
+                      >
+                        Home
+                      </span>
                     </div>
                   }
                 />
@@ -208,7 +232,14 @@ const Profile = (props) => {
                   label={
                     <div style={{ display: "inline-block" }}>
                       <EmailRoundedIcon style={iconStyle} />
-                      <span style={{ verticalAlign: "middle" }}>Messages</span>
+                      <span
+                        style={{
+                          verticalAlign: "middle",
+                          color: theme.palette.font.main,
+                        }}
+                      >
+                        Messages
+                      </span>
                     </div>
                   }
                 />
@@ -217,7 +248,14 @@ const Profile = (props) => {
                   label={
                     <div style={{ display: "inline-block" }}>
                       <SettingsRoundedIcon style={iconStyle} />
-                      <span style={{ verticalAlign: "middle" }}>Settings</span>
+                      <span
+                        style={{
+                          verticalAlign: "middle",
+                          color: theme.palette.font.main,
+                        }}
+                      >
+                        Settings
+                      </span>
                     </div>
                   }
                 />
@@ -225,24 +263,27 @@ const Profile = (props) => {
             </AppBar>
           </Grid>
         </Grid>
+        
         <Box mt={5} mb={3}>
-          <Grid container spacing={1} >
-
-            <Grid item xs={12} md={6} xl={4} >
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6} xl={4}>
               <AccountSettings />
             </Grid>
 
-            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex"}}>
-            {showDivider && <Divider orientation="vertical"   />}
+            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
+              {showDivider && (
+                <Divider orientation="vertical" color= {theme.palette.alt.main}/>
+              )}
               <ProfileInfoCard />
             </Grid>
 
-            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex"}}>
-              {showDivider && <Divider orientation="vertical"   />}
-         
+            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
+              {showDivider && (
+                <Divider orientation="vertical" color= {theme.palette.alt.main}  />
+              )}
+
               <AdditionalFeatures />
             </Grid>
-
           </Grid>
         </Box>
       </Card>

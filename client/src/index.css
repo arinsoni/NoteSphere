@@ -8,3 +8,15 @@ body,
   width: 100%;
   font-family: 'Poppins', sans-serif;
 } */
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+body {
+  -ms-overflow-style:none;
+}

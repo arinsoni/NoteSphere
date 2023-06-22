@@ -12,7 +12,7 @@ const StyleBox = ({ children, ...rest }) => {
     const { theme } = AppContext;
   return (
     <Box
-      color={theme.palette.font.main}
+      color={theme.palette.font.light}
       fontSize={theme.typography.subHeading.fontSize}
       fontFamily={theme.typography.h5.fontFamily}
       fontWeight={theme.typography.h5.fontWeight}

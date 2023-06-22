@@ -31,7 +31,7 @@ const AccountSettings = () => {
         <Box display="flex" justifyContent="space-between" {...rest}>
           <StyleBox textTransform="capitalize">{text}</StyleBox>
 
-          <StyleBox textTransform="capitalize">
+          <StyleBox textTransform="capitalize" color={theme.palette.font.main}>
             <SelectedIcon style={iconStyle} />
           </StyleBox>
         </Box>
@@ -40,11 +40,12 @@ const AccountSettings = () => {
   };
 
   return (
-    <Card sx={{ boxShadow: "none" }}>
+    <Card sx={{ boxShadow: "none", backgroundColor: theme.palette.primary.main }}>
       <Box p={2}>
         <StyleBox
           textTransform="capitalize"
           fontSize={theme.typography.heading.fontSize}
+          color={theme.palette.font.main}
         >
           Account Settings
         </StyleBox>
@@ -53,6 +54,7 @@ const AccountSettings = () => {
         p={2}
         textTransform="uppercase"
         fontSize={theme.typography.para.fontSize}
+        color={theme.palette.font.main}
       >
         account
       </StyleBox>
