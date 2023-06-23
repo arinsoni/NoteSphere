@@ -34,12 +34,31 @@ const SideNav = (props) => {
   const NavItem = ({ label, icon, ...rest }) => {
     const SelectedIcon = icon;
     return (
-      <Box pr={2} pl={2} {...rest} zIndex="1">
-        <Box display="flex" justifyContent="space-between" {...rest}>
-          <StyleBox textTransform="capitalize" color="white">
-            <SelectedIcon style={iconStyle} />
-          </StyleBox>
-          <StyleBox textTransform="capitalize" color="white" >{label}</StyleBox>
+      <Box
+        mt={2.5}
+        mr={1}
+        ml={1}
+        {...rest}
+        zIndex="1"
+        height="50px"
+        display="flex"
+        alignItems="center"
+        borderRadius="7px"
+      >
+          <Box
+            display="flex"
+            width="100%"
+            {...rest}
+            alignItems="center"
+            style={{ margin: "0 auto" }}
+          >
+            <StyleBox textTransform="capitalize" color="white" paddingTop="0" marginLeft="10px">
+              <SelectedIcon style={iconStyle} />
+            </StyleBox>
+            <StyleBox textTransform="capitalize" color="white" paddingTop="0" marginLeft="10px">
+              {label}
+            </StyleBox>
+  
         </Box>
       </Box>
     );
@@ -50,12 +69,24 @@ const SideNav = (props) => {
       MuiDivider: {
         styleOverrides: {
           root: {
-           
+            backgroundImage:
+              "linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff, rgba(255, 255, 255, 0))!important",
             height: "0.0625rem",
             borderBottom: "none",
             opacity: "1",
-            marginTop: "20px",
-            marginBottom: "20px"
+            marginTop: "30px",
+            marginBottom: "30px",
+          },
+        },
+      },
+      MuiBox: {
+        styleOverrides: {
+          root: {
+            color: "red",
+            "&.css-1s7ud62": {
+              color: "red",
+              paddingTop: "0",
+            },
           },
         },
       },
@@ -70,21 +101,30 @@ const SideNav = (props) => {
           top: 0,
           left: 0,
           bottom: 0,
-          margin: "2%",
+          margin: "20px",
           width: "250px",
           borderRadius: "10px",
-          p: "2px",
+          p: "5px",
 
           [breakpoints.down("lg")]: {
-            display: (props.isSideNavOpen || (props.showSideNav && clpClicked)) ? "block" :  "none" 
+            display:
+              props.isSideNavOpen || (props.showSideNav && clpClicked)
+                ? "block"
+                : "none",
           },
           zIndex: "1",
         })}
       >
         <NavItem label="NoteSphere" icon={NoteAltRoundedIcon} />
         <Divider />
-        <NavItem label="NoteBoard" icon={DashboardRoundedIcon} />
-        <NavItem label="Profile" icon={PersonRoundedIcon} />
+        <NavItem label="NoteBoard" icon={DashboardRoundedIcon} pt={-1} />
+        <NavItem
+          label="Profile"
+          icon={PersonRoundedIcon}
+          style={{
+            background: "linear-gradient(195deg, #49a3f1, #1A73E8)",
+          }}
+        />
         <NavItem label="About Us" icon={InfoRoundedIcon} />
         <NavItem label="Log Out" icon={LogoutRoundedIcon} />
       </Box>

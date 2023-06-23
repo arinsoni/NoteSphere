@@ -41,6 +41,7 @@ const MainPage = (props) => {
       </Box>
 
       <Box sx={{ flex: 1, position: "relative" }}>
+        
         <Box
           sx={{
             position: "absolute",
