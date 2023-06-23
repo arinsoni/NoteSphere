@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 //My components
 import StyleBox from "../pages/Profile/components/StyleBox";
@@ -26,7 +27,7 @@ const SideNav = () => {
     marginRight: "0.5rem",
   };
 
-  const NavItem = ({ label, icon, ...rest }) => {
+  const NavItem = ({ label, icon, redirectTo, active, ...rest }) => {
     const SelectedIcon = icon;
     return (
       <Box
@@ -39,22 +40,39 @@ const SideNav = () => {
         display="flex"
         alignItems="center"
         borderRadius="7px"
+        sx={{
+          background: active ? "linear-gradient(195deg, #49a3f1, #1A73E8)" : "red",
+        }}
+        
+        
       >
+        <Link to={redirectTo} style={{ textDecoration: "none" }}>
           <Box
             display="flex"
-            width="100%"
+            
             {...rest}
             alignItems="center"
             style={{ margin: "0 auto" }}
           >
-            <StyleBox textTransform="capitalize" color="white" paddingTop="0" marginLeft="10px">
+            <StyleBox
+              textTransform="capitalize"
+              color="white"
+              paddingTop="0"
+              marginLeft="10px"
+            >
               <SelectedIcon style={iconStyle} />
             </StyleBox>
-            <StyleBox textTransform="capitalize" color="white" paddingTop="0" marginLeft="10px">
+
+            <StyleBox
+              textTransform="capitalize"
+              color="white"
+              paddingTop="0"
+              marginLeft="10px"
+            >
               {label}
             </StyleBox>
-  
-        </Box>
+          </Box>
+        </Link>
       </Box>
     );
   };
@@ -103,25 +121,35 @@ const SideNav = () => {
 
           [breakpoints.down("lg")]: {
             display:
-              isSideNavOpen || (showSideNav && clpClicked)
-                ? "block"
-                : "none",
+              isSideNavOpen || (showSideNav && clpClicked) ? "block" : "none",
           },
           zIndex: "1",
         })}
       >
         <NavItem label="NoteSphere" icon={NoteAltRoundedIcon} />
         <Divider />
-        <NavItem label="NoteBoard" icon={DashboardRoundedIcon} pt={-1} />
+        <NavItem
+          label="NoteBoard"
+          icon={DashboardRoundedIcon}
+          pt={-1}
+          redirectTo="/noteboard"
+          active={window.location.pathname === "/noteboard"}
+        />
         <NavItem
           label="Profile"
           icon={PersonRoundedIcon}
-          style={{
-            background: "linear-gradient(195deg, #49a3f1, #1A73E8)",
-          }}
+          redirectTo="/dashboard"
+          active={window.location.pathname === "/dashboard"}
+          
         />
-        <NavItem label="About Us" icon={InfoRoundedIcon} />
-        <NavItem label="Log Out" icon={LogoutRoundedIcon} />
+        <NavItem
+          label="About Us"
+          icon={InfoRoundedIcon}
+          redirectTo="/"
+          active={window.location.pathname === "/"}
+          
+        />
+        <NavItem label="Log Out" icon={LogoutRoundedIcon} active={false} />
       </Box>
     </ThemeProvider>
   );
