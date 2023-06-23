@@ -53,7 +53,7 @@ function App() {
         <AppState>
           <UserState setProgress={setProgress}>
             <NoteState setProgress={setProgress}>
-              <NavBar showAlert={showAlert} />
+              {/* <NavBar  /> */}
               <LoadingBar height={5} color="#f11946" progress={progress} />
               <Alert alert={alert} />
               <div className="container">

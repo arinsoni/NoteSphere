@@ -185,7 +185,7 @@ const Profile = () => {
             <AppBar
               position="static"
               sx={{
-                backgroundColor: theme.palette.primary.light,
+                backgroundColor: theme.palette.alt.light,
                 borderRadius: "8px",
                 boxShadow: "none",
 

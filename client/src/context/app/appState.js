@@ -7,11 +7,6 @@ import breakpoints from "../../assets/base/breakpoints";
 export const AppState = ({ children }) => {
   //theme
   const [themeMode, setThemeMode] = useState("light");
-
- 
-  
-  
-
   //hiding navbar
   const [showNav, setShowNav] = useState(true)
 
@@ -71,6 +66,7 @@ export const AppState = ({ children }) => {
       value={{
         //theme
         theme,
+        themeMode,
         toggleTheme,
         //navbar
         showNav, 

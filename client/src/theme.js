@@ -51,6 +51,7 @@ export const colorTokens = {
     600: "#344767",
     700: "#33DDFB",
     900: "#1a2035",
+    1000: "#1f283e"
   },
 };
 
@@ -63,7 +64,7 @@ export const themeSettings = (mode) => {
         ? {
             // palette values for dark mode
             primary: {
-              light: colorTokens.primary[0], //#202940
+              light: colorTokens.primary[1000],// #1f283e
               main: colorTokens.primary[0], //#202940
             },
             secondary:{
@@ -71,7 +72,8 @@ export const themeSettings = (mode) => {
               main: colorTokens.primary[900]//#1a2035
             },
             alt:{
-              main:colorTokens.colors[0] //#FFFFFF
+              main:colorTokens.colors[0], //#FFFFFF
+              light: colorTokens.primary[0],   //#202940
             },
             font: {
 
@@ -82,7 +84,7 @@ export const themeSettings = (mode) => {
         : {
             // palette values for light mode
             primary: {
-              light:colorTokens.grey[0],//#F8f9fa
+              
               main: colorTokens.colors[0],  //#FFFFFF,
             },
             secondary:{
@@ -90,7 +92,8 @@ export const themeSettings = (mode) => {
               main: colorTokens.colors[0], //#FFFFFF
             },
             alt:{
-              main:colorTokens.colors[0] //#FFFFFF
+              main:colorTokens.colors[0], //#FFFFFF
+              light:colorTokens.grey[0],//#F8f9fa
             },
             font: {
               main: colorTokens.primary[600], //#344767

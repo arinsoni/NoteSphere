@@ -24,7 +24,7 @@ const SideNav = () => {
  
   //context
   const AppContext = useContext(app_context);
-  const { showSideNav, isSideNavOpen, clpClicked } = AppContext;
+  const { showSideNav, isSideNavOpen, clpClicked, themeMode, theme } = AppContext;
 
   // icon style
   let iconStyle = {
@@ -92,29 +92,19 @@ const SideNav = () => {
             height: "0.0625rem",
             borderBottom: "none",
             opacity: "1",
-            marginTop: "30px",
+            marginTop: "10px",
             marginBottom: "30px",
-          },
-        },
-      },
-      MuiBox: {
-        styleOverrides: {
-          root: {
-            color: "red",
-            "&.css-1s7ud62": {
-              color: "red",
-              paddingTop: "0",
-            },
           },
         },
       },
     },
   });
+  console.log(themeMode)
   return (
     <ThemeProvider theme={myTheme}>
       <Box
         sx={({ breakpoints }) => ({
-          background: "linear-gradient(195deg, #42424a, #191919)",
+          background: themeMode === "light" ? "linear-gradient(195deg, #42424a, #191919)" : theme.palette.primary.light,
           position: "fixed",
           top: 0,
           left: isSideNavOpen ? 0 : "-300px",

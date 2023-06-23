@@ -6,7 +6,7 @@ import LoadingBar from "react-top-loading-bar";
 //contexts
 import app_context from "../context/app/appContext";
 
-const NavBar = (props) => {
+const Abcd = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [id, setId] = useState(null);
@@ -209,4 +209,4 @@ const NavBar = (props) => {
   );
 };
 
-export default NavBar;
+export default Abcd;
