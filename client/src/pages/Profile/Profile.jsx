@@ -28,16 +28,18 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
-//theme
+//contexts
 import app_context from "../../context/app/appContext";
 
 
 const Profile = (props) => {
   //navigation
   let navigate = useNavigate();
+
   //context
   const AppContext = useContext(app_context);
   const { theme, toggleTheme } = AppContext;
+
   // hide Navbar
   useEffect(() => {
     props.setShowNav(false);
@@ -49,6 +51,7 @@ const Profile = (props) => {
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  
   // divider
   const [showDivider, setShowDivider] = useState(true);
   useEffect(() => {

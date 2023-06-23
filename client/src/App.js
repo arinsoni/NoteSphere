@@ -51,7 +51,7 @@ function App() {
         <UserState setProgress={setProgress}>
           <NoteState setProgress={setProgress}>
             
-               { showNav && <NavBar showAlert={showAlert} />}
+          <NavBar showAlert={showAlert} />
               <LoadingBar height={5} color='#f11946' progress={progress} />
               <Alert alert={alert} />
               <div className="container">
@@ -64,7 +64,6 @@ function App() {
                   <Route exact path="/auth/reset-password/:resetToken" element={<ResetPassword showAlert={showAlert} setProgress={setProgress} />} />
                   <Route exact path="/auth/forgot-password" element={<ForgotPassword showAlert={showAlert} setProgress={setProgress} />} />
                   <Route exact path="/auth/create-password/:createPasswordToken" element={<CreatePassword showAlert={showAlert} setProgress={setProgress} />} />
-                  <Route exact path="/profile" element={<Profile showAlert={showAlert} setProgress={setProgress} setShowNav={setShowNav} />} />
                   <Route exact path="/mainpage" element={<MainPage showAlert={showAlert} setProgress={setProgress} setShowNav={setShowNav} />} />
                 </Routes>
               </div>

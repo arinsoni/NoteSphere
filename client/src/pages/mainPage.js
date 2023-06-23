@@ -1,15 +1,16 @@
+import React, { useContext, useEffect, useState } from "react";
 import { Box, IconButton } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import Profile from "./Profile/Profile";
 import SideNav from "../components/SideNav";
-import MenuIcon from "@mui/icons-material/Menu";
 import breakpoints from "../assets/base/breakpoints";
+import app_context from "../context/app/appContext";
 
 const MainPage = (props) => {
   const { showAlert, setProgress, setShowNav } = props;
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
-  const [showSideNav, setShowSideNav] = useState(false);
+  const AppContext = useContext(app_context);
+  const { setShowSideNav, showSideNav } = AppContext;
 
   const toggleSideNav = () => {
     setIsSideNavOpen(!isSideNavOpen);
@@ -17,41 +18,45 @@ const MainPage = (props) => {
 
   useEffect(() => {
     const handleResize = () => {
-      const isSmallScreen = window.innerWidth < breakpoints.values.xl;
+      const isSmallScreen = window.innerWidth < breakpoints.values.lg;
       setIsSideNavOpen(!isSmallScreen);
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [setIsSideNavOpen]);
-  console.log("mainapge: " + showSideNav)
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
-      {(isSideNavOpen || showSideNav) && (
-        <Box width={isSideNavOpen ? "15%" : 0}>
-          <SideNav
-            toggleSideNav={toggleSideNav}
-            setShowSideNav={setShowSideNav}
-            showSideNav={showSideNav}
-            isSideNavOpen={isSideNavOpen}
-          />
-        </Box>
-      )  }
-
-      <Box width={isSideNavOpen ? "80%" : "100%"} ml={isSideNavOpen ? "4%" : 0}>
-        <Profile
-          showAlert={showAlert}
-          setProgress={setProgress}
-          setShowNav={setShowNav}
+      <Box width={isSideNavOpen ? "200px" : 0} position="fixed">
+        <SideNav
+          toggleSideNav={toggleSideNav}
           setShowSideNav={setShowSideNav}
           showSideNav={showSideNav}
           isSideNavOpen={isSideNavOpen}
         />
+      </Box>
+
+      <Box sx={{ flex: 1, position: "relative" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: isSideNavOpen ? "300px" : 0,
+            width:isSideNavOpen ? `calc(1250px-${window.innerWidth})` : "1400"
+          }}
+        >
+          <Profile
+            showAlert={showAlert}
+            setProgress={setProgress}
+            setShowNav={setShowNav}
+          />
+        </Box>
       </Box>
     </Box>
   );

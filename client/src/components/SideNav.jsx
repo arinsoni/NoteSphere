@@ -4,9 +4,13 @@ import React, { useContext, useEffect } from "react";
 import StyleBox from "../pages/Profile/components/StyleBox";
 
 // Mui Componenets
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, ThemeProvider, createTheme } from "@mui/material";
 //icons
-import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import NoteAltRoundedIcon from "@mui/icons-material/NoteAltRounded";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 //theme
 import app_context from "../context/app/appContext";
@@ -15,12 +19,11 @@ import breakpoints from "../assets/base/breakpoints";
 const SideNav = (props) => {
   //props
 
-
-  console.log("sidenav: " + props.isSideNavOpen)
+  console.log("sidenav: " + props.showSideNav);
 
   //context
   const AppContext = useContext(app_context);
-  const { theme, toggleTheme } = AppContext;
+  const { clpClicked } = AppContext;
 
   // icon style
   let iconStyle = {
@@ -31,43 +34,61 @@ const SideNav = (props) => {
   const NavItem = ({ label, icon, ...rest }) => {
     const SelectedIcon = icon;
     return (
-      <Box pr={2} pl={2} {...rest}>
+      <Box pr={2} pl={2} {...rest} zIndex="1">
         <Box display="flex" justifyContent="space-between" {...rest}>
-          <StyleBox textTransform="capitalize" color={theme.palette.font.main}>
+          <StyleBox textTransform="capitalize" color="white">
             <SelectedIcon style={iconStyle} />
           </StyleBox>
-          <StyleBox textTransform="capitalize">{label}</StyleBox>
+          <StyleBox textTransform="capitalize" color="white" >{label}</StyleBox>
         </Box>
       </Box>
     );
   };
-  return (
-    <Box
-      p={3}
-      sx={({ breakpoints }) => ({
-        backgroundColor: "red",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        bottom: 0,
-        margin: "2%",
-        
-        [breakpoints.down("xl")]: {
-            display: props.showSideNav ? "block" : "none"
+  //  // divider style
+  const myTheme = createTheme({
+    components: {
+      MuiDivider: {
+        styleOverrides: {
+          root: {
+           
+            height: "0.0625rem",
+            borderBottom: "none",
+            opacity: "1",
+            marginTop: "20px",
+            marginBottom: "20px"
+          },
         },
-        zIndex: "1"
-      })}
-    >
-      <NavItem label="NoteSphere" icon={SettingsRoundedIcon} />
-      <Divider />
-      <NavItem label="NoteBoard" icon={SettingsRoundedIcon} />
-      <NavItem label="NoteBoard" icon={SettingsRoundedIcon} />
-      <NavItem label="NoteBoard" icon={SettingsRoundedIcon} />
-      <NavItem label="NoteBoard" icon={SettingsRoundedIcon} />
-      <NavItem label="NoteBoard" icon={SettingsRoundedIcon} />
-      <NavItem label="NoteBoard" icon={SettingsRoundedIcon} />
-      <NavItem label="NoteBoard" icon={SettingsRoundedIcon} />
-    </Box>
+      },
+    },
+  });
+  return (
+    <ThemeProvider theme={myTheme}>
+      <Box
+        sx={({ breakpoints }) => ({
+          background: "linear-gradient(195deg, #42424a, #191919)",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          bottom: 0,
+          margin: "2%",
+          width: "250px",
+          borderRadius: "10px",
+          p: "2px",
+
+          [breakpoints.down("lg")]: {
+            display: (props.isSideNavOpen || (props.showSideNav && clpClicked)) ? "block" :  "none" 
+          },
+          zIndex: "1",
+        })}
+      >
+        <NavItem label="NoteSphere" icon={NoteAltRoundedIcon} />
+        <Divider />
+        <NavItem label="NoteBoard" icon={DashboardRoundedIcon} />
+        <NavItem label="Profile" icon={PersonRoundedIcon} />
+        <NavItem label="About Us" icon={InfoRoundedIcon} />
+        <NavItem label="Log Out" icon={LogoutRoundedIcon} />
+      </Box>
+    </ThemeProvider>
   );
 };
 

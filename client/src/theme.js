@@ -74,7 +74,7 @@ export const themeSettings = (mode) => {
               main:colorTokens.colors[0] //#FFFFFF
             },
             font: {
-              
+
               main: colorTokens.colors[0],  //#FFFFFF
               light: colorTokens.grey[100] //#FFFFFFCC
             },
