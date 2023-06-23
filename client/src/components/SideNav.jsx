@@ -16,7 +16,12 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 //theme
 import app_context from "../context/app/appContext";
 
+//assets
+import breakpoints from "../assets/base/breakpoints";
+
+
 const SideNav = () => {
+ 
   //context
   const AppContext = useContext(app_context);
   const { showSideNav, isSideNavOpen, clpClicked } = AppContext;
@@ -41,7 +46,7 @@ const SideNav = () => {
         alignItems="center"
         borderRadius="7px"
         sx={{
-          background: active ? "linear-gradient(195deg, #49a3f1, #1A73E8)" : "red",
+          background: active ? "linear-gradient(195deg, #49a3f1, #1A73E8)" : "transparent",
         }}
         
         
@@ -112,16 +117,19 @@ const SideNav = () => {
           background: "linear-gradient(195deg, #42424a, #191919)",
           position: "fixed",
           top: 0,
-          left: 0,
+          left: isSideNavOpen ? 0 : "-300px",
+          transform: isSideNavOpen ? "transformX(0)" : "transformX(-300px)",
+          transition : "left 0.3s ease-out",
           bottom: 0,
           margin: "20px",
           width: "250px",
           borderRadius: "10px",
           p: "5px",
 
-          [breakpoints.down("lg")]: {
-            display:
-              isSideNavOpen || (showSideNav && clpClicked) ? "block" : "none",
+          [breakpoints.down("md")]: {
+            left: (showSideNav && clpClicked) ? 0 : "-300px",
+            transform: (showSideNav && clpClicked) ? "transformX(0)" : "transformX(-300px)",
+            transition : "left 0.3s ease-out",
           },
           zIndex: "1",
         })}

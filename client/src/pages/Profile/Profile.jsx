@@ -46,7 +46,7 @@ const Profile = () => {
     return () => {
        setShowNav(true);
     };
-  }, [showNav]);
+  }, []);
 
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
