@@ -7,27 +7,9 @@ import app_context from "../context/app/appContext";
 
 const MainPage = (props) => {
   const { showAlert, setProgress, setShowNav } = props;
-  const [isSideNavOpen, setIsSideNavOpen] = useState(true);
-
   const AppContext = useContext(app_context);
-  const { setShowSideNav, showSideNav } = AppContext;
+  const { setShowSideNav, showSideNav, isSideNavOpen, toggleSideNav } = AppContext;
 
-  const toggleSideNav = () => {
-    setIsSideNavOpen(!isSideNavOpen);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      const isSmallScreen = window.innerWidth < breakpoints.values.lg;
-      setIsSideNavOpen(!isSmallScreen);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -49,7 +31,8 @@ const MainPage = (props) => {
             right: 0,
             bottom: 0,
             left: isSideNavOpen ? "300px" : 0,
-            width:isSideNavOpen ? `calc(1250px-${window.innerWidth})` : "1400"
+            width:isSideNavOpen ? `calc(1250px-${window.innerWidth})` : "1400",
+            zIndex: "-1"
           }}
         >
           <Profile
