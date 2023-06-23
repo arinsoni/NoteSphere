@@ -32,21 +32,21 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import app_context from "../../context/app/appContext";
 
 
-const Profile = (props) => {
+const Profile = () => {
   //navigation
   let navigate = useNavigate();
 
   //context
   const AppContext = useContext(app_context);
-  const { theme, toggleTheme } = AppContext;
+  const { theme, setShowNav, showNav  } = AppContext;
 
   // hide Navbar
   useEffect(() => {
-    props.setShowNav(false);
+     setShowNav(false);
     return () => {
-      props.setShowNav(true);
+       setShowNav(true);
     };
-  }, [props]);
+  }, [showNav]);
 
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");

@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react';
+import app_context from "../context/app/appContext";
 
-const ForgotPassword = (props) => {
+const ForgotPassword = () => {
+      //context
+      const AppContext = useContext(app_context);
+      const { showAlert } = AppContext;
     const [credentials, setCredentials] = useState({ email: "" });
     const [msg, setMsg] = useState("")
     const onChange = (e) => {
@@ -19,10 +23,10 @@ const ForgotPassword = (props) => {
         const json = await response.json();
         if (json.success) {
             // localStorage.setItem('verificationToken', json.verificationToken)
-            props.showAlert(json.message, "success");
+             showAlert(json.message, "success");
             setMsg("Click the link sent to your mail id")
           } else {
-            props.showAlert(json.message, "error");
+             showAlert(json.message, "error");
           }
     }
     return (

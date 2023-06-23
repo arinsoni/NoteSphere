@@ -26,11 +26,26 @@ import app_context from "./context/app/appContext";
 import NoteState from "./context/notes/NoteState";
 import UserState from "./context/user/UserState";
 import AppState from "./context/app/appState";
+import { useContext, useState } from "react";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  //context
-  const AppContext = useContext(app_context);
-  const { useContext, setProgress, alert, showAlert, progress, setShowNav } = AppContext;
+  //progress
+  const [progress, setProgress] = useState(0);
+   //alert
+   const [alert, setAlert] = useState(null);
+
+
+  //alert
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null)
+    }, 1500);
+  }
 
   return (
     <>
@@ -47,7 +62,7 @@ function App() {
                     exact
                     path="/:id/noteboard"
                     element={
-                      <Home showAlert={showAlert} setProgress={setProgress} />
+                      <Home showAlert={showAlert} />
                     }
                   />
                   <Route exact path="/" element={<About />} />
@@ -84,31 +99,21 @@ function App() {
                     exact
                     path="/auth/forgot-password"
                     element={
-                      <ForgotPassword
-                        showAlert={showAlert}
-                        setProgress={setProgress}
-                      />
+                      <ForgotPassword/>
                     }
                   />
                   <Route
                     exact
                     path="/auth/create-password/:createPasswordToken"
                     element={
-                      <CreatePassword
-                        showAlert={showAlert}
-                        setProgress={setProgress}
-                      />
+                      <CreatePassword/>
                     }
                   />
                   <Route
                     exact
-                    path="/mainpage"
+                    path="/dashboard"
                     element={
-                      <MainPage
-                        showAlert={showAlert}
-                        setProgress={setProgress}
-                        setShowNav={setShowNav}
-                      />
+                      <Dashboard/>
                     }
                   />
                 </Routes>

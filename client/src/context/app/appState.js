@@ -8,11 +8,9 @@ export const AppState = ({ children }) => {
   //theme
   const [themeMode, setThemeMode] = useState("light");
 
-  //alert
-  const [alert, setAlert] = useState(null);
+ 
   
-  //progress
-  const [progress, setProgress] = useState(0);
+  
 
   //hiding navbar
   const [showNav, setShowNav] = useState(true)
@@ -67,16 +65,6 @@ export const AppState = ({ children }) => {
   const theme = themeSettings(themeMode);
   //theme
 
-  //alert
-  const showAlert = (message, type) => {
-    setAlert({
-      msg: message,
-      type: type
-    })
-    setTimeout(() => {
-      setAlert(null)
-    }, 1500);
-  }
 
   return (
     <AppContext.Provider
@@ -84,12 +72,6 @@ export const AppState = ({ children }) => {
         //theme
         theme,
         toggleTheme,
-        //alert
-        alert,
-        setAlert,
-        //progress
-        progress, 
-        setProgress,
         //navbar
         showNav, 
         setShowNav,

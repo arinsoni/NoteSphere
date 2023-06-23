@@ -1,12 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, IconButton } from "@mui/material";
-import Profile from "./Profile/Profile";
+import { Box } from "@mui/material";
 import SideNav from "../components/SideNav";
-import breakpoints from "../assets/base/breakpoints";
 import app_context from "../context/app/appContext";
 
-const MainPage = (props) => {
-  const { showAlert, setProgress, setShowNav } = props;
+const MainPage = ({ children }) => {
   const AppContext = useContext(app_context);
   const { isSideNavOpen } = AppContext;
 
@@ -30,11 +27,7 @@ const MainPage = (props) => {
             zIndex: "-1"
           }}
         >
-          <Profile
-            showAlert={showAlert}
-            setProgress={setProgress}
-            setShowNav={setShowNav}
-          />
+          {children}
         </Box>
       </Box>
     </Box>
