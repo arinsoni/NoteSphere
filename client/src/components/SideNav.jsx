@@ -14,16 +14,11 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 //theme
 import app_context from "../context/app/appContext";
-import breakpoints from "../assets/base/breakpoints";
 
-const SideNav = (props) => {
-  //props
-
-  console.log("sidenav: " + props.showSideNav);
-
+const SideNav = () => {
   //context
   const AppContext = useContext(app_context);
-  const { clpClicked } = AppContext;
+  const { setShowSideNav, showSideNav, isSideNavOpen, toggleSideNav, clpClicked } = AppContext;
 
   // icon style
   let iconStyle = {
@@ -108,7 +103,7 @@ const SideNav = (props) => {
 
           [breakpoints.down("lg")]: {
             display:
-              props.isSideNavOpen || (props.showSideNav && clpClicked)
+              isSideNavOpen || (showSideNav && clpClicked)
                 ? "block"
                 : "none",
           },

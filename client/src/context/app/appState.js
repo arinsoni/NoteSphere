@@ -5,11 +5,28 @@ import breakpoints from "../../assets/base/breakpoints";
 
 
 export const AppState = ({ children }) => {
+  //theme
   const [themeMode, setThemeMode] = useState("light");
+
+  //alert
+  const [alert, setAlert] = useState(null);
+  
+  //progress
+  const [progress, setProgress] = useState(0);
+
+  //hiding navbar
+  const [showNav, setShowNav] = useState(true)
+
+
+  //sidenav
+  //showSideNav when button clicked on navbar
   const [showSideNav, setShowSideNav] = useState(false);
+  // is btn clicked on navbar for sidenav
   const [clpClicked, setClpClicked] = useState(false);
+  //visibility on the basis of size
   const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
+  //sidenav
   const toggleSideNav = () => {
     setIsSideNavOpen(!isSideNavOpen);
   };
@@ -35,6 +52,9 @@ export const AppState = ({ children }) => {
       setShowSideNav(!showSideNav);
     }
   };
+  //sidenav
+
+  //theme
   const toggleTheme = () => {
     if (themeMode === "light") {
       setThemeMode("dark");
@@ -45,12 +65,35 @@ export const AppState = ({ children }) => {
     }
   };
   const theme = themeSettings(themeMode);
+  //theme
+
+  //alert
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null)
+    }, 1500);
+  }
 
   return (
     <AppContext.Provider
       value={{
+        //theme
         theme,
         toggleTheme,
+        //alert
+        alert,
+        setAlert,
+        //progress
+        progress, 
+        setProgress,
+        //navbar
+        showNav, 
+        setShowNav,
+        //sidenav
         showSideNav,
         clpClicked,
         setClpClicked,

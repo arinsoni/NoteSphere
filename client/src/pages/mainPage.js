@@ -8,18 +8,13 @@ import app_context from "../context/app/appContext";
 const MainPage = (props) => {
   const { showAlert, setProgress, setShowNav } = props;
   const AppContext = useContext(app_context);
-  const { setShowSideNav, showSideNav, isSideNavOpen, toggleSideNav } = AppContext;
+  const { isSideNavOpen } = AppContext;
 
 
   return (
     <Box sx={{ display: "flex" }}>
       <Box width={isSideNavOpen ? "200px" : 0} position="fixed">
-        <SideNav
-          toggleSideNav={toggleSideNav}
-          setShowSideNav={setShowSideNav}
-          showSideNav={showSideNav}
-          isSideNavOpen={isSideNavOpen}
-        />
+        <SideNav/>
       </Box>
 
       <Box sx={{ flex: 1, position: "relative" }}>
