@@ -26,35 +26,49 @@ const NavBar = () => {
     showSideNav,
     handleSideNav,
     setClpClicked,
-    clpClicked,
+    themeMode,
   } = AppContext;
 
   // color of navbar
   const [navColor, setNavColor] = useState("transparent");
+  const [navShadow, setNavShadow] = useState("none");
   const [navOpacity, setNavOpacity] = useState("1");
-  //handle scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setNavColor("white");
-        setNavOpacity("0.9");
-      } else {
-        setNavColor("transparent");
-        setNavOpacity("1");
-      }
-    };
 
+  //handle scroll
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      themeMode === "light"
+        ? setNavColor("white")
+        : setNavColor("rgba(26, 32, 53, 0.8)");
+      themeMode === "light"
+        ? setNavShadow("none")
+        : setNavShadow(
+            "inset 0rem 0rem 0.0625rem 0.0625rem rgba(52, 71, 103, 0.9), 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)"
+          );
+
+      setNavOpacity("0.9");
+    } else {
+      setNavColor("transparent");
+      themeMode === "light" ? setNavShadow("none") : setNavShadow("none");
+      setNavOpacity("1");
+    }
+  };
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [window.scrollY]);
 
+  useEffect(() => {
+    handleScroll();
+  }, [themeMode]);
+
   const handleSideNavbar = async () => {
     await handleSideNav();
-    setClpClicked(true)
+    setClpClicked(true);
   };
-  
 
   return (
     <Box
@@ -74,8 +88,8 @@ const NavBar = () => {
         style={{
           borderRadius: "10px",
           backgroundColor: navColor,
-          boxShadow: "none",
-          border: "none",
+          boxShadow: navShadow,
+
           opacity: navOpacity,
         }}
       >
@@ -116,16 +130,17 @@ const NavBar = () => {
                 paddingTop: "0",
                 display: "flex",
                 alignItems: "center",
-                color: theme.palette.font.main,
+                color: "white",
                 display: !isSideNavOpen ? "block" : "none",
                 paddingRight: "2px",
               }}
             >
-              <IconButton
-                onClick={
-                  handleSideNavbar}
-              >
-                <MenuRoundedIcon style={{ height: "20px" }} />
+              <IconButton onClick={handleSideNavbar}>
+                {!showSideNav ? (
+                  <MenuRoundedIcon style={{ height: "23px", color: "white" }} />
+                ) : (
+                  <MenuOpenRoundedIcon style={{ height: "23px", color: "white" }} />
+                )}
               </IconButton>
             </StyleBox>
           </Box>
