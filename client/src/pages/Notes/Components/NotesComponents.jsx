@@ -32,13 +32,10 @@ export const RootContainer = styled(Box)(({}) => ({
   background: "#f7f7f7",
   borderRadius: "8px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  maxWidth: "400px",
-  width: "80%",
-  maxHeight: "80%",
-  overflow: "auto",
+  
 }));
 
-export const SubmitButton = styled(Button)(({ theme }) => ({
+export const SubmitButton = styled(Button)(({ }) => ({
   marginTop: "16px",
   background: "#202940",
   color: "white",
@@ -57,8 +54,8 @@ export const StyledCard = styled(Card)(({ themeMode }) => ({
 }));
 
 
-export const Heading = styled("h1")(({ themeMode }) => ({
-  color: themeMode === "dark" ? "#fff" : "#202940",
+export const Heading = styled("h1")(({  }) => ({
+ 
   fontFamily: "Arial, sans-serif",
   fontSize: "3vw", // Responsive font size based on viewport width
   fontWeight: "bold",

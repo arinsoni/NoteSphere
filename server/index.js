@@ -58,17 +58,21 @@ app.get("/auth/:id/verify/:token", async (req, res) => {
 
 
 
-app.post("/auth/resetPassword/:resetToken", async (req, res) => {
-	const { resetToken } = req.params;
-	const { confirmPassword, password } = req.body;
+app.post("/auth/resetPassword", async (req, res) => {
+	// const { resetToken } = req.params;
+	const { confirmPassword, password, otp, email } = req.body;
 
 	try {
 		
 		// Find the user with the provided reset token
+		
 		const user = await User.findOne({
-			resetPasswordToken: resetToken,
+			email: email,
 		});
 		const isCorrect = await bcrypt.compare(password, user.password);
+		if (user.resetPasswordOTP !== otp){
+			return res.status(400).json({ message: "Sorry your OTP is wrong" });
+		}
         if (!isCorrect) {
             return res.status(400).json({ message: "Sorry your password is incorrect" });
         }

@@ -13,11 +13,9 @@ import About from "../src/pages/About";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import EmailVerify from "./pages/EmailVerify";
-import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import CreatePassword from "./pages/createPassword";
-import MainPage from "./pages/mainPage";
-import NoteBoard from "./pages/Notes/NoteBoard"
+import NoteBoard from "./pages/Notes/NoteBoard";
 
 //context
 import app_context from "./context/app/appContext";
@@ -32,20 +30,19 @@ import Dashboard from "./pages/Dashboard";
 function App() {
   //progress
   const [progress, setProgress] = useState(0);
-   //alert
-   const [alert, setAlert] = useState(null);
-
+  //alert
+  const [alert, setAlert] = useState(null);
 
   //alert
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
-      type: type
-    })
+      type: type,
+    });
     setTimeout(() => {
-      setAlert(null)
+      setAlert(null);
     }, 1500);
-  }
+  };
 
   return (
     <>
@@ -53,7 +50,7 @@ function App() {
         <AppState>
           <UserState setProgress={setProgress}>
             <NoteState setProgress={setProgress}>
-              <NavBar  />
+              <NavBar />
               <LoadingBar height={5} color="#f11946" progress={progress} />
               <Alert alert={alert} />
               <div className="container">
@@ -61,9 +58,7 @@ function App() {
                   <Route
                     exact
                     path="/:id/noteboard"
-                    element={
-                      <NoteBoard showAlert={showAlert} />
-                    }
+                    element={<NoteBoard showAlert={showAlert} />}
                   />
                   <Route exact path="/" element={<About />} />
                   <Route
@@ -87,35 +82,15 @@ function App() {
                   />
                   <Route
                     exact
-                    path="/auth/reset-password/:resetToken"
-                    element={
-                      <ResetPassword
-                        showAlert={showAlert}
-                        setProgress={setProgress}
-                      />
-                    }
-                  />
-                  <Route
-                    exact
                     path="/auth/forgot-password"
-                    element={
-                      <ForgotPassword/>
-                    }
+                    element={<ForgotPassword />}
                   />
                   <Route
                     exact
                     path="/auth/create-password/:createPasswordToken"
-                    element={
-                      <CreatePassword/>
-                    }
+                    element={<CreatePassword />}
                   />
-                  <Route
-                    exact
-                    path="/dashboard"
-                    element={
-                      <Dashboard/>
-                    }
-                  />
+                  <Route exact path="/dashboard" element={<Dashboard />} />
                 </Routes>
               </div>
             </NoteState>

@@ -30,6 +30,7 @@ const userSchema = mongoose.Schema({
   },
   resetPasswordToken: String,
   requestForgotPassword: String,
+  resetPasswordOTP: String,
 });
 
 userSchema.pre('remove', async function(next) {

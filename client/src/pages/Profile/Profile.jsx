@@ -29,14 +29,14 @@ import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 //contexts
-import app_context from "../../context/app/appContext";
+import appContext from "../../context/app/appContext";
 
 
 const Profile = () => {
 
   //context
-  const AppContext = useContext(app_context);
-  const { theme, setShowNav, showNav  } = AppContext;
+  const AppContext = useContext(appContext);
+  const { theme, setShowNav  } = AppContext;
 
   // hide Navbar
   useEffect(() => {

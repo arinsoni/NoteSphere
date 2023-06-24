@@ -42,7 +42,6 @@ const Notes = (props) => {
     // eslint-disable-next-line
   }, []);
 
-
   //for modal
   const [open, setOpen] = useState(false);
 
@@ -81,7 +80,7 @@ const Notes = (props) => {
       clearInterval(interval); // Clear the interval on component unmount
     };
   }, []);
- 
+
   // update note
   const updateNote = (currentNote) => {
     setOpen(true);
@@ -121,7 +120,14 @@ const Notes = (props) => {
               alignItems: "center",
             }}
           >
-            <RootContainer>
+            <RootContainer
+              sx={{
+                maxWidth: "400px",
+                width: "80%",
+                maxHeight: "80%",
+                overflow: "auto",
+              }}
+            >
               <StyledTextField
                 label="Title"
                 fullWidth

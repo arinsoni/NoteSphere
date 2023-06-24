@@ -35,7 +35,7 @@ const NoteItem = ({ showAlert, note, updateNote }) => {
   };
 
   return (
-    <StyledCard themeMode={themeMode}>
+    <StyledCard data-thememode={themeMode}>
       <CardContent>
         <Title variant="h6" component="div">
           {note.title}

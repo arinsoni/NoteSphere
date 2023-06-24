@@ -58,7 +58,7 @@ const AddNote = (props) => {
           <Heading>Add A Note</Heading>
         </div>
       </div>
-      <RootContainer>
+      <RootContainer sx={{ maxWidth: "600px", margin: "0 auto" }}>
         <StyledTextField
           label="Title"
           fullWidth

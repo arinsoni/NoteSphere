@@ -79,7 +79,7 @@ const NavBar = () => {
         top: 0,
         right: 0,
         bottom: 0,
-        left: isSideNavOpen ? "300px" : 0,
+        left: isSideNavOpen ? "280px" : 0,
         margin: "9px",
       }}
     >

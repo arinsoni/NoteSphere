@@ -1,9 +1,8 @@
 import UserContext from "./userContext";
 import { useState, useEffect } from "react";
-import LoadingBar from "react-top-loading-bar";
 
 const host = "http://localhost:5000";
-const userInitial = null;
+const userInitial = {};
 
 const UserState = (props) => {
   const [user, setUser] = useState(userInitial);
@@ -33,7 +32,7 @@ const UserState = (props) => {
       console.log("Error fetching user data:");
     }
   };
-  // DELETED ORPHANED NOTES
+  // DELETED ORPHANED NOTE
   const deleteOrphanedNotes = async () => {
     // Make an API request to your backend server to delete orphaned notes
     try {
