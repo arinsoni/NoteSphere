@@ -106,10 +106,13 @@ const Profile = () => {
             backgroundColor: "transparent",
             opacity: "1",
             margin: "4px",
+            transition: "background-color 0.1s ease-in-out",
             "&.Mui-selected": {
               backgroundColor: theme.palette.secondary.main,
-              transition: "background-color 0s ease-in-out ",
+              // transition: "background-color 1s ease-in-out",
               color: theme.palette.font.main,
+              boxShadow: "2px 2px 3px rgba(0, 0, 0, 0.5)",
+
             },
           },
         },
