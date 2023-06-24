@@ -16,8 +16,6 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 //theme
 import app_context from "../context/app/appContext";
 
-//assets
-import breakpoints from "../assets/base/breakpoints";
 
 
 const SideNav = () => {

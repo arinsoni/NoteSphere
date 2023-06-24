@@ -10,25 +10,25 @@ const MainPage = ({ children }) => {
 
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Box width={isSideNavOpen ? "200px" : 0} position="fixed">
+    <Box sx={{ display: "flex", }}>
+      <Box width={isSideNavOpen ? "200px" : 0} position="fixed"  >
         <SideNav />
       </Box>
 
-      <Box sx={{ flex: 1, position: "relative" }}>
+      <Box sx={{ flex: 1, position: "relative", }}>
 
         <Box
           sx={{
             position: "absolute",
-            top: 30,
+           
+            top:30,
             right: 0,
             bottom: 0,
-            left: isSideNavOpen ? "300px" : 0,
+            left: isSideNavOpen ? "280px" : 0,
             width: isSideNavOpen ? `calc(1250px-${window.innerWidth})` : "1400",
             zIndex: "-1"
           }}
         >
-          <NavBar/>
           {children}
         </Box>
       </Box>
