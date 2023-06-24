@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 //My components
 import StyleBox from "../pages/Profile/components/StyleBox";
@@ -13,16 +13,29 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
-//theme
+//context
 import app_context from "../context/app/appContext";
-
-
+import user_conetxt from "../context/user/userContext";
 
 const SideNav = () => {
- 
+  const navigate = useNavigate();
   //context
   const AppContext = useContext(app_context);
-  const { showSideNav, isSideNavOpen, clpClicked, themeMode, theme, handleSideNav, setClpClicked } = AppContext;
+  const {
+    showSideNav,
+    isSideNavOpen,
+    clpClicked,
+    themeMode,
+    theme,
+    handleSideNav,
+    setClpClicked,
+  } = AppContext;
+
+  const UserContext = useContext(user_conetxt);
+  const { user, progress, setProgress, isLogin, setIsLogin } = UserContext;
+
+  //user credentials
+  const [id, setId] = useState(null);
 
   // icon style
   let iconStyle = {
@@ -30,7 +43,7 @@ const SideNav = () => {
     marginRight: "0.5rem",
   };
 
-  const NavItem = ({ label, icon, redirectTo, active, ...rest }) => {
+  const NavItem = ({ label, icon, redirectTo, active, onClick, ...rest }) => {
     const SelectedIcon = icon;
     return (
       <Box
@@ -44,15 +57,18 @@ const SideNav = () => {
         alignItems="center"
         borderRadius="7px"
         sx={{
-          background: active ? "linear-gradient(195deg, #49a3f1, #1A73E8)" : "transparent",
+          background: active
+            ? "linear-gradient(195deg, #49a3f1, #1A73E8)"
+            : "transparent",
         }}
-        
-        
       >
-        <Link to={redirectTo} style={{ textDecoration: "none" }}>
+        <Link
+          to={redirectTo}
+          style={{ textDecoration: "none" }}
+          onClick={onClick}
+        >
           <Box
             display="flex"
-            
             {...rest}
             alignItems="center"
             style={{ margin: "0 auto" }}
@@ -79,7 +95,7 @@ const SideNav = () => {
       </Box>
     );
   };
-  //  // divider style
+  // // divider style
   const myTheme = createTheme({
     components: {
       MuiDivider: {
@@ -97,25 +113,21 @@ const SideNav = () => {
       },
     },
   });
-  
 
   const sideNavRef = useRef(null);
 
   // Function to handle clicks outside of the SideNav component
-
-
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      
-      let x = sideNavRef.current && !sideNavRef.current.contains(event.target) && !clpClicked; // false when clicked outside
-      if( showSideNav && !clpClicked && x){
+      let x =
+        sideNavRef.current &&
+        !sideNavRef.current.contains(event.target) &&
+        !clpClicked; // false when clicked outside
+      if (showSideNav && !clpClicked && x) {
+        handleSideNav();
+      } else if (x && clpClicked) {
         handleSideNav();
       }
-      else if(x && clpClicked){
-        handleSideNav();
-      }
-  
-     
     };
     // Add event listener for clicks outside of SideNav component
     window.addEventListener("click", handleOutsideClick);
@@ -125,16 +137,37 @@ const SideNav = () => {
       window.removeEventListener("click", handleOutsideClick);
     };
   }, [showSideNav, clpClicked, handleSideNav]);
+
+  // BACKEND INTEGRATION
+
+  //getting user
+  useEffect(() => {
+    if (user && user._id) {
+      setId(user._id);
+    }
+  });
+
+  const handleLogout = () => {
+    setProgress(50);
+    localStorage.removeItem("token");
+    navigate("/login");
+    setProgress(100);
+    setIsLogin(false);
+  };
   return (
     <ThemeProvider theme={myTheme}>
-      <Box ref={sideNavRef} 
+      <Box
+        ref={sideNavRef}
         sx={({ breakpoints }) => ({
-          background: themeMode === "light" ? "linear-gradient(195deg, #42424a, #191919)" : theme.palette.primary.light,
+          background:
+            themeMode === "light"
+              ? "linear-gradient(195deg, #42424a, #191919)"
+              : theme.palette.primary.light,
           position: "fixed",
           top: 0,
           left: isSideNavOpen ? 0 : "-300px",
           transform: isSideNavOpen ? "transformX(0)" : "transformX(-300px)",
-          transition : "left 0.3s ease-out",
+          transition: "left 0.3s ease-out",
           bottom: 0,
           margin: "20px",
           width: "250px",
@@ -142,9 +175,9 @@ const SideNav = () => {
           p: "5px",
 
           [breakpoints.down("md")]: {
-            left: (showSideNav ) ? 0 : "-300px",
-            transform: (showSideNav ) ? "transformX(0)" : "transformX(-300px)",
-            transition : "left 0.3s ease-out",
+            left: showSideNav ? 0 : "-300px",
+            transform: showSideNav ? "transformX(0)" : "transformX(-300px)",
+            transition: "left 0.3s ease-out",
           },
           zIndex: "1",
         })}
@@ -155,24 +188,28 @@ const SideNav = () => {
           label="NoteBoard"
           icon={DashboardRoundedIcon}
           pt={-1}
-          redirectTo="/noteboard"
-          active={window.location.pathname === "/noteboard"}
+          redirectTo={`/${id}/noteboard`}
+          active={window.location.pathname === `/${id}/noteboard`}
         />
         <NavItem
           label="Profile"
           icon={PersonRoundedIcon}
           redirectTo="/dashboard"
           active={window.location.pathname === "/dashboard"}
-          
         />
         <NavItem
           label="About Us"
           icon={InfoRoundedIcon}
           redirectTo="/"
           active={window.location.pathname === "/"}
-          
         />
-        <NavItem label="Log Out" icon={LogoutRoundedIcon} active={false} />
+        <NavItem
+          label="Log Out"
+          icon={LogoutRoundedIcon}
+          active={false}
+          onClick={handleLogout}
+          redirectTo="/login"
+        />
       </Box>
     </ThemeProvider>
   );

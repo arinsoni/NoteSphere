@@ -6,7 +6,11 @@ import { useState } from "react";
 const NoteState = (props) => {
   const host = "http://localhost:5000"
   const notesInitial = []
-  
+
+  // Update Note opening and closing
+  const [open, setOpen] = useState(false);
+
+
   const [notes, setNotes] = useState(notesInitial);
   const getNotes = async () => {
     const response = await fetch(`${host}/notes/getAllNotes`, {

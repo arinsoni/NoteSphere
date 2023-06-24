@@ -120,7 +120,7 @@ const deleteUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-const checkuserutatus = async (req, res) => {
+const checkuserstatus = async (req, res) => {
     try {
         // Retrieve the user from the database based on the token
         const user = await User.findById(req.user.id);
@@ -186,7 +186,7 @@ module.exports = {
     login,
     getUser,
     deleteUser,
-    checkuserutatus,
+    checkuserstatus,
     requestPasswordReset,
     requestForgotPassword
 };

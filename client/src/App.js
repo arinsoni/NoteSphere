@@ -17,7 +17,7 @@ import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import CreatePassword from "./pages/createPassword";
 import MainPage from "./pages/mainPage";
-import Home from "./pages/Home"
+import NoteBoard from "./pages/Notes/NoteBoard"
 
 //context
 import app_context from "./context/app/appContext";
@@ -62,7 +62,7 @@ function App() {
                     exact
                     path="/:id/noteboard"
                     element={
-                      <Home showAlert={showAlert} />
+                      <NoteBoard showAlert={showAlert} />
                     }
                   />
                   <Route exact path="/" element={<About />} />

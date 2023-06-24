@@ -33,8 +33,6 @@ import app_context from "../../context/app/appContext";
 
 
 const Profile = () => {
-  //navigation
-  let navigate = useNavigate();
 
   //context
   const AppContext = useContext(app_context);
