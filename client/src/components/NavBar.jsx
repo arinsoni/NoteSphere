@@ -20,13 +20,19 @@ import { Icon, IconButton } from "@mui/material";
 const NavBar = () => {
   //context
   const AppContext = useContext(app_context);
-  const { isSideNavOpen, theme, showSideNav, handleSideNav } = AppContext;
+  const {
+    isSideNavOpen,
+    theme,
+    showSideNav,
+    handleSideNav,
+    setClpClicked,
+    clpClicked,
+  } = AppContext;
 
   // color of navbar
   const [navColor, setNavColor] = useState("transparent");
   const [navOpacity, setNavOpacity] = useState("1");
   //handle scroll
-  console.log("shoeSideNav: " + showSideNav)
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -39,11 +45,16 @@ const NavBar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    console.log(navColor);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [window.scrollY]);
+
+  const handleSideNavbar = async () => {
+    await handleSideNav();
+    setClpClicked(true)
+  };
+  
 
   return (
     <Box
@@ -56,7 +67,6 @@ const NavBar = () => {
         bottom: 0,
         left: isSideNavOpen ? "300px" : 0,
         margin: "9px",
-        
       }}
     >
       <AppBar
@@ -67,10 +77,9 @@ const NavBar = () => {
           boxShadow: "none",
           border: "none",
           opacity: navOpacity,
-          
         }}
       >
-        <Toolbar >
+        <Toolbar>
           <Box display="flex" alignItems="center" flexGrow={1}>
             <Box display="flex" flexDirection="column">
               <StyleBox
@@ -112,7 +121,10 @@ const NavBar = () => {
                 paddingRight: "2px",
               }}
             >
-              <IconButton onClick={handleSideNav} >
+              <IconButton
+                onClick={
+                  handleSideNavbar}
+              >
                 <MenuRoundedIcon style={{ height: "20px" }} />
               </IconButton>
             </StyleBox>
@@ -130,11 +142,8 @@ const NavBar = () => {
               <PersonRoundedIcon style={{ height: "20px" }} />
             </StyleBox>
           </Box>
-        
         </Toolbar>
-        
       </AppBar>
-   
     </Box>
   );
 };

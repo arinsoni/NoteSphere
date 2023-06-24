@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 //My components
@@ -22,7 +22,7 @@ const SideNav = () => {
  
   //context
   const AppContext = useContext(app_context);
-  const { showSideNav, isSideNavOpen, clpClicked, themeMode, theme } = AppContext;
+  const { showSideNav, isSideNavOpen, clpClicked, themeMode, theme, handleSideNav, setClpClicked } = AppContext;
 
   // icon style
   let iconStyle = {
@@ -97,10 +97,37 @@ const SideNav = () => {
       },
     },
   });
-  console.log(themeMode)
+  
+
+  const sideNavRef = useRef(null);
+
+  // Function to handle clicks outside of the SideNav component
+
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      
+      let x = sideNavRef.current && !sideNavRef.current.contains(event.target) && !clpClicked; // false when clicked outside
+      if( showSideNav && !clpClicked && x){
+        handleSideNav();
+      }
+      else if(x && clpClicked){
+        handleSideNav();
+      }
+  
+     
+    };
+    // Add event listener for clicks outside of SideNav component
+    window.addEventListener("click", handleOutsideClick);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, [showSideNav, clpClicked, handleSideNav]);
   return (
     <ThemeProvider theme={myTheme}>
-      <Box
+      <Box ref={sideNavRef} 
         sx={({ breakpoints }) => ({
           background: themeMode === "light" ? "linear-gradient(195deg, #42424a, #191919)" : theme.palette.primary.light,
           position: "fixed",
@@ -115,8 +142,8 @@ const SideNav = () => {
           p: "5px",
 
           [breakpoints.down("md")]: {
-            left: (showSideNav && clpClicked) ? 0 : "-300px",
-            transform: (showSideNav && clpClicked) ? "transformX(0)" : "transformX(-300px)",
+            left: (showSideNav ) ? 0 : "-300px",
+            transform: (showSideNav ) ? "transformX(0)" : "transformX(-300px)",
             transition : "left 0.3s ease-out",
           },
           zIndex: "1",

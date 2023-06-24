@@ -38,13 +38,20 @@ export const AppState = ({ children }) => {
   }, []);
 
   const handleSideNav = () => {
-    setClpClicked(true);
+   
     if (showSideNav) {
       setShowSideNav(!showSideNav);
+      
     } else {
       setShowSideNav(!showSideNav);
+      
     }
+    setTimeout(() => {
+      setClpClicked(false);
+    }, 100);
   };
+
+
   //sidenav
 
   //theme
