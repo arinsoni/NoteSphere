@@ -28,8 +28,12 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
+
 //contexts
 import appContext from "../../context/app/appContext";
+
+//alert
+import myAlert from "../../components/Alert"
 
 
 const Profile = () => {
@@ -290,6 +294,8 @@ const Profile = () => {
             </Grid>
           </Grid>
         </Box>
+       
+       
       </Card>
     </ThemeProvider>
   );

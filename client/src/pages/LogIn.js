@@ -7,9 +7,13 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import user_context from "../context/user/userContext";
 import { Link } from 'react-router-dom';
-
+import appContext from "../context/app/appContext"
 
 const LogIn = (props) => {
+    // app Context
+    const AppContext = useContext(appContext);
+    // const { alert, setAlert, showAlert } = AppContext
+    console.log("login alert: " )
   const userContext = useContext(user_context);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -54,7 +58,9 @@ const LogIn = (props) => {
     if (json.success) {
       localStorage.setItem('token', json.token);
       localStorage.setItem('email', credentials.email);
-      props.showAlert("Logged In successfully", "success");
+      // setAlert({
+      //   msg: "Logged In"
+      // });
       
       // Fetch user data after successful login
       await userContext.getUser();
@@ -62,7 +68,7 @@ const LogIn = (props) => {
         navigate(`/${json.data.user.id}/noteboard`);
       }
     } else {
-      props.showAlert("Invalid Credentials", "danger");
+      // props.showAlert("Invalid Credentials", "danger");
     }
   
     props.setProgress(100)

@@ -1,21 +1,15 @@
-import React from 'react'
+import * as React from 'react';
+import Box from '@mui/joy/Box';
+import Alert from '@mui/joy/Alert';
 
-export default function Alert(props) {
-    
-    const capitalize = (word) => {
-        if (word === 'danger'){
-            word = "Error"
-        }
-        const lower = word.toLowerCase();
-        return lower.charAt(0).toUpperCase() + lower.slice(1);
-    }
-    return (
-       
-        <div style={{height: '50px'}}>
-            { props.alert &&
-            <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
-                <strong>{capitalize(props.alert.type)}: </strong> {props.alert.msg}
-            </div>}
-        </div>
-    )
+export default function MyAlert(props) {
+  return (
+    <>
+    {props.alert &&  
+    <Box sx={{ width: '100%' }}>
+      <Alert>{props.alert.msg}</Alert>
+    </Box>
+}
+    </>
+  );
 }

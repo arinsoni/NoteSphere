@@ -64,7 +64,7 @@ const SignUp = (props) => {
             // if (json.success) {
             //     navigate('/login?email=' + encodeURIComponent(values.email));
 
-            //     props.showAlert("Account created succesfully", "success")
+                props.showAlert("Account created succesfully")
             // } else {
             //     alert(json.message, "error")
             //     props.showAlert("Invalid details", "danger")

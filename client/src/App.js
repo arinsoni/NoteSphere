@@ -18,61 +18,55 @@ import CreatePassword from "./pages/createPassword";
 import NoteBoard from "./pages/Notes/NoteBoard";
 
 //context
-import app_context from "./context/app/appContext";
+import appContext from "./context/app/appContext"
 
 // State
 import NoteState from "./context/notes/NoteState";
 import UserState from "./context/user/UserState";
-import AppState from "./context/app/appState";
+import AppState from "./context/app/AppState";
 import { useContext, useState } from "react";
 import Dashboard from "./pages/Dashboard";
+import MyAlert from "./components/Alert";
 
-function App() {
+const App = ()=> {
   //progress
   const [progress, setProgress] = useState(0);
-  //alert
-  const [alert, setAlert] = useState(null);
 
-  //alert
-  const showAlert = (message, type) => {
-    setAlert({
-      msg: message,
-      type: type,
-    });
-    setTimeout(() => {
-      setAlert(null);
-    }, 1500);
-  };
+  // app Context
+  const AppContext = useContext(appContext);
+
+
 
   return (
-    <>
+    <AppState>
       <Router>
-        <AppState>
+        
           <UserState setProgress={setProgress}>
             <NoteState setProgress={setProgress}>
               <NavBar />
               <LoadingBar height={5} color="#f11946" progress={progress} />
-              <Alert alert={alert} />
+ 
+      
               <div className="container">
                 <Routes>
                   <Route
                     exact
                     path="/:id/noteboard"
-                    element={<NoteBoard showAlert={showAlert} />}
+                    element={<NoteBoard />}
                   />
                   <Route exact path="/" element={<About />} />
                   <Route
                     exact
                     path="/login"
                     element={
-                      <LogIn setProgress={setProgress} showAlert={showAlert} />
+                      <LogIn setProgress={setProgress}  />
                     }
                   />
                   <Route
                     exact
                     path="/signup"
                     element={
-                      <SignUp setProgress={setProgress} showAlert={showAlert} />
+                      <SignUp setProgress={setProgress} />
                     }
                   />
                   <Route
@@ -95,9 +89,10 @@ function App() {
               </div>
             </NoteState>
           </UserState>
-        </AppState>
+       
       </Router>
-    </>
+      </AppState>
+   
   );
 }
 

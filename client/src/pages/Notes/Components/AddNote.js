@@ -33,7 +33,7 @@ const AddNote = (props) => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
     setNote({ title: "", description: "", tag: "" });
-    props.showAlert("Added Successfully", "success");
+    // props.showAlert("Added Successfully", "success");
   };
 
   const onChange = (e) => {

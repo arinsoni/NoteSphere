@@ -21,7 +21,7 @@ const Notes = (props) => {
   //Note Context
   const NoteContext = useContext(noteContext);
   const { notes, getNotes, editNote, isFetching } = NoteContext;
-
+  
   //user context
   const user_context = useContext(userContext);
   const { user, getUser, deleteOrphanedNotes } = user_context;
@@ -173,7 +173,7 @@ const Notes = (props) => {
             </RootContainer>
           </Modal>
 
-          <AddNote showAlert={props.showAlert} />
+          <AddNote/>
           <div className="row d-flex">
             {notes.length === 0 && "No notes available"}
             {notes.map((note) => {
@@ -181,7 +181,7 @@ const Notes = (props) => {
                 <NoteItem
                   key={note._id}
                   note={note}
-                  showAlert={props.showAlert}
+                  
                   updateNote={updateNote}
                 />
               );

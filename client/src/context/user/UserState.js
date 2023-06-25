@@ -6,7 +6,6 @@ const userInitial = {};
 
 const UserState = (props) => {
   const [user, setUser] = useState(userInitial);
-  const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
@@ -93,8 +92,6 @@ const UserState = (props) => {
         isLoading,
         getUser,
         deleteOrphanedNotes,
-        progress,
-        setProgress,
         isLogin,
         setIsLogin,
         isFetching,

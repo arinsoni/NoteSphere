@@ -16,7 +16,7 @@ const Title = styled(Typography)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#fff" : "#202940",
 }));
 
-const NoteItem = ({ showAlert, note, updateNote }) => {
+const NoteItem = ({ note, updateNote }) => {
   //note context
   const NoteCotext = useContext(noteContext);
   const { deleteNote } = NoteCotext;
@@ -27,7 +27,7 @@ const NoteItem = ({ showAlert, note, updateNote }) => {
 
   const handleDelete = () => {
     deleteNote(note._id);
-    showAlert("Deleted Successfully", "success");
+    // showAlert("Deleted Successfully", "success");
   };
 
   const handleEdit = () => {

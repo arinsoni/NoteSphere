@@ -52,13 +52,13 @@ const Abcd = (props) => {
     setProgress(80);
     if (json.success) {
       // localStorage.setItem('verificationToken', json.verificationToken)
-      props.showAlert(json.message, "success");
+      // props.showAlert(json.message, "success");
       localStorage.removeItem("token"); // user cant naviagte back to notes page
       handleLogout();
       setIsLogin(false);
       navigate("/");
     } else {
-      props.showAlert(json.message, "error");
+      // props.showAlert(json.message, "error");
     }
     setProgress(100);
   };
@@ -80,7 +80,7 @@ const Abcd = (props) => {
         localStorage.removeItem("token", json.token);
 
         navigate("/login");
-        props.showAlert("Deleted ", "success");
+        // props.showAlert("Deleted ", "success");
       } else {
         // User deletion failed, display an error message or handle the failure
         console.log(json.message);

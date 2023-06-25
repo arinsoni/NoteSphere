@@ -3,14 +3,26 @@ import { themeSettings } from "../../theme";
 import { useEffect, useState } from "react";
 import breakpoints from "../../assets/base/breakpoints";
 
-
-export const AppState = ({ children }) => {
+const AppState = ({ children }) => {
   //theme
   const [themeMode, setThemeMode] = useState("light");
   //hiding navbar
-  const [showNav, setShowNav] = useState(true)
+  const [showNav, setShowNav] = useState(true);
 
+  //Alert
 
+   // //alert
+  //  const [alert, setAlert] = useState(null);
+
+  //  //alert
+  //  const showAlert = (message) => {
+  //    setAlert({
+  //      msg: message
+  //    });
+  //    setTimeout(() => {
+  //      setAlert(null);
+  //    }, 1500);
+  //  };
   //sidenav
   //showSideNav when button clicked on navbar
   const [showSideNav, setShowSideNav] = useState(false);
@@ -38,19 +50,15 @@ export const AppState = ({ children }) => {
   }, []);
 
   const handleSideNav = () => {
-   
     if (showSideNav) {
       setShowSideNav(!showSideNav);
-      
     } else {
       setShowSideNav(!showSideNav);
-      
     }
     setTimeout(() => {
       setClpClicked(false);
     }, 100);
   };
-
 
   //sidenav
 
@@ -67,7 +75,6 @@ export const AppState = ({ children }) => {
   const theme = themeSettings(themeMode);
   //theme
 
-
   return (
     <AppContext.Provider
       value={{
@@ -76,7 +83,7 @@ export const AppState = ({ children }) => {
         themeMode,
         toggleTheme,
         //navbar
-        showNav, 
+        showNav,
         setShowNav,
         //sidenav
         showSideNav,
@@ -86,7 +93,12 @@ export const AppState = ({ children }) => {
         handleSideNav,
         isSideNavOpen,
         setIsSideNavOpen,
-        toggleSideNav
+        toggleSideNav,
+        //alert
+        // alert, 
+        // setAlert, 
+        // showAlert
+       
       }}
     >
       {children}
