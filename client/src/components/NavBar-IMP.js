@@ -11,8 +11,10 @@ const Abcd = (props) => {
   const navigate = useNavigate();
   const [id, setId] = useState(null);
   const userContext = useContext(user_context);
-  const { user, progress, setProgress, isLogin, setIsLogin } = userContext;
+  const { user, isLogin, setIsLogin } = userContext;
   const [email, setEmail] = useState("");
+
+  // app ci
 
   //context
   const AppContext = useContext(app_context);

@@ -6,23 +6,25 @@ import breakpoints from "../../assets/base/breakpoints";
 const AppState = ({ children }) => {
   //theme
   const [themeMode, setThemeMode] = useState("light");
+
   //hiding navbar
   const [showNav, setShowNav] = useState(true);
 
+  //progress
+  const [progress, setProgress] = useState(0);
+
   //Alert
+  const [alert, setAlert] = useState(null);
+  const showAlert = (index, message) => {
+    setAlert({
+      index: index,
+      msg: message,
+    });
+    setTimeout(() => {
+      setAlert(null);
+    }, 3000);
+  }
 
-   // //alert
-  //  const [alert, setAlert] = useState(null);
-
-  //  //alert
-  //  const showAlert = (message) => {
-  //    setAlert({
-  //      msg: message
-  //    });
-  //    setTimeout(() => {
-  //      setAlert(null);
-  //    }, 1500);
-  //  };
   //sidenav
   //showSideNav when button clicked on navbar
   const [showSideNav, setShowSideNav] = useState(false);
@@ -95,10 +97,12 @@ const AppState = ({ children }) => {
         setIsSideNavOpen,
         toggleSideNav,
         //alert
-        // alert, 
-        // setAlert, 
-        // showAlert
-       
+        showAlert,
+        alert,
+        setAlert,
+        //progress
+        progress, 
+        setProgress
       }}
     >
       {children}

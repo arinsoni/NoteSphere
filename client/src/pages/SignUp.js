@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,11 +7,13 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
+import appContext from '../context/app/appContext';
 
 
 
 const SignUp = (props) => {
+    //context
+    const { setProgress, showAlert } = useContext(appContext)
     let navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [showPassword, setShowPassword] = React.useState(false);
@@ -47,7 +49,7 @@ const SignUp = (props) => {
 
         validationSchema: registerSchema,
         onSubmit: async (values, action) => {
-            props.setProgress(30)
+            setProgress(30)
             console.log("inside register function")
             const { firstName, email, password, cpassword } = values
             const response = await fetch("http://localhost:5000/auth/register", {
@@ -57,19 +59,19 @@ const SignUp = (props) => {
                 },
                 body: JSON.stringify({ firstName, email, password, cpassword })
             })
-            props.setProgress(60)
+            setProgress(60)
 
             const json = await response.json()
 
             // if (json.success) {
             //     navigate('/login?email=' + encodeURIComponent(values.email));
 
-                props.showAlert("Account created succesfully")
+                showAlert(1, "Account created succesfully")
             // } else {
             //     alert(json.message, "error")
-            //     props.showAlert("Invalid details", "danger")
+            //     showAlert("Invalid details", "danger")
             // }
-            props.setProgress(100)
+            setProgress(100)
         }
        
     })

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
@@ -10,10 +10,13 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-
+import appContext from '../context/app/appContext';
 
 
 const CreatePassword = (props) => {
+    //app context
+    const {setProgress} = useContext(appContext)
+
     let navigate = useNavigate();
     // formik params
     const [showPassword, setShowPassword] = React.useState(false);
@@ -46,7 +49,7 @@ const CreatePassword = (props) => {
 
         validationSchema: registerSchema,
         onSubmit: async (values) => {
-            props.setProgress(30)
+            setProgress(30)
             
             const { password } = values
             const response = await fetch(`http://localhost:5000/auth/createPassword/${createPasswordToken}`, {
@@ -56,7 +59,7 @@ const CreatePassword = (props) => {
                 },
                 body: JSON.stringify({ createPasswordToken, password })
             })
-            props.setProgress(60)
+            setProgress(60)
 
             const json = await response.json()
             if (json.success) {
@@ -66,7 +69,7 @@ const CreatePassword = (props) => {
                 alert(`${json.message}`);
             }
      
-            props.setProgress(100)
+            setProgress(100)
         }
        
     })

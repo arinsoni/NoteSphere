@@ -40,8 +40,8 @@ const Profile = () => {
 
   //context
   const AppContext = useContext(appContext);
-  const { theme, setShowNav  } = AppContext;
-
+  const { theme, setShowNav, count  } = AppContext;
+  console.log("profile counr: " + count)
   // hide Navbar
   useEffect(() => {
      setShowNav(false);

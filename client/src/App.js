@@ -18,82 +18,70 @@ import CreatePassword from "./pages/createPassword";
 import NoteBoard from "./pages/Notes/NoteBoard";
 
 //context
-import appContext from "./context/app/appContext"
+import appContext from "./context/app/appContext";
 
 // State
 import NoteState from "./context/notes/NoteState";
 import UserState from "./context/user/UserState";
-import AppState from "./context/app/AppState";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import MyAlert from "./components/Alert";
+import AppState from "./context/app/AppState";
 
-const App = ()=> {
-  //progress
-  const [progress, setProgress] = useState(0);
-
+const App = () => {
   // app Context
-  const AppContext = useContext(appContext);
-
-
+  const { showAlert, alert, progress } = useContext(appContext);
 
   return (
-    <AppState>
-      <Router>
-        
-          <UserState setProgress={setProgress}>
-            <NoteState setProgress={setProgress}>
-              <NavBar />
-              <LoadingBar height={5} color="#f11946" progress={progress} />
- 
+    
+    <Router>
+    
+        <UserState >
+          
+          
+            <NavBar />
+            <LoadingBar height={5} color="#f11946" progress={progress} />
+            <MyAlert alert={alert} />
+            <div className="container">
+              <Routes>
+                <Route exact path="/:id/noteboard" element={<NoteBoard />} />
+                <Route exact path="/" element={<About />} />
+                <Route
+                  exact
+                  path="/login"
+                  element={<LogIn  />}
+                />
+                <Route
+                  exact
+                  path="/signup"
+                  element={<SignUp  />}
+                />
+                <Route
+                  exact
+                  path="/auth/:id/verify/:token"
+                  element={<EmailVerify  />}
+                />
+                <Route
+                  exact
+                  path="/auth/forgot-password"
+                  element={<ForgotPassword />}
+                />
+                <Route
+                  exact
+                  path="/auth/create-password/:createPasswordToken"
+                  element={<CreatePassword />}
+                />
+                <Route exact path="/dashboard" element={<Dashboard />} />
+              </Routes>
+            </div>
+            
+         
+          
+        </UserState>
+    </Router>
+    
       
-              <div className="container">
-                <Routes>
-                  <Route
-                    exact
-                    path="/:id/noteboard"
-                    element={<NoteBoard />}
-                  />
-                  <Route exact path="/" element={<About />} />
-                  <Route
-                    exact
-                    path="/login"
-                    element={
-                      <LogIn setProgress={setProgress}  />
-                    }
-                  />
-                  <Route
-                    exact
-                    path="/signup"
-                    element={
-                      <SignUp setProgress={setProgress} />
-                    }
-                  />
-                  <Route
-                    exact
-                    path="/auth/:id/verify/:token"
-                    element={<EmailVerify setProgress={setProgress} />}
-                  />
-                  <Route
-                    exact
-                    path="/auth/forgot-password"
-                    element={<ForgotPassword />}
-                  />
-                  <Route
-                    exact
-                    path="/auth/create-password/:createPasswordToken"
-                    element={<CreatePassword />}
-                  />
-                  <Route exact path="/dashboard" element={<Dashboard />} />
-                </Routes>
-              </div>
-            </NoteState>
-          </UserState>
-       
-      </Router>
-      </AppState>
-   
   );
-}
+};
 
 export default App;

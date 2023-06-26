@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 //context
 import noteContext from "../../../context/notes/noteContext";
 import userContext from "../../../context/user/userContext";
+import appContext from "../../../context/app/appContext";
 
 //My Componnets
 import NoteItem from "./NoteItem";
@@ -25,6 +26,9 @@ const Notes = (props) => {
   //user context
   const user_context = useContext(userContext);
   const { user, getUser, deleteOrphanedNotes } = user_context;
+
+  //app context
+  const { showAlert } = useContext(appContext)
 
   // Initiallisation of note
   const [note, setNote] = useState({
@@ -95,7 +99,7 @@ const Notes = (props) => {
   const handleClick = (e) => {
     editNote(note.id, note.etitle, note.edescription, note.etag);
     setOpen(false);
-    props.showAlert("Updated Succesfully", "success");
+    showAlert(1, "Updated Succesfully");
   };
 
   const onChange = (e) => {

@@ -17,7 +17,7 @@ import appContext from "../../../context/app/appContext";
 const AddNote = (props) => {
   //app context
   const AppContext = useContext(appContext);
-  const { theme, themeMode } = AppContext;
+  const { theme, themeMode, showAlert } = AppContext;
 
   //user context
   const context = useContext(noteContext);
@@ -29,11 +29,11 @@ const AddNote = (props) => {
     tag: "",
   });
 
-  const handleClick = async (e) => {
+  const handleAddNote = async (e) => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
     setNote({ title: "", description: "", tag: "" });
-    // props.showAlert("Added Successfully", "success");
+    showAlert(0, "Note added Successfully");
   };
 
   const onChange = (e) => {
@@ -124,7 +124,7 @@ const AddNote = (props) => {
             },
           }}
         />
-        <SubmitButton type="submit" variant="contained" onClick={handleClick}>
+        <SubmitButton type="submit" variant="contained" onClick={handleAddNote}>
           Submit
         </SubmitButton>
       </RootContainer>

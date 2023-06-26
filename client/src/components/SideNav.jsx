@@ -28,11 +28,12 @@ const SideNav = () => {
     themeMode,
     theme,
     handleSideNav,
-    setClpClicked,
+    setProgress,
+    count
   } = AppContext;
 
   const UserContext = useContext(user_conetxt);
-  const { user, progress, setProgress, isLogin, setIsLogin } = UserContext;
+  const { user, setIsLogin } = UserContext;
 
   //user credentials
   const [id, setId] = useState(null);
@@ -210,6 +211,9 @@ const SideNav = () => {
           onClick={handleLogout}
           redirectTo="/login"
         />
+        <div>
+          {count}
+        </div>
       </Box>
     </ThemeProvider>
   );

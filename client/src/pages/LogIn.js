@@ -12,8 +12,7 @@ import appContext from "../context/app/appContext"
 const LogIn = (props) => {
     // app Context
     const AppContext = useContext(appContext);
-    // const { alert, setAlert, showAlert } = AppContext
-    console.log("login alert: " )
+   const { showAlert, setProgress } = AppContext;
   const userContext = useContext(user_context);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -24,6 +23,8 @@ const LogIn = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let navigate = useNavigate();
   const location = useLocation();
+
+  
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -40,7 +41,7 @@ const LogIn = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    props.setProgress(30)
+    setProgress(30)
   
     const response = await fetch("http://localhost:5000/auth/login", {
       method: 'POST',
@@ -49,18 +50,17 @@ const LogIn = (props) => {
       },
       body: JSON.stringify({ email: credentials.email, password: credentials.password }),
     });
-    props.setProgress(60)
+    setProgress(60)
   
     const json = await response.json();
-    props.setProgress(80)
+    setProgress(80)
    
   
     if (json.success) {
       localStorage.setItem('token', json.token);
       localStorage.setItem('email', credentials.email);
-      // setAlert({
-      //   msg: "Logged In"
-      // });
+     showAlert(0, "Logged In Succesfully")
+      
       
       // Fetch user data after successful login
       await userContext.getUser();
@@ -68,10 +68,10 @@ const LogIn = (props) => {
         navigate(`/${json.data.user.id}/noteboard`);
       }
     } else {
-      // props.showAlert("Invalid Credentials", "danger");
+      showAlert(2, "Invalid Credentials");
     }
   
-    props.setProgress(100)
+    setProgress(100)
   };
   
 

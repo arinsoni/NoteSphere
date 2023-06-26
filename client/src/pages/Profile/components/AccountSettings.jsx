@@ -44,7 +44,7 @@ const AccountSettings = () => {
   const navigate = useNavigate();
   //app context
   const AppContext = useContext(appContext);
-  const { theme, setShowAlert } = AppContext;
+  const { theme, setProgress, showAlert } = AppContext;
 
   //user context
   const UserContext = useContext(userContext);
@@ -90,10 +90,10 @@ const AccountSettings = () => {
 
   // Log out
   const handleLogout = () => {
-    // setProgress(50);
+    setProgress(50);
     localStorage.removeItem("token");
     navigate("/login");
-    // setProgress(100);
+    setProgress(100);
     setIsLogin(false);
   };
 
@@ -128,7 +128,7 @@ const AccountSettings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setProgress(30);
+    setProgress(30);
     // console.log(`${localStorage.getItem('token')} - reset`)
     // Send the password reset request to the backend
     const response = await fetch("http://localhost:5000/auth/resetPassword", {
@@ -139,27 +139,27 @@ const AccountSettings = () => {
       },
       body: JSON.stringify({ password, confirmPassword, email, otp }),
     });
-    // setProgress(60);
+    setProgress(60);
     const json = await response.json();
 
-    // setProgress(80);
+    setProgress(80);
     if (json.success) {
-      // props.showAlert(`${json.message}`, "success");
+      showAlert(1, `${json.message}`);
 
       alert("success");
       localStorage.setItem("token", json.token);
       navigate("/login");
     } else {
-      // props.showAlert(`${json.message}`, "success");
+      showAlert(2, `${json.message}`);
       alert("error");
     }
-    // setProgress(100);
+    setProgress(100);
   };
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
 
-    // setProgress(40);
+    setProgress(40);
     // Send the password change request to the backend
     const response = await fetch("http://localhost:5000/auth/reset-password", {
       method: "POST",
@@ -170,19 +170,19 @@ const AccountSettings = () => {
 
       body: JSON.stringify({ email }),
     });
-    // setProgress(60);
+    setProgress(60);
     const json = await response.json();
-    // setProgress(80);
+    setProgress(80);
     if (json.success) {
       
     } else {
-      // props.showAlert(json.message, "error");
+      showAlert(2, json.message);
       alert("error");
     }
-    // setProgress(100);
+    setProgress(100);
   };
 
-  // Delete Password
+  // Delete Account
   // const handleDelete = async () => {
   //   try {
   //     const response = await fetch("http://localhost:5000/auth/deleteUser", {

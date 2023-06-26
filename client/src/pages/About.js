@@ -11,11 +11,10 @@ const About = (props) => {
   const { user } = userContext;
 
   const AppContext = useContext(appContext);
-  // useEffect(() => {
-  //   {
-  //     props.showAlert("Logged In successfully");
-  //   }
-  // });
+  const { showAlert } = AppContext;
+  const handleClick = () => {
+    showAlert(1, "hello")
+  };
 
   return (
     <MainPage>
@@ -30,6 +29,8 @@ const About = (props) => {
           </p>
         )}
       </div>
+
+      <button onClick={handleClick}>Click me</button>
     </MainPage>
   );
 };
