@@ -68,7 +68,7 @@ const LogIn = (props) => {
         navigate(`/${json.data.user.id}/noteboard`);
       }
     } else {
-      showAlert(2, "Invalid Credentials");
+      showAlert(1, json.message);
     }
   
     setProgress(100)

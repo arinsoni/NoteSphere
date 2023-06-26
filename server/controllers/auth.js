@@ -56,20 +56,23 @@ const login = async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ error: "Please try to login with correct credentials email" });
+        .json({ message: "User doesn't exist" });
     }
     const isCorrect = await bcrypt.compare(password, user.password);
     if (!isCorrect) {
       return res
         .status(400)
-        .json({ error: "Please try to login with correct credentials pass" });
+        .json({ message: "Please try to login with correct credentials" });
     }
-
+    
+    
     if (!user.verified) {
+      console.log("False hai")
       return res
         .status(400)
         .send({ message: "An Email sent to your account please verify" });
     }
+    
 
     const data = {
       user: {
@@ -79,7 +82,7 @@ const login = async (req, res) => {
     const token = JWT.sign(data, process.env.JWT_SECRET);
     delete user.password;
     success = true;
-    let secret = await uniqueString.findOne({ userId: user._id });
+    // let secret = await uniqueString.findOne({ userId: user._id });
 
     res.status(200).json({ success, token, data });
   } catch (error) {
@@ -103,6 +106,22 @@ const getUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const userId = req.user.id;
+    const { accDeletePassword } = req.body;
+    const user = await User.findById(req.user.id);
+    console.log("acc deketion" + accDeletePassword)
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "No user find" });
+    }
+
+    
+    const isCorrect = await bcrypt.compare(accDeletePassword, user.password);
+    if (!isCorrect) {
+      return res
+        .status(400)
+        .json({ message: "Your password is incorrect" });
+    }
     await Notes.deleteMany({ user: userId });
     await User.findByIdAndDelete(userId);
     res

@@ -66,7 +66,7 @@ const SignUp = (props) => {
             // if (json.success) {
             //     navigate('/login?email=' + encodeURIComponent(values.email));
 
-                showAlert(1, "Account created succesfully")
+                showAlert(0, "Email has been sent to  your mail id ")
             // } else {
             //     alert(json.message, "error")
             //     showAlert("Invalid details", "danger")

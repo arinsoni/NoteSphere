@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
     default: Date.now
   },
   verified: {
-    type: String,
+    type: Boolean,
     default: false
   },
   resetPasswordToken: String,

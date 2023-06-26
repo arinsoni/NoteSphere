@@ -1,6 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+//My Components
+import StyleBox from "./StyleBox";
+import {
+  RootContainer,
+  StyledTextField,
+  SubmitButton,
+} from "../../Notes/Components/NotesComponents";
+
 // MUi Components
 import { Card, Box, Modal } from "@mui/material";
 
@@ -19,15 +27,11 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 //context
 import appContext from "../../../context/app/appContext";
 import userContext from "../../../context/user/userContext";
-import StyleBox from "./StyleBox";
-import {
-  RootContainer,
-  StyledTextField,
-  SubmitButton,
-} from "../../Notes/Components/NotesComponents";
 
 //alert
 import MyAlert from "../../../components/Alert";
+import ModalPopup from "./ModalPopup";
+import ModalForm from "./ModalForm";
 
 const AccountSettings = () => {
   //alerts
@@ -106,6 +110,7 @@ const AccountSettings = () => {
     setPasswordDialogContext(false);
   };
 
+  // Form handling
   const [openChangePasswordForm, setOpenChangePasswordForm] = useState(false);
   const handleOpenForm = () => {
     setOpenChangePasswordForm(true);
@@ -118,45 +123,16 @@ const AccountSettings = () => {
     e.preventDefault();
     setPasswordDialogContext(false);
     setOpenChangePasswordForm(true);
-    handlePasswordChange(e);
+    handleChangePasswordOTP(e);
   };
 
-  // form
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setProgress(30);
-    // console.log(`${localStorage.getItem('token')} - reset`)
-    // Send the password reset request to the backend
-    const response = await fetch("http://localhost:5000/auth/resetPassword", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({ password, confirmPassword, email, otp }),
-    });
-    setProgress(60);
-    const json = await response.json();
+  // to sent OTP for password change
 
-    setProgress(80);
-    if (json.success) {
-      showAlert(1, `${json.message}`);
-
-      alert("success");
-      localStorage.setItem("token", json.token);
-      navigate("/login");
-    } else {
-      showAlert(2, `${json.message}`);
-      alert("error");
-    }
-    setProgress(100);
-  };
-
-  const handlePasswordChange = async (e) => {
+  const handleChangePasswordOTP = async (e) => {
     e.preventDefault();
 
     setProgress(40);
@@ -174,42 +150,94 @@ const AccountSettings = () => {
     const json = await response.json();
     setProgress(80);
     if (json.success) {
-      
+      showAlert(0, `OTP has been sent to your mail-id:  ${email}`);
     } else {
-      showAlert(2, json.message);
+      showAlert(1, json.message);
       alert("error");
     }
     setProgress(100);
   };
 
-  // Delete Account
-  // const handleDelete = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:5000/auth/deleteUser", {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "auth-token": localStorage.getItem("token"),
-  //       },
-  //     });
+  // to submit the form for changing password
 
-  //     const json = await response.json();
+  const handleChangePasswordForm = async (e) => {
+    e.preventDefault();
+    setProgress(30);
+    // console.log(`${localStorage.getItem('token')} - reset`)
+    // Send the password reset request to the backend
+    const response = await fetch("http://localhost:5000/auth/resetPassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ password, confirmPassword, email, otp }),
+    });
+    setProgress(60);
+    const json = await response.json();
 
-  //     if (json.success) {
-  //       // User deletion successful, perform any necessary cleanup or redirects
-  //       localStorage.removeItem("token", json.token);
+    setProgress(80);
+    if (json.success) {
+      showAlert(0, `${json.message}`);
+      localStorage.setItem("token", json.token);
+      navigate("/login");
+    } else {
+      showAlert(1, `${json.message}`);
+    }
+    setProgress(100);
+  };
 
-  //       navigate("/login");
-  //       props.showAlert("Deleted ", "success");
-  //     } else {
-  //       // User deletion failed, display an error message or handle the failure
-  //       console.log(json.message);
-  //     }
-  //   } catch (error) {
-  //     // Error occurred during the deletion process, handle the error
-  //     console.log(error);
-  //   }
-  // };
+  //Delete Acccount
+  const [accDeleteDialogContext, setAccDeleteDialogContext] = useState(false);
+  const handleAccDeleteDialogContextOpen = () => {
+    setAccDeleteDialogContext(true);
+  };
+  const handleAccDeleteDialogContextClose = () => {
+    setAccDeleteDialogContext(false);
+  };
+  const handleYesAccDelete = (e) => {
+    e.preventDefault();
+    setAccDeleteDialogContext(false);
+    handleAccDeleteFormOpen();
+  };
+
+  // Form handling
+  const [accDeletePassword, setAccDeletePassword] = useState("");
+  const [openAccDeleteForm, setOpenAccDeleteForm] = useState(false);
+  const handleAccDeleteFormOpen = () => {
+    setOpenAccDeleteForm(true);
+  };
+  const handleAccDeleteFormClose = () => {
+    setOpenAccDeleteForm(false);
+  };
+  const handleAccDelete = async () => {
+    try {
+      setProgress(20);
+      const response = await fetch("http://localhost:5000/auth/deleteUser", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ accDeletePassword }),
+      });
+      setProgress(40);
+      const json = await response.json();
+
+      if (json.success) {
+        // User deletion successful, perform any necessary cleanup or redirects
+        localStorage.removeItem("token", json.token);
+        setProgress(100);
+        navigate("/login");
+        showAlert(0, "Account Deleted Successfully");
+      } else {
+        showAlert(1, json.message);
+      }
+    } catch (error) {
+      // Error occurred during the deletion process, handle the error
+      console.log(error);
+    }
+  };
 
   return (
     <Card
@@ -233,117 +261,31 @@ const AccountSettings = () => {
       >
         account
       </StyleBox>
-      
 
       {/* Dialog Box for Change Password */}
-      <Modal
+      <ModalPopup
         open={passwordDialogContext}
         onClose={handlePasswordDialogContextClose}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <RootContainer
-          sx={{
-            maxWidth: "400px",
-            width: "80%",
-            maxHeight: "80%",
-            overflow: "auto",
-          }}
-        >
-          <StyleBox style={{ textAlign: "center" }}>
-            Do you want to change your password?
-          </StyleBox>
-          <Box display="flex" flexDirection="row" justifyContent="space-around">
-            <SubmitButton onClick={handleYesPassword}>Yes</SubmitButton>
-            <SubmitButton onClick={handlePasswordDialogContextClose}>
-              No
-            </SubmitButton>
-          </Box>
-        </RootContainer>
-      </Modal>
+        onYesClick={handleYesPassword}
+        onNoClick={handlePasswordDialogContextClose}
+        msg="Do you want to change your password?"
+      />
       {/* Form Popoup for changing password */}
-      <Modal
+      <ModalForm
         open={openChangePasswordForm}
         onClose={handleCloseForm}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <RootContainer sx={{ width: "400px", margin: "0 auto" }}>
-          <StyledTextField
-            label="OTP"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            InputLabelProps={{
-              style: {
-                color: theme === "dark" ? "#fff" : "#4f4f4f",
-              },
-            }}
-            InputProps={{
-              style: {
-                color: theme === "dark" ? "#fff" : "#000",
-                background: theme === "dark" ? "#333" : "#fff",
-              },
-            }}
-          />
-          <StyledTextField
-            label="Old Password"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            multiline
-            rows={4}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            InputLabelProps={{
-              style: {
-                color: theme === "dark" ? "#fff" : "#4f4f4f",
-              },
-            }}
-            InputProps={{
-              style: {
-                color: theme === "dark" ? "#fff" : "#000",
-                background: theme === "dark" ? "#333" : "#fff",
-              },
-            }}
-          />
-          <StyledTextField
-            label="New Password"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            InputLabelProps={{
-              style: {
-                color: theme === "dark" ? "#fff" : "#4f4f4f",
-              },
-            }}
-            InputProps={{
-              style: {
-                color: theme === "dark" ? "#fff" : "#000",
-                background: theme === "dark" ? "#333" : "#fff",
-              },
-            }}
-          />
-          <SubmitButton
-            type="submit"
-            variant="contained"
-            onClick={handleSubmit}
-          >
-            Submit
-          </SubmitButton>
-        </RootContainer>
-      </Modal>
-
+        label_1="OTP"
+        value_1={otp}
+        fun_1={setOtp}
+        label_2="Old Password"
+        value_2={password}
+        fun_2={setPassword}
+        label_3="New Password"
+        value_3={confirmPassword}
+        fun_3={setConfirmPassword}
+        onSubmit={handleChangePasswordForm}
+      />
+      {/* Form Popoup for changing password ------- X ------ */}
       <AccBox
         text="Change Password"
         icon={KeyRoundedIcon}
@@ -351,8 +293,30 @@ const AccountSettings = () => {
       />
       <AccBox text="2-F Authentication" icon={SecurityRoundedIcon} />
       <AccBox text="Update Email-Id" icon={ModeEditRoundedIcon} />
+      {/* Dialog Box for Delete Account */}
+      <ModalPopup
+        open={accDeleteDialogContext}
+        onClose={handleAccDeleteDialogContextClose}
+        onYesClick={handleYesAccDelete}
+        onNoClick={handleAccDeleteDialogContextClose}
+        msg="Are you sure? You want to delete your account permanently?"
+      />
+      {/* Form for Acc deletion */}
 
-      <AccBox text="Account Closure" icon={DeleteOutlineRoundedIcon} />
+      <ModalForm
+        open={openAccDeleteForm}
+        onClose={handleAccDeleteFormClose}
+        label_1="Password"
+        value_1={accDeletePassword}
+        fun_1={setAccDeletePassword}
+        onSubmit={handleAccDelete}
+      />
+
+      <AccBox
+        text="Account Closure"
+        icon={DeleteOutlineRoundedIcon}
+        onClick={handleAccDeleteDialogContextOpen}
+      />
       <AccBox text="Update Profile Pic" icon={InsertEmoticonRoundedIcon} />
       <AccBox text="Export your Notes" icon={FileDownloadRoundedIcon} />
     </Card>

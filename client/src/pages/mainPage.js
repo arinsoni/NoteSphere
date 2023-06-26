@@ -21,7 +21,7 @@ const MainPage = ({ children }) => {
           sx={{
             position: "absolute",
            
-            top:30,
+            top:60,
             right: 0,
             bottom: 0,
             left: isSideNavOpen ? "280px" : 0,
