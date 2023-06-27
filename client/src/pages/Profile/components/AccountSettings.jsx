@@ -234,8 +234,58 @@ const AccountSettings = () => {
         showAlert(1, json.message);
       }
     } catch (error) {
-      // Error occurred during the deletion process, handle the error
-      console.log(error);
+      showAlert(1, "Internal Server Error");
+    }
+  };
+
+  //Update Mail Id
+
+  const [updateMailDialogContext, setUpdateMailDialogContext] = useState(false);
+  const handleUpdateMailDialogContextOpen = () => {
+    setUpdateMailDialogContext(true);
+  };
+  const handleUpdateMailDialogContextClose = () => {
+    setUpdateMailDialogContext(false);
+  };
+  const handleYesUpdateMail = (e) => {
+    e.preventDefault();
+    setUpdateMailDialogContext(false);
+    handleUpdateMailFormOpen();
+  };
+
+  // form handling
+  const [oldMailId, setOldMailId] = useState("");
+  const [newMailId, setNewMailId] = useState("");
+  const [openUpdateMailForm, setOpenUpdateMailForm] = useState(false);
+  const handleUpdateMailFormOpen = () => {
+    setOpenUpdateMailForm(true);
+  };
+  const handleUpdateMailFormClose = () => {
+    setOpenUpdateMailForm(false);
+  };
+
+  const handleUpdateMailId = async () => {
+    try {
+      setProgress(20);
+      const response = await fetch("http://localhost:5000/auth/update-mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ oldMailId, newMailId }),
+      });
+      setProgress(40);
+      const json = await response.json();
+      if (json.success) {
+        setProgress(100);
+        handleUpdateMailFormClose();
+        showAlert(0, json.message);
+      } else {
+        showAlert(1, json.message);
+      }
+    } catch (error) {
+      showAlert(1, "Internal Server Error");
     }
   };
 
@@ -292,7 +342,30 @@ const AccountSettings = () => {
         onClick={handlePasswordDialogContextOpen}
       />
       <AccBox text="2-F Authentication" icon={SecurityRoundedIcon} />
-      <AccBox text="Update Email-Id" icon={ModeEditRoundedIcon} />
+
+      {/* Dialog Box for Update Mail-id */}
+      <ModalPopup
+        open={updateMailDialogContext}
+        onClose={handleUpdateMailDialogContextClose}
+        onYesClick={handleYesUpdateMail}
+        onNoClick={handleUpdateMailDialogContextClose}
+        msg="Are you sure? You want to update you mail-id?"
+      />
+
+      <ModalForm
+        open={openUpdateMailForm}
+        onClose={handleUpdateMailFormClose}
+        label_1="Old Email Id"
+        value_1={oldMailId}
+        fun_1={setOldMailId}
+        label_2="New E-Mail Id"
+        value_2={newMailId}
+        fun_2={setNewMailId}
+        onSubmit={handleUpdateMailId}
+      />
+
+      <AccBox text="Update Email-Id" icon={ModeEditRoundedIcon} onClick={handleUpdateMailDialogContextOpen} />
+
       {/* Dialog Box for Delete Account */}
       <ModalPopup
         open={accDeleteDialogContext}

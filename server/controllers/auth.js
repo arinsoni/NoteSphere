@@ -53,6 +53,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+    console.log("login: " + user )
     if (!user) {
       return res
         .status(400)
@@ -203,6 +204,34 @@ const requestForgotPassword = async (req, res) => {
   }
 };
 
+//update mail id
+const updateMail = async (req, res) => {
+  let success = false;
+  try {
+    const { oldMailId, newMailId } = req.body;
+
+    const user = await User.findOne({ email: oldMailId });
+    if(!user){
+      return res
+        .status(400)
+        .json({ message: "No User found with this Mail-Id" })
+    }
+
+    user.email = newMailId;
+    await user.save();
+    success = true;
+    return res
+      .status(200)
+      .json({ message: "E-mail Id updated Successfully", success })
+
+  } catch (error) {
+    console.log(error)
+    res 
+      .status(400)
+      .json({ message: error.message })
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -211,4 +240,5 @@ module.exports = {
   checkuserstatus,
   requestPasswordReset,
   requestForgotPassword,
+  updateMail
 };

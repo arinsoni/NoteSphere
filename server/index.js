@@ -110,7 +110,6 @@ app.post("/auth/createPassword/:createPasswordToken", async (req, res) => {
 			requestForgotPassword: createPasswordToken,
 
 		});
-		console.log(`user before : ${user}`)
 		if (!user) {
 			return res.status(400).json({
 				success: false,
