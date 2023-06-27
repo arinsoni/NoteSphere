@@ -57,7 +57,6 @@ const AddNote = () => {
     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
   }));
 
-  console.log("Length of notes : " + notes.length);
 
   return (
     <div>

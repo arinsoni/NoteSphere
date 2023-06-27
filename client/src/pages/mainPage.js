@@ -7,26 +7,26 @@ import NavBar from "../components/NavBar";
 const MainPage = ({ children }) => {
   const AppContext = useContext(app_context);
   const { isSideNavOpen } = AppContext;
-
+  useEffect(() => {
+    console.log("width: " + window.innerWidth);
+  }, [window.innerWidth]);
 
   return (
-    <Box sx={{ display: "flex", }}>
-      <Box width={isSideNavOpen ? "200px" : 0} position="fixed"  >
+    <Box sx={{ display: "flex" }}>
+      <Box width={isSideNavOpen ? "200px" : 0} position="fixed">
         <SideNav />
       </Box>
 
-      <Box sx={{ flex: 1, position: "relative", }}>
-
+      <Box sx={{ flex: 1, position: "relative" }}>
         <Box
           sx={{
             position: "absolute",
-           
-            top:60,
+            top: 60,
             right: 0,
             bottom: 0,
             left: isSideNavOpen ? "280px" : 0,
-            width: isSideNavOpen ? `calc(1250px-${window.innerWidth})` : "1400",
-            zIndex: "-1"
+            width: isSideNavOpen ? `calc(100% - 280px)` : "100%",
+            zIndex: "-1",
           }}
         >
           {children}

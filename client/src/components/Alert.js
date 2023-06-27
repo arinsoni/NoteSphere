@@ -25,7 +25,7 @@ export default function MyAlert( props ) {
   const index = props.alert && props.alert.index;
   const msg = props.alert && props.alert.msg;
   const items = [list[index]];
-  // console.log("alrty: " + props.alert.index )
+
 
   return (
     <>

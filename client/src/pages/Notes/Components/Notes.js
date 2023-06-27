@@ -221,11 +221,11 @@ const Notes = (props) => {
           />
           <Box mt={5} mb={3}>
          
-            <Grid container spacing={1}>
+            <Grid container spacing={1} m="auto" > 
              
               {notes.map((note) => {
                 return (
-                  <Grid item xs={12} md={6} xl={4}>
+                  <Grid item xs={12} md={6} xl={4} p={2}>
                     <NoteItem
                       key={note._id}
                       note={note}
