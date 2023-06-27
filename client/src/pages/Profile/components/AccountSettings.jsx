@@ -30,8 +30,8 @@ import userContext from "../../../context/user/userContext";
 
 //alert
 import MyAlert from "../../../components/Alert";
-import ModalPopup from "./ModalPopup";
-import ModalForm from "./ModalForm";
+import ModalPopup from "../Modals/ModalPopup";
+import ModalForm from "../Modals/ModalForm";
 
 const AccountSettings = () => {
   //alerts

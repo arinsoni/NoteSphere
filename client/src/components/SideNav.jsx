@@ -163,7 +163,7 @@ const SideNav = () => {
           background:
             themeMode === "light"
               ? "linear-gradient(195deg, #42424a, #191919)"
-              : theme.palette.primary.light,
+              : "#1f283e",
           position: "fixed",
           top: 0,
           left: isSideNavOpen ? 0 : "-300px",

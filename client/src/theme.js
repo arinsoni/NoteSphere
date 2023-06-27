@@ -64,7 +64,7 @@ export const themeSettings = (mode) => {
         ? {
             // palette values for dark mode
             primary: {
-              light: colorTokens.primary[1000],// #1f283e
+              light: colorTokens.primary[900],// #1f283e
               main: colorTokens.primary[0], //#202940
             },
             secondary:{
@@ -78,13 +78,14 @@ export const themeSettings = (mode) => {
             font: {
 
               main: colorTokens.colors[0],  //#FFFFFF
-              light: colorTokens.grey[100] //#FFFFFFCC
+              light: colorTokens.grey[100], //#FFFFFFCC
+              dark: colorTokens.primary[600] //#344767
             },
           }
         : {
             // palette values for light mode
             primary: {
-              
+              light:colorTokens.grey[0], //#FFFFFFCC
               main: colorTokens.colors[0],  //#FFFFFF,
             },
             secondary:{
@@ -98,6 +99,7 @@ export const themeSettings = (mode) => {
             font: {
               main: colorTokens.primary[600], //#344767
               light: colorTokens.primary[500], //#7B809A
+              dark: colorTokens.colors[0],  //#FFFFFF
             },
           }),
     },

@@ -31,7 +31,8 @@ const ModalForm = ({
 }) => {
     //app context
   const AppContext = useContext(appContext);
-  const { theme } = AppContext;
+  const { theme, themeMode } = AppContext;
+
   return (
     <Modal
       open={open}
@@ -52,13 +53,13 @@ const ModalForm = ({
           onChange={(e) => fun_1(e.target.value)}
           InputLabelProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#4f4f4f",
+              color: "#4f4f4f",
             },
           }}
           InputProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#000",
-              background: theme === "dark" ? "#333" : "#fff",
+              color: themeMode === "dark" ? "#fff" : "#000",
+              background: themeMode === "dark" ? "#333" : "#fff",
             },
           }}
         />
@@ -72,13 +73,13 @@ const ModalForm = ({
           onChange={(e) => fun_2(e.target.value)}
           InputLabelProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#4f4f4f",
+              color: themeMode === "dark" ? "#fff" : "#4f4f4f",
             },
           }}
           InputProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#000",
-              background: theme === "dark" ? "#333" : "#fff",
+              color: theme.palette.font.main,
+              background: theme.palette.primary.main
             },
           }}
         />}
@@ -92,13 +93,13 @@ const ModalForm = ({
           onChange={(e) => fun_3(e.target.value)}
           InputLabelProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#4f4f4f",
+              color: themeMode === "dark" ? "#fff" : "#4f4f4f",
             },
           }}
           InputProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#000",
-              background: theme === "dark" ? "#333" : "#fff",
+              color: themeMode === "dark" ? "#fff" : "#000",
+              background: themeMode === "dark" ? "#333" : "#fff",
             },
           }}
         />
