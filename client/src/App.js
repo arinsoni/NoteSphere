@@ -23,14 +23,13 @@ import appContext from "./context/app/appContext";
 // State
 import NoteState from "./context/notes/NoteState";
 import UserState from "./context/user/UserState";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Dashboard from "./pages/Dashboard";
 import MyAlert from "./components/Alert";
-import AppState from "./context/app/AppState";
 
 const App = () => {
   // app Context
-  const { showAlert, alert, progress } = useContext(appContext);
+  const { showNav, alert, progress } = useContext(appContext);
 
   return (
     
@@ -39,7 +38,7 @@ const App = () => {
         <UserState >
           
           
-            <NavBar />
+            {showNav &&  <NavBar />}
             <LoadingBar height={5} color="#f11946" progress={progress} />
             <MyAlert alert={alert} />
             <div className="container">
@@ -75,7 +74,7 @@ const App = () => {
               </Routes>
             </div>
             
-         
+
           
         </UserState>
     </Router>

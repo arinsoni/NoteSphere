@@ -155,6 +155,7 @@ const Profile = () => {
           px: 2,
           py: 2,
           backgroundColor: theme.palette.primary.main,
+          border: `1px solid ${theme.palette.font.dark}`,
         }}
       >
         {/* container for all grid items with spacing between them 3 and vertically centered */}

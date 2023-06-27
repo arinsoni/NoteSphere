@@ -146,7 +146,7 @@ const SideNav = () => {
     if (user && user._id) {
       setId(user._id);
     }
-  });
+  }, []);
 
   const handleLogout = () => {
     setProgress(50);
@@ -173,6 +173,7 @@ const SideNav = () => {
           margin: "20px",
           width: "250px",
           borderRadius: "10px",
+          border: `1px solid ${theme.palette.font.dark}`,
           p: "5px",
 
           [breakpoints.down("md")]: {

@@ -83,7 +83,7 @@ const UserState = (props) => {
     return () => {
       clearInterval(interval); // Clear the interval on component unmount
     };
-  });
+  }, []);
 
   return (
     <UserContext.Provider

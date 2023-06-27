@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // formik and Yup
 import { useFormik } from "formik";
@@ -275,30 +275,47 @@ const LogIn = (props) => {
                     paddingTop: "10px",
                     paddingBottom: "10px",
                     marginTop: "10px",
-                    color: theme.palette.font.dark,
-                    cursor: "pointer",
                   }}
                 >
                   Submit
                 </button>
               </form>
             </CardContent>
-            <Typography
-            variant="body2"
-            gutterBottom
-            style={{
-              textTransform: "capitalize",
-              fontSize: "15px",
-              color: theme.palette.font.main,
-              fontWeight: 300,
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            Don't have any account? <Link to="/signup">Sign-Up</Link>
-          </Typography>
           </Card>
         </Box>
+
+        // <form onSubmit={handleSubmit}>
+        //   <div className="mb-3">
+        //     <label htmlFor="email" className="form-label">Email address</label>
+        //     <input type="email" className="form-control" id="email" name='email' value={credentials.email} aria-describedby="emailHelp" onChange={onChange} />
+        //     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+        //   </div>
+        //   <OutlinedInput
+        //     id="password" name='password' onChange={onChange}
+        //     type={showPassword ? "text" : "password"}
+        //     endAdornment={
+        //       <InputAdornment position="end">
+        //         <IconButton
+        //           aria-label="toggle password visibility"
+        //           onClick={handleClickShowPassword}
+        //           onMouseDown={handleMouseDownPassword}
+        //           edge="end"
+        //         >
+        //           {showPassword ? <VisibilityOff /> : <Visibility />}
+        //         </IconButton>
+        //       </InputAdornment>
+        //     }
+        //     label="Password"
+        //   />
+        //    <Link
+
+        //             aria-current="page"
+        //             to={'/auth/forgot-password'}
+        //           >
+        //             forgot password
+        //           </Link>
+        //   <button type="submit" className="btn btn-primary">Submit</button>
+        // </form>
       )}
     </div>
   );

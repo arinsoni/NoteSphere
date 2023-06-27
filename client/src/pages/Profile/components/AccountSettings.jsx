@@ -62,7 +62,7 @@ const AccountSettings = () => {
       setId(user._id);
       setEmail(user.email);
     }
-  });
+  }, []);
 
   //user context
 
