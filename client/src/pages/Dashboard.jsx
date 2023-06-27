@@ -4,8 +4,9 @@ import Profile from './Profile/Profile'
 
 const Dashboard = () => {
   return (
-    <MainPage>
+    <MainPage >
         <Profile/>
+        
     </MainPage>
   )
 }

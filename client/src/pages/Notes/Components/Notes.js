@@ -18,19 +18,32 @@ import {
 //MUI Components
 import { Modal, Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import MyBox from "../../../components/MyBox";
+//icons
+import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
+
+//assets
+import noteImg from "../../../assets/images/note.png"
 
 
 const Notes = (props) => {
   //Note Context
   const NoteContext = useContext(noteContext);
-  const { notes, getNotes, editNote, isFetching } = NoteContext;
-  
+  const {
+    notes,
+    getNotes,
+    editNote,
+    isFetching,
+    addNoteForm,
+    handleCloseAddNoteForm,
+  } = NoteContext;
+
   //user context
   const user_context = useContext(userContext);
   const { user, getUser, deleteOrphanedNotes } = user_context;
 
   //app context
-  const { showAlert } = useContext(appContext)
+  const { showAlert, theme } = useContext(appContext);
 
   // Initiallisation of note
   const [note, setNote] = useState({
@@ -104,9 +117,10 @@ const Notes = (props) => {
     showAlert(1, "Updated Succesfully");
   };
 
-  const onChange = (e) => {
-    setNote({ ...note, [e.target.name]: e.target.value });
-  };
+  // const onChange = (e) => {
+  //   console.log(e.target.name)
+  //   setNote({ ...note, [e.target.name]: e.target.value });
+  // };
   const handleClose = () => {
     setOpen(false);
   };
@@ -116,7 +130,7 @@ const Notes = (props) => {
       {isFetching ? (
         <p>Loading...</p>
       ) : (
-        <div>
+        <Box position="relative">
           <Modal
             open={open}
             onClose={handleClose}
@@ -126,79 +140,103 @@ const Notes = (props) => {
               alignItems: "center",
             }}
           >
-            <RootContainer
-              sx={{
-                maxWidth: "400px",
-                width: "80%",
-                maxHeight: "80%",
-                overflow: "auto",
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
               }}
             >
-              <StyledTextField
-                label="Title"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                id="etitle"
-                name="etitle"
-                value={note.etitle}
-                onChange={onChange}
-              />
-
-              <StyledTextField
-                label="Description"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                multiline
-                rows={4}
-                id="edescription"
-                value={note.edescription}
-                name="edescription"
-                onChange={onChange}
-              />
-
-              <StyledTextField
-                label="Tag"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                id="etag"
-                value={note.etag}
-                name="etag"
-                onChange={onChange}
-              />
-
-              <SubmitButton
-                type="submit"
-                variant="contained"
-                onClick={handleClick}
+              <MyBox
+                width={70}
+                height={70}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                position="relative"
+                borderRadius="50%"
+                color={theme.palette.primary.main}
+                sx={{
+                  backgroundColor: theme.palette.secondary.dark,
+                  backgroundSize: "cover", // to cover the given area
+                  backgroundPosition: "center", // to show image completely
+                }}
               >
-                Submit
-              </SubmitButton>
-            </RootContainer>
+                <CreateRoundedIcon />
+              </MyBox>
+              <RootContainer
+                sx={{
+                  mt: -4,
+                  minWidth: "40vw",
+                  width: "80%",
+                  maxHeight: "80%",
+                  overflow: "auto",
+                  border: `2px solid ${theme.palette.font.dark}`,
+                }}
+              >
+                <StyledTextField
+                  label="Title"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  id="etitle"
+                  value={note.etitle}
+                />
+
+                <StyledTextField
+                  label="Description"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  multiline
+                  rows={4}
+                  id="edescription"
+                  value={note.edescription}
+                />
+
+                <StyledTextField
+                  label="Tag"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  id="etag"
+                  value={note.etag}
+                />
+
+                <SubmitButton
+                  type="submit"
+                  variant="contained"
+                  onClick={handleClick}
+                >
+                  Submit
+                </SubmitButton>
+              </RootContainer>
+            </div>
           </Modal>
 
-          <AddNote/>
-          <Grid container spacing={2} alignItems="center" margin="0">
-            {notes.length === 0 && "No notes available"}
-            {notes.map((note) => {
-              return (
-                <Grid item xs={12} md={6} xl={4}>
-                  <NoteItem
-                  key={note._id}
-                  note={note}
-                  
-                  updateNote={updateNote}
-                />
-                </Grid>
-                
-              );
-            })}
-            {user && user.firstName && <p>Name: {user.verified}</p>}
-            {user && user.firstName && <p>Name: {user.firstName}</p>}
-          </Grid>
-        </div>
+          <AddNote
+            addNoteForm={addNoteForm}
+            handleCloseAddNoteForm={handleCloseAddNoteForm}
+          />
+          <Box mt={5} mb={3}>
+         
+            <Grid container spacing={1}>
+             
+              {notes.map((note) => {
+                return (
+                  <Grid item xs={12} md={6} xl={4}>
+                    <NoteItem
+                      key={note._id}
+                      note={note}
+                      updateNote={updateNote}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </Box>
+        </Box>
       )}
     </>
   );

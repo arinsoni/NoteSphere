@@ -137,10 +137,10 @@ const Profile = () => {
         width="100%"
         height="400px"
         display="flex"
-        alignItems="center" // Optional: Adjust the alignment of the content vertically
-        justifyContent="center" // Optional: Adjust the alignment of the content horizontally
+        alignItems="center" 
+        justifyContent="center" 
         position="relative"
-        borderRadius="15px" // Set the border radius value here
+        borderRadius="15px" 
         sx={{
           backgroundImage: `url(${bg})`,
           backgroundSize: "cover", // to cover the given area

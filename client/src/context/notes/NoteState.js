@@ -90,9 +90,28 @@ const NoteState = (props) => {
     setProgress(100);
   };
 
+  // Add note form handilng
+  const [addNoteForm, setAddNoteForm] = useState(false);
+  const handleOpenAddNoteForm = () => {
+    setAddNoteForm(true);
+  };
+  const handleCloseAddNoteForm = () => {
+    setAddNoteForm(false);
+  };
+
   return (
     <NoteContext.Provider
-      value={{ notes, addNote, editNote, deleteNote, getNotes }}
+      value={{
+        notes,
+        addNote,
+        editNote,
+        deleteNote,
+        getNotes,
+        addNoteForm,
+        setAddNoteForm,
+        handleCloseAddNoteForm,
+        handleOpenAddNoteForm,
+      }}
     >
       {props.children}
     </NoteContext.Provider>

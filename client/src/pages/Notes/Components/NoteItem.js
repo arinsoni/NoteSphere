@@ -4,6 +4,8 @@ import React, { useContext } from "react";
 import { CardContent, Typography, IconButton } from "@mui/material";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import { styled } from "@mui/system";
+//icons
+
 
 //Note Components
 import { StyledCard } from "./NotesComponents";
@@ -11,6 +13,7 @@ import { StyledCard } from "./NotesComponents";
 //context
 import noteContext from "../../../context/notes/noteContext";
 import appContext from "../../../context/app/appContext";
+import MyBox from "../../../components/MyBox";
 
 const Title = styled(Typography)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#fff" : "#202940",
@@ -19,7 +22,7 @@ const Title = styled(Typography)(({ theme }) => ({
 const NoteItem = ({ note, updateNote }) => {
   //note context
   const NoteCotext = useContext(noteContext);
-  const { deleteNote } = NoteCotext;
+  const { deleteNote, notes } = NoteCotext;
 
   //app context
   const AppContext = useContext(appContext);
@@ -35,6 +38,7 @@ const NoteItem = ({ note, updateNote }) => {
   };
 
   return (
+  
     <StyledCard>
       <CardContent>
         <Title variant="h6" component="div" style={{color: theme.palette.font.main, textTransform: "capitalize"}}>
@@ -50,14 +54,16 @@ const NoteItem = ({ note, updateNote }) => {
       <div item xs={12} md={6} xl={4} sx={{ ml: "auto" }}
         style={{ display: "flex", justifyContent: "flex-end", position: "absolute", bottom: "0", right: "0"}}
       >
-        <IconButton onClick={handleDelete}>
+        <IconButton onClick={handleDelete} sx={{color: theme.palette.secondary.dark}} >
           <DeleteOutline />
         </IconButton>
-        <IconButton onClick={handleEdit}>
+        <IconButton onClick={handleEdit} sx={{color: theme.palette.secondary.dark}} >
           <Edit />
         </IconButton>
       </div>
     </StyledCard>
+
+  
   );
 };
 

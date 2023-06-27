@@ -35,6 +35,7 @@ export const RootContainer = styled(Box)(() => {
     flexDirection: "column",
     gap: "16px",
     padding: "16px",
+    paddingTop: "34px",
     background: theme.palette.primary.main,
     borderRadius: "8px",
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
@@ -60,7 +61,7 @@ export const SubmitButton = styled(Button)(({}) => {
 export const StyledCard = styled(Card)(() => {
   const { theme } = useContext(appContext)
   return {
-  width: "300px",
+  height: "100%",
   marginBottom: "16px", 
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.4)",
   position:"relative",
