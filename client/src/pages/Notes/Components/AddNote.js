@@ -70,13 +70,13 @@ const AddNote = (props) => {
           onChange={onChange}
           InputLabelProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#4f4f4f",
+              color: theme.palette.secondary.dark,
             },
           }}
           InputProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#000",
-              background: theme === "dark" ? "#333" : "#fff",
+              color: theme.palette.font.main,
+              background: theme.palette.primary.main
             },
           }}
         />
@@ -93,13 +93,13 @@ const AddNote = (props) => {
           onChange={onChange}
           InputLabelProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#4f4f4f",
+              color: theme.palette.secondary.dark,
             },
           }}
           InputProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#000",
-              background: theme === "dark" ? "#333" : "#fff",
+              color: theme.palette.font.main,
+              background: theme.palette.primary.main
             },
           }}
         />
@@ -114,13 +114,13 @@ const AddNote = (props) => {
           onChange={onChange}
           InputLabelProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#4f4f4f",
+              color: theme.palette.secondary.dark,
             },
           }}
           InputProps={{
             style: {
-              color: theme === "dark" ? "#fff" : "#000",
-              background: theme === "dark" ? "#333" : "#fff",
+              color: theme.palette.font.main,
+              background: theme.palette.primary.main
             },
           }}
         />

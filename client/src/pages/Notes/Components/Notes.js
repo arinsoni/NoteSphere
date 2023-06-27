@@ -16,7 +16,9 @@ import {
 } from "./NotesComponents";
 
 //MUI Components
-import { Modal } from "@mui/material";
+import { Modal, Box } from "@mui/material";
+import Grid from "@mui/material/Grid";
+
 
 const Notes = (props) => {
   //Note Context
@@ -178,21 +180,24 @@ const Notes = (props) => {
           </Modal>
 
           <AddNote/>
-          <div className="row d-flex">
+          <Grid container spacing={2} alignItems="center" margin="0">
             {notes.length === 0 && "No notes available"}
             {notes.map((note) => {
               return (
-                <NoteItem
+                <Grid item xs={12} md={6} xl={4}>
+                  <NoteItem
                   key={note._id}
                   note={note}
                   
                   updateNote={updateNote}
                 />
+                </Grid>
+                
               );
             })}
             {user && user.firstName && <p>Name: {user.verified}</p>}
             {user && user.firstName && <p>Name: {user.firstName}</p>}
-          </div>
+          </Grid>
         </div>
       )}
     </>

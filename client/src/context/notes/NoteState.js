@@ -22,7 +22,7 @@ const NoteState = (props) => {
     const json = await response.json();
     setNotes(json);
   };
-
+  //add a note
   const addNote = async (title, description, tag) => {
     setProgress(20);
     const response = await fetch(`${host}/notes/addNotes`, {
@@ -39,7 +39,7 @@ const NoteState = (props) => {
     setNotes([note, ...notes]);
     setProgress(80);
     setProgress(100);
-    showAlert(1, "Note added successfully");
+    showAlert(0, "Note added successfully");
   };
 
   // deleting Note

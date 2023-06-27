@@ -23,7 +23,7 @@ const NoteItem = ({ note, updateNote }) => {
 
   //app context
   const AppContext = useContext(appContext);
-  const { themeMode } = AppContext;
+  const { themeMode, theme } = AppContext;
 
   const handleDelete = () => {
     deleteNote(note._id);
@@ -35,20 +35,20 @@ const NoteItem = ({ note, updateNote }) => {
   };
 
   return (
-    <StyledCard data-thememode={themeMode}>
+    <StyledCard>
       <CardContent>
-        <Title variant="h6" component="div">
+        <Title variant="h6" component="div" style={{color: theme.palette.font.main, textTransform: "capitalize"}}>
           {note.title}
         </Title>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
+        <Typography variant="body2" color="text.secondary" gutterBottom style={{color: theme.palette.font.main, textTransform: "capitalize"}}>
           {note.description}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" style={{color: theme.palette.font.main, textTransform: "capitalize"}}>
           {note.tag}
         </Typography>
       </CardContent>
-      <div
-        style={{ display: "flex", justifyContent: "flex-end", padding: "8px" }}
+      <div item xs={12} md={6} xl={4} sx={{ ml: "auto" }}
+        style={{ display: "flex", justifyContent: "flex-end", position: "absolute", bottom: "0", right: "0"}}
       >
         <IconButton onClick={handleDelete}>
           <DeleteOutline />
