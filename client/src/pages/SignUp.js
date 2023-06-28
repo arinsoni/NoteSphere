@@ -29,6 +29,7 @@ const SignUp = (props) => {
   //hiding navbar
   useEffect(() => {
     setShowNav(false);
+    return setShowNav(true);
   }, []);
 
   // hide passwords

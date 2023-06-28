@@ -8,20 +8,18 @@ import StyleBox from "./StyleBox";
 
 const AdditionalFeatures = () => {
   const AppContext = useContext(app_context);
-  const { theme, toggleTheme } = AppContext;
+  const { theme, toggleTheme, themeMode } = AppContext;
 
-  useEffect(() => {
-    const isDarkMode = localStorage.getItem("darkMode") === "true";
-    if (isDarkMode) {
-      toggleTheme();
-    }
-  }, []);
+
 
   const handleThemeToggle = () => {
     toggleTheme();
-    const isDarkMode = theme.palette.mode === "dark";
-    localStorage.setItem("darkMode", isDarkMode);
   };
+
+  useEffect(() => {
+    const isDarkMode = themeMode === "dark";
+    console.log("is dark mode set:", isDarkMode, themeMode);
+  }, [themeMode]);
 
   const myTheme = createTheme({
     components: {

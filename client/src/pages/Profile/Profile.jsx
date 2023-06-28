@@ -41,14 +41,8 @@ const Profile = () => {
   //context
   const AppContext = useContext(appContext);
   const { theme, setShowNav, count  } = AppContext;
-  console.log("profile counr: " + count)
-  // hide Navbar
-  useEffect(() => {
-     setShowNav(false);
-    return () => {
-       setShowNav(true);
-    };
-  }, []);
+
+  
 
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");

@@ -7,9 +7,7 @@ import NavBar from "../components/NavBar";
 const MainPage = ({ children }) => {
   const AppContext = useContext(app_context);
   const { isSideNavOpen } = AppContext;
-  useEffect(() => {
-    console.log("width: " + window.innerWidth);
-  }, [window.innerWidth]);
+
 
   return (
     <Box sx={{ display: "flex" }}>
