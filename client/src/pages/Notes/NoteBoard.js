@@ -50,14 +50,14 @@ const NoteBoard = () => {
         mx={2}
         my={2}
       >
-        <IconButton>
+        <IconButton onClick={handleOpenAddNoteForm}>
           <AddIcon
             style={{
               color: theme.palette.primary.main,
               transform: addNoteForm && "rotate(45deg)",
               transition: "transform 0.3s ease",
             }}
-            onClick={handleOpenAddNoteForm}
+            
           />
         </IconButton>
       </Box>

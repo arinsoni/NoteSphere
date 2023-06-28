@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-  firstName: {
+  
+  name: {
     type: String,
     required: true,
     min: 2,

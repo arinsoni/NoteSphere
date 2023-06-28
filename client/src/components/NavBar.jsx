@@ -137,9 +137,9 @@ const NavBar = () => {
             >
               <IconButton onClick={handleSideNavbar}>
                 {!showSideNav ? (
-                  <MenuRoundedIcon style={{ height: "23px", color: "white" }} />
+                  <MenuRoundedIcon style={{ height: "23px", color: theme.palette.secondary.dark }} />
                 ) : (
-                  <MenuOpenRoundedIcon style={{ height: "23px", color: "white" }} />
+                  <MenuOpenRoundedIcon style={{ height: "23px", color: theme.palette.secondary.dark }} />
                 )}
               </IconButton>
             </StyleBox>

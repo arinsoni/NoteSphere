@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import SideNav from "../components/SideNav";
 import app_context from "../context/app/appContext";
-import NavBar from "../components/NavBar";
+
 
 const MainPage = ({ children }) => {
   const AppContext = useContext(app_context);
@@ -19,17 +19,19 @@ const MainPage = ({ children }) => {
         <Box
           sx={{
             position: "absolute",
-            top: 60,
+            top: 80,
             right: 0,
             bottom: 0,
-            left: isSideNavOpen ? "280px" : 0,
-            width: isSideNavOpen ? `calc(100% - 280px)` : "100%",
+            left: isSideNavOpen ? "300px" : 10,
+            right: isSideNavOpen ? "10px" : 10,
+            width: isSideNavOpen ? `calc(1200px-${window.innerWidth})` : "1400",
             zIndex: "-1",
           }}
         >
           {children}
         </Box>
       </Box>
+      
     </Box>
   );
 };

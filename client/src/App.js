@@ -29,57 +29,40 @@ import MyAlert from "./components/Alert";
 
 const App = () => {
   // app Context
-  const { showNav, alert, progress } = useContext(appContext);
+  const { showNav, alert, progress, theme } = useContext(appContext);
 
   return (
-    
     <Router>
-    
-        <UserState >
-          
-          
-            {showNav &&  <NavBar />}
-            <LoadingBar height={5} color="#f11946" progress={progress} />
-            <MyAlert alert={alert} />
-            <div className="container">
-              <Routes>
-                <Route exact path="/:id/noteboard" element={<NoteBoard />} />
-                <Route exact path="/" element={<About />} />
-                <Route
-                  exact
-                  path="/login"
-                  element={<LogIn  />}
-                />
-                <Route
-                  exact
-                  path="/signup"
-                  element={<SignUp  />}
-                />
-                <Route
-                  exact
-                  path="/auth/:id/verify/:token"
-                  element={<EmailVerify  />}
-                />
-                <Route
-                  exact
-                  path="/auth/forgot-password"
-                  element={<ForgotPassword />}
-                />
-                <Route
-                  exact
-                  path="/auth/create-password/:createPasswordToken"
-                  element={<CreatePassword />}
-                />
-                <Route exact path="/dashboard" element={<Dashboard />} />
-              </Routes>
-            </div>
-            
-
-          
-        </UserState>
+      <UserState>
+        {showNav && <NavBar />}
+        <LoadingBar height={5} color={theme.palette.secondary.dark} progress={progress} />
+        <MyAlert alert={alert} />
+        <div className="container">
+          <Routes>
+            <Route exact path="/:id/noteboard" element={<NoteBoard />} />
+            <Route exact path="/" element={<About />} />
+            <Route exact path="/login" element={<LogIn />} />
+            <Route exact path="/signup" element={<SignUp />} />
+            <Route
+              exact
+              path="/auth/:id/verify/:token"
+              element={<EmailVerify />}
+            />
+            <Route
+              exact
+              path="/auth/forgot-password"
+              element={<ForgotPassword />}
+            />
+            <Route
+              exact
+              path="/auth/create-password/:createPasswordToken"
+              element={<CreatePassword />}
+            />
+            <Route exact path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </div>
+      </UserState>
     </Router>
-    
-      
   );
 };
 

@@ -20,8 +20,8 @@ const About = (props) => {
     <MainPage>
       <div>
         This is about section
-        {user && user.firstName ? (
-          <p>Name: {user.firstName}</p>
+        {user && user.name ? (
+          <p>Name: {user.name}</p>
         ) : (
           <p>
             {" "}

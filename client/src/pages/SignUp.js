@@ -29,7 +29,6 @@ const SignUp = (props) => {
   //hiding navbar
   useEffect(() => {
     setShowNav(false);
-    return setShowNav(true);
   }, []);
 
   // hide passwords
@@ -48,7 +47,7 @@ const SignUp = (props) => {
 
   // formik Schema
   const registerSchema = Yup.object().shape({
-    firstName: Yup.string()
+    name: Yup.string()
       .required()
       .min(3)
       .max(25)
@@ -74,7 +73,7 @@ const SignUp = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
+      name: "",
       email: "",
       password: "",
       cpassword: "",
@@ -84,13 +83,13 @@ const SignUp = (props) => {
     onSubmit: async (values, action) => {
       setProgress(30);
       console.log("inside register function");
-      const { firstName, email, password, cpassword } = values;
+      const { name, email, password, cpassword } = values;
       const response = await fetch("http://localhost:5000/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ firstName, email, password, cpassword }),
+        body: JSON.stringify({ name, email, password, cpassword }),
       });
       setProgress(60);
 
@@ -157,10 +156,10 @@ const SignUp = (props) => {
           variant="body2"
           gutterBottom
           style={{
-            color: theme.palette.font.main,
+            color: "#344767",
             textTransform: "capitalize",
             fontSize: "20px",
-            color: theme.palette.font.dark,
+            color: "white",
             fontWeight: 500,
           }}
         >
@@ -170,10 +169,10 @@ const SignUp = (props) => {
           variant="body2"
           gutterBottom
           style={{
-            color: theme.palette.font.main,
+            color: "#344767",
             textTransform: "capitalize",
             fontSize: "15px",
-            color: theme.palette.font.dark,
+            color: "white",
             fontWeight: 300,
           }}
         >
@@ -190,21 +189,21 @@ const SignUp = (props) => {
           maxWidth: "400px", // Set a maximum width for the card
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.4)",
           position: "relative",
-          background: theme.palette.primary.main,
+          background: "white",
           borderRadius: "15px",
-          border: `2px solid ${theme.palette.font.dark}`,
+          border: `2px solid ${"white"}`,
           mx: "auto", // Center the card horizontally
         }}
       >
         <CardContent>
           <form onSubmit={handleSubmit}>
             <TextField
-              {...getFieldProps("firstName")}
+              {...getFieldProps("name")}
               onChange={handleChange}
               onBlur={handleBlur}
-              id="firstName"
-              name="firstName"
-              value={values.firstName}
+              id="name"
+              name="name"
+              value={values.name}
               label="Name"
               fullWidth
               size="small"
@@ -216,8 +215,8 @@ const SignUp = (props) => {
                 autoComplete: "off",
               }}
             />
-            {errors.firstName && touched.firstName ? (
-              <Alert severity="error">{errors.firstName}</Alert>
+            {errors.name && touched.name ? (
+              <Alert severity="error">{errors.name}</Alert>
             ) : null}
             <TextField
               {...getFieldProps("email")}
@@ -325,20 +324,21 @@ const SignUp = (props) => {
                 paddingTop: "10px",
                 paddingBottom: "10px",
                 marginTop: "10px",
-                color: theme.palette.font.dark,
-                    cursor: "pointer",
+                color: "white",
+                cursor: "pointer",
               }}
             >
               Submit
             </button>
           </form>
           <Typography
+            p={3}
             variant="body2"
             gutterBottom
             style={{
               textTransform: "capitalize",
               fontSize: "15px",
-              color: theme.palette.font.main,
+              color: "#344767",
               fontWeight: 300,
               alignItems: "center",
               textAlign: "center",

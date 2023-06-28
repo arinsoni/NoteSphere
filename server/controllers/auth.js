@@ -11,7 +11,7 @@ const sendEmail = require("../sendEmails");
 const register = async (req, res) => {
   let success = false;
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { name, lastName, email, password } = req.body;
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
@@ -26,7 +26,7 @@ const register = async (req, res) => {
     }
 
     const newUser = new User({
-      firstName,
+      name,
       lastName,
       email,
       password: passwordHash,

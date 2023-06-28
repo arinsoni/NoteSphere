@@ -51,7 +51,7 @@ const NoteItem = ({ note, updateNote }) => {
           {note.tag}
         </Typography>
       </CardContent>
-      <div item xs={12} md={6} xl={4} sx={{ ml: "auto" }}
+      <div xs={12} md={6} xl={4} sx={{ ml: "auto" }}
         style={{ display: "flex", justifyContent: "flex-end", position: "absolute", bottom: "0", right: "0"}}
       >
         <IconButton onClick={handleDelete} sx={{color: theme.palette.secondary.dark}} >

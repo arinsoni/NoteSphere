@@ -34,6 +34,7 @@ import appContext from "../../context/app/appContext";
 
 //alert
 import myAlert from "../../components/Alert"
+import Footer from "../../components/Footer";
 
 
 const Profile = () => {
@@ -292,6 +293,7 @@ const Profile = () => {
        
        
       </Card>
+      <Footer/>
     </ThemeProvider>
   );
 };

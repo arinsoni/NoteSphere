@@ -166,10 +166,10 @@ const LogIn = (props) => {
               variant="body2"
               gutterBottom
               style={{
-                color: theme.palette.font.main,
+                color: "#344767",
                 textTransform: "capitalize",
                 fontSize: "20px",
-                color: theme.palette.font.dark,
+                color: "white",
                 fontWeight: 500,
               }}
             >
@@ -179,10 +179,10 @@ const LogIn = (props) => {
               variant="body2"
               gutterBottom
               style={{
-                color: theme.palette.font.main,
+                color: "#344767",
                 textTransform: "capitalize",
                 fontSize: "15px",
-                color: theme.palette.font.dark,
+                color: "white",
                 fontWeight: 300,
               }}
             >
@@ -199,8 +199,8 @@ const LogIn = (props) => {
               maxWidth: "400px", // Set a maximum width for the card
               boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.4)",
               position: "relative",
-              background: theme.palette.primary.main,
-              border: `2px solid ${theme.palette.font.dark}`,
+              background: "white",
+              border: `2px solid ${"white"}`,
               mx: "auto", // Center the card horizontally
             }}
           >
@@ -276,7 +276,7 @@ const LogIn = (props) => {
                     paddingTop: "10px",
                     paddingBottom: "10px",
                     marginTop: "10px",
-                    color: theme.palette.font.dark,
+                    color: "white",
                     cursor: "pointer",
                   }}
                 >
@@ -285,12 +285,13 @@ const LogIn = (props) => {
               </form>
             </CardContent>
             <Typography
+            p={3}
             variant="body2"
             gutterBottom
             style={{
               textTransform: "capitalize",
               fontSize: "15px",
-              color: theme.palette.font.main,
+              color: "#344767",
               fontWeight: 300,
               alignItems: "center",
               textAlign: "center",

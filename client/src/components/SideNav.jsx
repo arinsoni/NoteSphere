@@ -29,7 +29,7 @@ const SideNav = () => {
     theme,
     handleSideNav,
     setProgress,
-    count
+    count,
   } = AppContext;
 
   const UserContext = useContext(user_conetxt);
@@ -48,50 +48,48 @@ const SideNav = () => {
     const SelectedIcon = icon;
     return (
       <Box
-  mt={2.5}
-  mr={1}
-  ml={1}
-  {...rest}
-  zIndex="1"
-  height="50px"
-  display="flex"
-  alignItems="center"
-  borderRadius="7px"
-  sx={{
-    background: active
-      ? "linear-gradient(195deg, #49a3f1, #1A73E8)"
-      : "transparent",
-  }}
->
-  <Link
-    to={redirectTo}
-    style={{
-      textDecoration: "none",
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      alignItems: "center",
-    }}
-    onClick={onClick}
-  >
-    <Box display="flex" alignItems="center" marginLeft="10px">
-      <StyleBox
-        textTransform="capitalize"
-        color="white"
-        paddingTop="0"
-        marginRight="10px"
+        mt={2.5}
+        mr={1}
+        ml={1}
+        {...rest}
+        zIndex="1"
+        height="50px"
+        display="flex"
+        alignItems="center"
+        borderRadius="7px"
+        sx={{
+          background: active
+            ? "linear-gradient(195deg, #49a3f1, #1A73E8)"
+            : "transparent",
+        }}
       >
-        <SelectedIcon style={iconStyle} />
-      </StyleBox>
+        <Link
+          to={redirectTo}
+          style={{
+            textDecoration: "none",
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+          onClick={onClick}
+        >
+          <Box display="flex" alignItems="center" marginLeft="10px">
+            <StyleBox
+              textTransform="capitalize"
+              color="white"
+              paddingTop="0"
+              marginRight="10px"
+            >
+              <SelectedIcon style={iconStyle} />
+            </StyleBox>
 
-      <StyleBox textTransform="capitalize" color="white" paddingTop="0">
-        {label}
-      </StyleBox>
-    </Box>
-  </Link>
-</Box>
-
-    
+            <StyleBox textTransform="capitalize" color="white" paddingTop="0">
+              {label}
+            </StyleBox>
+          </Box>
+        </Link>
+      </Box>
     );
   };
   // // divider style
@@ -149,6 +147,7 @@ const SideNav = () => {
   const handleLogout = () => {
     setProgress(50);
     localStorage.removeItem("token");
+    setProgress(100);
     navigate("/login");
     setProgress(100);
     setIsLogin(false);
@@ -210,9 +209,7 @@ const SideNav = () => {
           onClick={handleLogout}
           redirectTo="/login"
         />
-        <div>
-          {count}
-        </div>
+        <div>{count}</div>
       </Box>
     </ThemeProvider>
   );

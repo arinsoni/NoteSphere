@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import appContext from "../context/app/appContext";
 
-const footer = () => {
+const Footer = () => {
+  const { theme, isSideNavOpen } = useContext(appContext)
   return (
     <Box
+      component="footer"
       sx={{
-        display: "flex",
-        flexDirection: "row",
+        alignContent: "center",
+        padding: "16px",
+        textAlign: "center",
+        margin : "0 25px",
+        
+        
+
       }}
     >
-      <Typography>Hello</Typography>
+      <Typography variant="body2" color={theme.palette.secondary.dark}  >
+        © 2023 All rights reserved.
+      </Typography>
     </Box>
   );
 };
 
-export default footer;
+export default Footer;
