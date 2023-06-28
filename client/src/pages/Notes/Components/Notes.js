@@ -27,6 +27,7 @@ import noteImg from "../../../assets/images/note.png"
 
 
 const Notes = (props) => {
+  let navigate = useNavigate();
   //Note Context
   const NoteContext = useContext(noteContext);
   const {
@@ -65,7 +66,7 @@ const Notes = (props) => {
   const [open, setOpen] = useState(false);
 
   // if user got delted from database
-  let navigate = useNavigate();
+  
   const checkUserStatus = async (e) => {
     try {
       const response = await fetch(

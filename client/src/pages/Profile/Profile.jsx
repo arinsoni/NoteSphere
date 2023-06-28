@@ -31,20 +31,23 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 //contexts
 import appContext from "../../context/app/appContext";
+import userContext from "../../context/user/userContext";
 
 //alert
-import myAlert from "../../components/Alert"
 import Footer from "../../components/Footer";
 
 
 const Profile = () => {
 
-  //context
+  //navigation
+  let navigate = useNavigate();
+
+  //app context
   const AppContext = useContext(appContext);
   const { theme, setShowNav, count  } = AppContext;
 
-  
-
+  // user context
+  const { getUser } = useContext(userContext);
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
@@ -75,6 +78,16 @@ const Profile = () => {
   const handleSetTabValue = (event, newValue) => {
     setTabValue(newValue);
   };
+
+  //authentication
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getUser();
+    } else {
+      navigate("/");
+    }
+    // eslint-disable-next-line
+  }, []);
 
   // tab style
   let tabStyle = {
