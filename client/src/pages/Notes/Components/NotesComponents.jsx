@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { Card, Box, TextField, Button } from "@mui/material";
 import appContext from "../../../context/app/appContext";
 
-export const StyledTextField = styled(TextField)(({}) => {
+export const StyledTextField = styled(TextField)(({...rest}) => {
   const { theme } = useContext(appContext);
   return {
     "& .MuiInputLabel-root": {

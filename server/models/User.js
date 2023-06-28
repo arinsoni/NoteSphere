@@ -2,7 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-  
+  bio: {
+    type: String,
+    min: 10,
+    max: 100
+  },
   name: {
     type: String,
     required: true,

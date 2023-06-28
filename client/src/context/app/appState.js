@@ -5,7 +5,7 @@ import breakpoints from "../../assets/base/breakpoints";
 
 const AppState = ({ children }) => {
   //theme
-  const [themeMode, setThemeMode] = useState("dark");
+  const [themeMode, setThemeMode] = useState("light");
 
   //hiding navbar
   const [showNav, setShowNav] = useState(true);

@@ -225,7 +225,30 @@ const updateMail = async (req, res) => {
       .json({ message: "E-mail Id updated Successfully", success })
 
   } catch (error) {
-    console.log(error)
+    
+    res 
+      .status(400)
+      .json({ message: error.message })
+  }
+}
+
+// update info
+const info = async (req, res) => {
+  try {
+    const { bio, email } = req.body;
+    const user = await User.findOne({ email: email });
+    if(!user){
+      return res
+        .status(400)
+        .json({ message: "No User found with this Mail-Id" })
+    }
+    user.bio = bio;
+    await user.save();
+    success = true;
+    return res
+      .status(200)
+      .json({ message: "Bio Updated Successfully", success, bio })
+  } catch (error) {
     res 
       .status(400)
       .json({ message: error.message })
@@ -240,5 +263,6 @@ module.exports = {
   checkuserstatus,
   requestPasswordReset,
   requestForgotPassword,
-  updateMail
+  updateMail,
+  info
 };

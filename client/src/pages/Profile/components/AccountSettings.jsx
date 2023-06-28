@@ -3,11 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 //My Components
 import StyleBox from "./StyleBox";
-import {
-  RootContainer,
-  StyledTextField,
-  SubmitButton,
-} from "../../Notes/Components/NotesComponents";
+
 
 // MUi Components
 import { Card, Box, Modal } from "@mui/material";
@@ -29,7 +25,6 @@ import appContext from "../../../context/app/appContext";
 import userContext from "../../../context/user/userContext";
 
 //alert
-import MyAlert from "../../../components/Alert";
 import ModalPopup from "../Modals/ModalPopup";
 import ModalForm from "../Modals/ModalForm";
 
@@ -153,7 +148,7 @@ const AccountSettings = () => {
       showAlert(0, `OTP has been sent to your mail-id:  ${email}`);
     } else {
       showAlert(1, json.message);
-      alert("error");
+      ;
     }
     setProgress(100);
   };
@@ -330,9 +325,11 @@ const AccountSettings = () => {
         label_2="Old Password"
         value_2={password}
         fun_2={setPassword}
+        isPassword_2={true}
         label_3="New Password"
         value_3={confirmPassword}
         fun_3={setConfirmPassword}
+        isPassword_3={true}
         onSubmit={handleChangePasswordForm}
       />
       {/* Form Popoup for changing password ------- X ------ */}
@@ -380,6 +377,7 @@ const AccountSettings = () => {
         open={openAccDeleteForm}
         onClose={handleAccDeleteFormClose}
         label_1="Password"
+        isPassword_1={true}
         value_1={accDeletePassword}
         fun_1={setAccDeletePassword}
         onSubmit={handleAccDelete}
