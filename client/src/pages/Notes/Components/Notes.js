@@ -23,8 +23,7 @@ import MyBox from "../../../components/MyBox";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 
 //assets
-import noteImg from "../../../assets/images/note.png"
-
+import noteImg from "../../../assets/images/note.png";
 
 const Notes = (props) => {
   let navigate = useNavigate();
@@ -66,7 +65,7 @@ const Notes = (props) => {
   const [open, setOpen] = useState(false);
 
   // if user got delted from database
-  
+
   const checkUserStatus = async (e) => {
     try {
       const response = await fetch(
@@ -115,13 +114,13 @@ const Notes = (props) => {
   const handleClick = (e) => {
     editNote(note.id, note.etitle, note.edescription, note.etag);
     setOpen(false);
-    showAlert(1, "Updated Succesfully");
+    showAlert(0, "Updated Succesfully");
   };
 
-  // const onChange = (e) => {
-  //   console.log(e.target.name)
-  //   setNote({ ...note, [e.target.name]: e.target.value });
-  // };
+  const handleChange = (e) => {
+    console.log(e.target.name);
+    setNote({ ...note, [e.target.name]: e.target.value });
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -182,7 +181,10 @@ const Notes = (props) => {
                   margin="normal"
                   variant="outlined"
                   id="etitle"
+                  name="etitle"
                   value={note.etitle}
+                  defaultValue={note.etitle}
+                  onChange={handleChange}
                 />
 
                 <StyledTextField
@@ -192,8 +194,11 @@ const Notes = (props) => {
                   variant="outlined"
                   multiline
                   rows={4}
+                  name="edescription"
                   id="edescription"
                   value={note.edescription}
+                  defaultValue={note.edescription}
+                  onChange={handleChange}
                 />
 
                 <StyledTextField
@@ -202,7 +207,10 @@ const Notes = (props) => {
                   margin="normal"
                   variant="outlined"
                   id="etag"
+                  name="etag"
                   value={note.etag}
+                  defaultValue={note.etag}
+                  onChange={handleChange}
                 />
 
                 <SubmitButton
@@ -221,17 +229,11 @@ const Notes = (props) => {
             handleCloseAddNoteForm={handleCloseAddNoteForm}
           />
           <Box mt={5} mb={3}>
-         
-            <Grid container spacing={1} m="auto"> 
-             
+            <Grid container spacing={1} m="auto">
               {notes.map((note) => {
                 return (
-                  <Grid item xs={12} md={6} xl={4} p={2}  key={note._id}>
-                    <NoteItem
-                     
-                      note={note}
-                      updateNote={updateNote}
-                    />
+                  <Grid item xs={12} md={6} xl={4} p={2} key={note._id}>
+                    <NoteItem note={note} updateNote={updateNote} />
                   </Grid>
                 );
               })}

@@ -17,12 +17,10 @@ const register = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (user) {
-      return res
-        .status(400)
-        .json({
-          success,
-          error: "Sorry! A user with same email address already exist",
-        });
+      return res.status(400).json({
+        success,
+        error: "Sorry! A user with same email address already exist",
+      });
     }
 
     const newUser = new User({
@@ -37,6 +35,7 @@ const register = async (req, res) => {
       userId: newUser._id,
       eToken: crypto.randomBytes(32).toString("hex"),
     }).save();
+
     const url = `${process.env.BASE_URL}auth/${newUser._id}/verify/${secret.eToken}`;
     await sendEmail(newUser.email, "Verify Email", url);
     success = true;
@@ -53,11 +52,9 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    console.log("login: " + user )
+    console.log("login: " + user);
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: "User doesn't exist" });
+      return res.status(400).json({ message: "User doesn't exist" });
     }
     const isCorrect = await bcrypt.compare(password, user.password);
     if (!isCorrect) {
@@ -65,15 +62,13 @@ const login = async (req, res) => {
         .status(400)
         .json({ message: "Please try to login with correct credentials" });
     }
-    
-    
+
     if (!user.verified) {
-      console.log("False hai")
+      console.log("False hai");
       return res
         .status(400)
         .send({ message: "An Email sent to your account please verify" });
     }
-    
 
     const data = {
       user: {
@@ -109,19 +104,14 @@ const deleteUser = async (req, res) => {
     const userId = req.user.id;
     const { accDeletePassword } = req.body;
     const user = await User.findById(req.user.id);
-    console.log("acc deketion" + accDeletePassword)
+    console.log("acc deketion" + accDeletePassword);
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: "No user find" });
+      return res.status(400).json({ message: "No user find" });
     }
 
-    
     const isCorrect = await bcrypt.compare(accDeletePassword, user.password);
     if (!isCorrect) {
-      return res
-        .status(400)
-        .json({ message: "Your password is incorrect" });
+      return res.status(400).json({ message: "Your password is incorrect" });
     }
     await Notes.deleteMany({ user: userId });
     await User.findByIdAndDelete(userId);
@@ -211,10 +201,10 @@ const updateMail = async (req, res) => {
     const { oldMailId, newMailId } = req.body;
 
     const user = await User.findOne({ email: oldMailId });
-    if(!user){
+    if (!user) {
       return res
         .status(400)
-        .json({ message: "No User found with this Mail-Id" })
+        .json({ message: "No User found with this Mail-Id" });
     }
 
     user.email = newMailId;
@@ -222,38 +212,35 @@ const updateMail = async (req, res) => {
     success = true;
     return res
       .status(200)
-      .json({ message: "E-mail Id updated Successfully", success })
-
+      .json({ message: "E-mail Id updated Successfully", success });
   } catch (error) {
-    
-    res 
-      .status(400)
-      .json({ message: error.message })
+    res.status(400).json({ message: error.message });
   }
-}
+};
 
 // update info
 const info = async (req, res) => {
   try {
-    const { bio, email } = req.body;
+    const { newBio, newName, email } = req.body;
     const user = await User.findOne({ email: email });
-    if(!user){
+    if (!user) {
       return res
         .status(400)
-        .json({ message: "No User found with this Mail-Id" })
+        .json({ message: "No User found with this Mail-Id" });
     }
-    user.bio = bio;
+
+    user.bio = newBio;
+    user.name = newName;
+    console.log("name: " + newName, user.name, newBio, user.bio)
     await user.save();
     success = true;
     return res
       .status(200)
-      .json({ message: "Bio Updated Successfully", success, bio })
+      .json({ message: "Bio Updated Successfully", success, newBio, newName });
   } catch (error) {
-    res 
-      .status(400)
-      .json({ message: error.message })
+    res.status(400).json({ message: error.message });
   }
-}
+};
 
 module.exports = {
   register,
@@ -264,5 +251,5 @@ module.exports = {
   requestPasswordReset,
   requestForgotPassword,
   updateMail,
-  info
+  info,
 };

@@ -193,8 +193,8 @@ const SideNav = () => {
         <NavItem
           label="Profile"
           icon={PersonRoundedIcon}
-          redirectTo="/dashboard"
-          active={window.location.pathname === "/dashboard"}
+          redirectTo={`/${id}/dashboard`}
+          active={window.location.pathname === `/${id}/dashboard`}
         />
         <NavItem
           label="About Us"

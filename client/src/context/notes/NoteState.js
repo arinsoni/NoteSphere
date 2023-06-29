@@ -60,7 +60,7 @@ const NoteState = (props) => {
     });
     setNotes(newNotes);
     setProgress(100);
-    showAlert(1, "Note deleted successfully");
+    showAlert(0, "Note deleted successfully");
   };
 
   const editNote = async (id, title, description, tag) => {

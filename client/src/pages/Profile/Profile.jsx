@@ -42,16 +42,18 @@ const Profile = () => {
   //navigation
   let navigate = useNavigate();
 
+  
+
   //app context
   const AppContext = useContext(appContext);
-  const { theme, setShowNav, count  } = AppContext;
+  const { theme } = AppContext;
 
   // user context
   const { getUser } = useContext(userContext);
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  
+
   // divider
   const [showDivider, setShowDivider] = useState(true);
   useEffect(() => {
@@ -127,9 +129,9 @@ const Profile = () => {
           },
         },
       },
-      MuiDivider:{
-        styleOverrides:{
-          root:{
+      MuiDivider: {
+        styleOverrides: {
+          root: {
             opacity: "0.5",
           }
         }
@@ -145,10 +147,10 @@ const Profile = () => {
         width="100%"
         height="400px"
         display="flex"
-        alignItems="center" 
-        justifyContent="center" 
+        alignItems="center"
+        justifyContent="center"
         position="relative"
-        borderRadius="15px" 
+        borderRadius="15px"
         sx={{
           backgroundImage: `url(${bg})`,
           backgroundSize: "cover", // to cover the given area
@@ -280,7 +282,7 @@ const Profile = () => {
             </AppBar>
           </Grid>
         </Grid>
-        
+
         <Box mt={5} mb={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6} xl={4}>
@@ -289,24 +291,24 @@ const Profile = () => {
 
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
               {showDivider && (
-                <Divider orientation="vertical" color= {theme.palette.alt.main}/>
+                <Divider orientation="vertical" color={theme.palette.alt.main} />
               )}
               <ProfileInfoCard />
             </Grid>
 
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
               {showDivider && (
-                <Divider orientation="vertical" color= {theme.palette.alt.main}  />
+                <Divider orientation="vertical" color={theme.palette.alt.main} />
               )}
 
               <AdditionalFeatures />
             </Grid>
           </Grid>
         </Box>
-       
-       
+
+
       </Card>
-      <Footer/>
+      <Footer />
     </ThemeProvider>
   );
 };

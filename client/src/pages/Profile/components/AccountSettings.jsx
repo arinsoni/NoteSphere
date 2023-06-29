@@ -148,7 +148,6 @@ const AccountSettings = () => {
       showAlert(0, `OTP has been sent to your mail-id:  ${email}`);
     } else {
       showAlert(1, json.message);
-      ;
     }
     setProgress(100);
   };
@@ -321,14 +320,17 @@ const AccountSettings = () => {
         onClose={handleCloseForm}
         label_1="OTP"
         value_1={otp}
-        fun_1={setOtp}
+        name_1="otp"
+        onChange_1={(e) => setOtp(e.target.value)}
         label_2="Old Password"
         value_2={password}
-        fun_2={setPassword}
+        name_2="password"
+        onChange_2={(e) => setPassword(e.target.value)}
         isPassword_2={true}
         label_3="New Password"
+        name_3="confirmPassword"
         value_3={confirmPassword}
-        fun_3={setConfirmPassword}
+        onChange_3={(e) => setConfirmPassword(e.target.value)}
         isPassword_3={true}
         onSubmit={handleChangePasswordForm}
       />
@@ -353,11 +355,13 @@ const AccountSettings = () => {
         open={openUpdateMailForm}
         onClose={handleUpdateMailFormClose}
         label_1="Old Email Id"
+        name_1="oldMailId"
         value_1={oldMailId}
-        fun_1={setOldMailId}
+        onChange_1={(e) => setOldMailId(e.target.value)}
         label_2="New E-Mail Id"
+        name_2="newMailId"
         value_2={newMailId}
-        fun_2={setNewMailId}
+        onChange_2={(e) => setNewMailId(e.target.value)}
         onSubmit={handleUpdateMailId}
       />
 
@@ -377,9 +381,10 @@ const AccountSettings = () => {
         open={openAccDeleteForm}
         onClose={handleAccDeleteFormClose}
         label_1="Password"
+        name_1="accDeletePassword"
         isPassword_1={true}
         value_1={accDeletePassword}
-        fun_1={setAccDeletePassword}
+        onChange_1={(e) => setAccDeletePassword(e.target.value)}
         onSubmit={handleAccDelete}
       />
 

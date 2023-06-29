@@ -8,6 +8,7 @@ import {
   Divider,
   createTheme,
   CircularProgress,
+  Modal,
 } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 //icons
@@ -16,6 +17,11 @@ import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 
 //My Components
 import StyleBox from "./StyleBox";
+import {
+  StyledTextField,
+  RootContainer,
+  SubmitButton,
+} from "../../Notes/Components/NotesComponents";
 
 //context
 import app_context from "../../../context/app/appContext";
@@ -29,7 +35,7 @@ const ProfileInfoCard = () => {
 
   //user context
   const UserContext = useContext(userContext);
-  const { user } = UserContext;
+  const { user, setUser } = UserContext;
 
   //user credentials
   const [email, setEmail] = useState("");
@@ -90,28 +96,45 @@ const ProfileInfoCard = () => {
   });
 
   // bio update
-  const [bio, setBio] = useState("");
-  const [updatedBio, setUpdatedBio] = useState("");
-  const [initialBio, setInitialBio] = useState("");
-  const [loading, setLoading] = useState(true)
+  const [info, setInfo] = useState({
+    bio: "",
+    name: "",
+  });
+  // const [bio, setBio] = useState("");
+  const [updatedInfo, setUpdatedInfo] = useState({
+    initialBio: " ",
+    initialName: " ",
+  });
 
   useEffect(() => {
-    if (user && user.bio) {
-      setInitialBio(user.bio);
-      setUpdatedBio(user.bio); // Set the initial bio value for updatedBio as well
-      setLoading(false);
+    if (user && user._id) {
+      setUpdatedInfo({
+        initialBio: user.bio,
+        initialName: user.name,
+      });
     }
   }, [user]);
 
-  const [bioFormOpen, setBioFormOpen] = useState(false);
-  const handleBioFormOpen = () => {
-    setBioFormOpen(true);
-  };
-  const handleBioFormClose = () => {
-    setBioFormOpen(false);
+  const [openBioForm, setOpenBioForm] = useState(false);
+  const changeBio = () => {
+    setOpenBioForm(true);
+    setInfo({
+      bio: user.bio,
+      name: user.name,
+    });
   };
 
-  const handleBioFormSubmit = async () => {
+  const handleClick = (e) => {
+    handleBioFormSubmit(info.bio, info.name);
+    setOpenBioForm(false);
+    showAlert(0, "Updated Successfully");
+  };
+
+  const handleClose = () => {
+    setOpenBioForm(false);
+  };
+
+  const handleBioFormSubmit = async (newBio, newName) => {
     try {
       setProgress(20);
       const response = await fetch("http://localhost:5000/auth/info", {
@@ -120,15 +143,20 @@ const ProfileInfoCard = () => {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: JSON.stringify({ bio, email }),
+        body: JSON.stringify({ newBio, newName, email }),
       });
       setProgress(40);
       const json = await response.json();
 
       if (json.success) {
         setProgress(100);
-        setUpdatedBio(json.bio); // Set the updated bio value
-        handleBioFormClose();
+        setInfo({
+          bio: json.newBio,
+          name: json.newName,
+        });
+        setUpdatedInfo({ initialBio: json.newBio, initialName: json.newName });
+
+        handleClose();
         showAlert(0, json.message);
       } else {
         showAlert(1, json.message);
@@ -160,32 +188,31 @@ const ProfileInfoCard = () => {
           <StyleBox textTransform="capitalize" color={theme.palette.font.main}>
             <ModeEditRoundedIcon
               style={iconStyle}
-              onClick={handleBioFormOpen}
+              onClick={changeBio}
+              sx={{
+                cursor: "pointer",
+              }}
             />
           </StyleBox>
         </Box>
 
         <ModalForm
-          open={bioFormOpen}
-          onClose={handleBioFormClose}
+          open={openBioForm}
+          onClose={handleClose}
           label_1="Bio"
-          value_1={bio}
-          fun_1={setBio}
-          onSubmit={handleBioFormSubmit}
+          name_1="bio"
+          value_1={info.bio}
+          onChange_1={(e) => setInfo({ ...info, bio: e.target.value })}
+          label_2="Name"
+          name_2="name"
+          value_2={info.name}
+          onChange_2={(e) => setInfo({ ...info, name: e.target.value })}
+          onSubmit={handleClick}
         />
+
         <Box p={2} letterSpacing={1}>
           <StyleBox pt={-2} pb={2}>
-            {loading ? (
-              <CircularProgress />
-            ) : (
-              <>
-                {updatedBio || initialBio ? (
-                  <p>Bio: {updatedBio || initialBio}</p>
-                ) : (
-                  <p>Tell us about yourself</p>
-                )}
-              </>
-            )}
+            {updatedInfo.initialBio}
             {/* Hey there, I'm Arin Soni, I'm Kota, Rajasthan. Ya the so called
           "Education" city :), Now I'm in IITB persuing Mech (just persuing,
           love coding though) anyways, if I'm not coding then you can find me
@@ -193,7 +220,7 @@ const ProfileInfoCard = () => {
           </StyleBox>
           {/* <Divider color={theme.palette.neutral.dark} /> */}
           <Divider />
-          <InfoCard label="Name: " info={user.name} />
+          <InfoCard label="Name: " info={updatedInfo.initialName} />
           <InfoCard label="Mobile: " info="76658-52977" />
           <InfoCard label="Email: " info={user.email} />
           <InfoCard label="Location: " info="Kota, Rajasthan" />

@@ -22,17 +22,20 @@ const ModalForm = ({
 
   label_1 = null,
   value_1,
-  fun_1,
+  onChange_1,
+  name_1,
   isPassword_1 = false,
 
   label_2 = null,
   value_2,
-  fun_2,
+  onChange_2,
+  name_2,
   isPassword_2 = false,
 
   label_3 = null,
   value_3,
-  fun_3,
+  onChange_3,
+  name_3,
   isPassword_3 = false,
 
   onSubmit,
@@ -91,10 +94,11 @@ const ModalForm = ({
           label={label_1}
           type={showPassword_1  ? "text" : "password"}
           fullWidth
+          name={name_1}
           margin="normal"
           variant="outlined"
           value={value_1}
-          onChange={(e) => fun_1(e.target.value)}
+          onChange={onChange_1}
           InputLabelProps={{
             style: {
               color: theme.palette.secondary.dark,
@@ -130,8 +134,9 @@ const ModalForm = ({
           margin="normal"
           variant="outlined"
           value={value_2}
+          name={name_2}
           type={showPassword_2  ? "text" : "password"}
-          onChange={(e) => fun_2(e.target.value)}
+          onChange={onChange_2}
           InputLabelProps={{
             style: {
               color: themeMode === "dark" ? "#fff" : "#4f4f4f",
@@ -165,8 +170,9 @@ const ModalForm = ({
           margin="normal"
           variant="outlined"
           value={value_3}
+          name={name_3}
           type={showPassword_3  ? "text" : "password"}
-          onChange={(e) => fun_3(e.target.value)}
+          onChange={onChange_3}
           InputLabelProps={{
             style: {
               color: themeMode === "dark" ? "#fff" : "#4f4f4f",

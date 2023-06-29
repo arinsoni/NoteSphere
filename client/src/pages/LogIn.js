@@ -34,7 +34,6 @@ const LogIn = (props) => {
   //hiding navbar
   useEffect(() => {
     setShowNav(false);
-    return setShowNav(true)
   }, []);
 
   // user context

@@ -1,10 +1,16 @@
 import UserContext from "./userContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+//context
+import appContext from "../app/appContext";
 
 const host = "http://localhost:5000";
 const userInitial = {};
 
+
+
 const UserState = (props) => {
+  // app context
+  const { showAlert } = useContext(appContext)
   const [user, setUser] = useState(userInitial);
   const [isLoading, setIsLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(true);
@@ -27,8 +33,12 @@ const UserState = (props) => {
       const json = await response.json();
       setUser(json);
       setIsLoading(false);
-    } catch {
-      console.log("Error fetching user data:");
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setIsLoading(false);
+      // Show an alert with the error message
+      showAlert(2, "Failed to fetch user data. Please try again later.");
+      return;
     }
   };
   // DELETED ORPHANED NOTE
@@ -49,12 +59,12 @@ const UserState = (props) => {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Orphaned notes deleted successfully");
+        // console.log("Orphaned notes deleted successfully");
       } else {
-        console.log("Error deleting orphaned notes:", data.message);
+        // console.log("Error deleting orphaned notes:", data.message);
       }
     } catch (error) {
-      console.log("Error deleting orphaned notes:", error);
+      // console.log("Error deleting orphaned notes:", error);
     }
   };
 
@@ -67,11 +77,9 @@ const UserState = (props) => {
     if (user && user._id) {
       setIsLogin(true);
       setIsFetching(false);
-      console.log(`fetch if: ${isFetching}`);
     } else {
       setIsLogin(false);
       setIsFetching(true);
-      console.log(`fetch else: ${isFetching}`);
     }
   }, [user]);
 

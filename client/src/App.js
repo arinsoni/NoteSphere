@@ -58,7 +58,7 @@ const App = () => {
               path="/auth/create-password/:createPasswordToken"
               element={<CreatePassword />}
             />
-            <Route exact path="/dashboard" element={<Dashboard />} />
+            <Route exact path="/:id/dashboard" element={<Dashboard />} />
           </Routes>
         </div>
       </UserState>
