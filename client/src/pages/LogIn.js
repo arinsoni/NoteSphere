@@ -10,7 +10,13 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Typography, Box, Card, CardContent, TextField } from "@mui/material";
+import {
+  Typography,
+  Box,
+  TextField,
+  Grid,
+  Paper,
+} from "@mui/material";
 import Alert from "@mui/joy/Alert/Alert";
 
 //context
@@ -118,93 +124,111 @@ const LogIn = (props) => {
       {isLoading ? (
         <p>Loading ....</p>
       ) : (
+<>
+      <Box>
         <Box
           sx={{
+            backgroundImage: `url(${signup_bg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            borderRadius: 5,
+            width: "calc(100%-2rem)",
+            minHeight: "35vh", //35% of the height of the viewport,
+            marginRight: "16px",
+            marginLeft: "16px",
+            marginTop: "16px",
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          marginTop: "-100px",
+          paddingLeft: "8px",
+          paddingRight: "8px",
+          width: "calc(100%-2rem)", //subtracting 2rem from the container's width, rem = font-size of the root element 
+          marginLeft: "16px",
+          marginRight: "16px",
+          
+          
+        }}
+      >
+        <Grid
+          container
+          
+          spacing={1}
+          sx={{
             display: "flex",
-            justifyContent: "flex-start", //vertically align
-            alignItems: "center", //horizontally align
-            height: "100vh",
-            flexDirection: "column",
-            backgroundColor: "#f0f2f5",
-            paddingRight: "20px",
-            paddingLeft: "20px",
+            justifyContent: "center",
+            width: "calc(100% + 8px)",
+            
           }}
         >
-          <MyBox
-            width="100%"
-            maxHeight="300px"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            borderRadius="15px"
-            position="relative"
-            margin={3}
-            sx={{
-              backgroundImage: `url(${signup_bg})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
-
-          <Box
-            width="350px"
-            height="140px"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="column"
-            zIndex={999}
-            borderRadius="15px"
-            sx={{
-              background: "linear-gradient(195deg, #49a3f1, #1A73E8)",
-              mt: -20,
-            }}
-          >
-            {/* Content */}
-            <Typography
-              variant="body2"
-              gutterBottom
-              style={{
-                color: "#344767",
-                textTransform: "capitalize",
-                fontSize: "20px",
-                color: "white",
-                fontWeight: 500,
+          <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
+            {/* Paper being by default responsive so --> */}
+            <Paper
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                position: "relative",
+                wordWrap: "break-word",
+                
               }}
             >
-              Join us Today
-            </Typography>
-            <Typography
-              variant="body2"
-              gutterBottom
-              style={{
-                color: "#344767",
-                textTransform: "capitalize",
-                fontSize: "15px",
-                color: "white",
-                fontWeight: 300,
-              }}
-            >
-              Enter your credentials to Sign-Up
-            </Typography>
-          </Box>
-
-          <Card
-            sx={{
-              mt: -12,
-              position: "relative",
-              pt: 12,
-              width: "100%", // Set width to 100% for flexibility
-              maxWidth: "400px", // Set a maximum width for the card
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.4)",
-              position: "relative",
-              background: "white",
-              border: `2px solid ${"white"}`,
-              mx: "auto", // Center the card horizontally
-            }}
-          >
-            <CardContent>
-              <form onSubmit={handleSubmit}>
+              <Box
+                sx={{
+                  background: "linear-gradient(195deg, #49a3f1, #1A73E8)",
+                  marginLeft: "16px",
+                  marginRight: "16px",
+                  marginTop: "-24px",
+                  padding: "24px",
+                  marginBottom: "8px",
+                  textAlign: "center",
+                  opacity: 1,
+                  borderRadius: 3
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  gutterBottom
+                  style={{
+                    textTransform: "capitalize",
+                    fontSize: "20px",
+                    color: "white",
+                    fontWeight: 500,
+                  }}
+                >
+                  Join us Today
+                </Typography>
+                <Typography
+                  variant="body2"
+                  gutterBottom
+                  style={{
+                    color: "#344767",
+                    textTransform: "capitalize",
+                    fontSize: "15px",
+                    color: "white",
+                    fontWeight: 300,
+                  }}
+                >
+                  Enter your credentials to Sign-Up
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  background: "transparent",
+                  marginLeft: "16px",
+                  marginRight: "16px",
+                  marginTop: "-24px",
+                  marginBottom: "8px",
+                  paddingTop: "32px",
+                  paddingBottom: "24px",
+                  paddingLeft: "24px",
+                  paddingRight: "24px",
+                  textAlign: "center",
+                  opacity: 1,
+                }}
+              >
+                <form onSubmit={handleSubmit}>
                 <TextField
                   {...getFieldProps("email")}
                   onChange={handleChange}
@@ -282,24 +306,33 @@ const LogIn = (props) => {
                   Submit
                 </button>
               </form>
-            </CardContent>
-            <Typography
-            p={3}
-            variant="body2"
-            gutterBottom
-            style={{
-              textTransform: "capitalize",
-              fontSize: "15px",
-              color: "#344767",
-              fontWeight: 300,
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            Don't have any account? <Link to="/signup">Sign-Up</Link>
-          </Typography>
-          </Card>
-        </Box>
+
+               
+                <Typography
+                  p={3}
+                  variant="body2"
+                  gutterBottom
+                  style={{
+                    textTransform: "capitalize",
+                    fontSize: "15px",
+                    color: "#344767",
+                    fontWeight: 300,
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  Don't have an account? <Link to="/signup">Sign-Up</Link>
+                </Typography>
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Box>
+    </>
+
+
+
+       
       )}
     </div>
   );

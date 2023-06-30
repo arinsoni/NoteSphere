@@ -108,6 +108,20 @@ export const themeSettings = (mode) => {
           }),
     },
     typography: {
+      weight:{
+        lighter:{
+          fontWeight: 300
+        },
+        normal:{
+          fontWeight: 400
+        },
+        medium:{
+          fontWeight: 500
+        },
+        bolder:{
+          fontWeight: 700
+        }
+      },
       heading: {
         fontSize: 18,
         fontWeight: 700,

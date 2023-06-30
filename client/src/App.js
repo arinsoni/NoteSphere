@@ -26,6 +26,7 @@ import UserState from "./context/user/UserState";
 import { useContext } from "react";
 import Dashboard from "./pages/Dashboard";
 import MyAlert from "./components/Alert";
+import { Box } from "@mui/system";
 
 const App = () => {
   // app Context
@@ -35,8 +36,22 @@ const App = () => {
     <Router>
       <UserState>
         {showNav && <NavBar />}
-        <LoadingBar height={5} color={theme.palette.secondary.dark} progress={progress} />
-        <MyAlert alert={alert} />
+        <LoadingBar
+          height={5}
+          color={theme.palette.secondary.dark}
+          progress={progress}
+        />
+        <Box
+          position="absolute"
+          zIndex={99999999}
+          style={{
+            left: "50%",
+            transform: "translate(-50%, 0)",
+          }}
+        >
+          <MyAlert alert={alert} />
+        </Box>
+
         <div className="container">
           <Routes>
             <Route exact path="/:id/noteboard" element={<NoteBoard />} />

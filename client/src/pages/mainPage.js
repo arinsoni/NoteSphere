@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Box } from "@mui/material";
 import SideNav from "../components/SideNav";
 import app_context from "../context/app/appContext";

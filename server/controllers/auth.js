@@ -1,17 +1,16 @@
-const express = require("express");
 const User = require("../models/User");
 const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Notes = require("../models/Notes");
-const uniqueString = require("../models/Token");
 const crypto = require("crypto");
 const sendEmail = require("../sendEmails");
 
-// REGISTER
-const register = async (req, res) => {
+
+// REGISTER - OTP
+const registerOTP = async (req, res) => {
   let success = false;
   try {
-    const { name, lastName, email, password } = req.body;
+    const { name, email, password } = req.body;
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
@@ -19,29 +18,59 @@ const register = async (req, res) => {
     if (user) {
       return res.status(400).json({
         success,
-        error: "Sorry! A user with same email address already exist",
+        message: "Sorry! A user with same email address already exist",
       });
     }
 
     const newUser = new User({
       name,
-      lastName,
       email,
       password: passwordHash,
     });
 
     const savedUser = await newUser.save();
-    const secret = await new uniqueString({
-      userId: newUser._id,
-      eToken: crypto.randomBytes(32).toString("hex"),
-    }).save();
 
-    const url = `${process.env.BASE_URL}auth/${newUser._id}/verify/${secret.eToken}`;
-    await sendEmail(newUser.email, "Verify Email", url);
+    const otp = generateOTP();
+    console.log("otp: " + otp, newUser.name, newUser.registerOTP);
+    newUser.registerOTP = otp;
+    await newUser.save();
+
+    await sendEmail(newUser.email, "Register OTP", otp);
     success = true;
     res.status(201).json({ success, savedUser });
+
+    setTimeout(async () => {
+      newUser.registerOTP = ""; // Clear the OTP value
+      await User.findByIdAndDelete(newUser._id);
+    }, 90000);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// register verification
+const registerVerification = async (req, res) => {
+  let success = false;
+  try {
+    const { otp, email } = req.body;
+
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "No User found with this Mail-Id" });
+    }
+
+    if (otp !== user.registerOTP) {
+      return res.status(400).json({ message: "OTP is wrong" });
+    }
+    console.log(user);
+    await User.updateOne({ _id: user._id, verified: true });
+    success = true;
+    res.status(200).json({ success, user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 
@@ -104,7 +133,6 @@ const deleteUser = async (req, res) => {
     const userId = req.user.id;
     const { accDeletePassword } = req.body;
     const user = await User.findById(req.user.id);
-    console.log("acc deketion" + accDeletePassword);
     if (!user) {
       return res.status(400).json({ message: "No user find" });
     }
@@ -155,11 +183,8 @@ const requestPasswordReset = async (req, res) => {
       return res.status(404).json({ success: false });
     }
 
-    // const resetToken = crypto.randomBytes(20).toString("hex");
-    // user.resetPasswordToken = resetToken;
-    // await user.save();
-    const otp = generateOTP(); // Generate the OTP (implement this function)
-    user.resetPasswordOTP = otp; // Store the OTP in the user document
+    const otp = generateOTP();
+    user.resetPasswordOTP = otp;
     await user.save();
 
     // const url = `${process.env.BASE_URL}auth/reset-password/${resetToken}`;
@@ -231,7 +256,7 @@ const info = async (req, res) => {
 
     user.bio = newBio;
     user.name = newName;
-    console.log("name: " + newName, user.name, newBio, user.bio)
+    console.log("name: " + newName, user.name, newBio, user.bio);
     await user.save();
     success = true;
     return res
@@ -243,7 +268,6 @@ const info = async (req, res) => {
 };
 
 module.exports = {
-  register,
   login,
   getUser,
   deleteUser,
@@ -252,4 +276,6 @@ module.exports = {
   requestForgotPassword,
   updateMail,
   info,
+  registerOTP,
+  registerVerification,
 };

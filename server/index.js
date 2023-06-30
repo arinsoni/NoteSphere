@@ -5,8 +5,6 @@ const authRoutes = require('./routes/auth');
 const notesRoutes = require('./routes/notes');
 var cors = require('cors');
 const User = require('./models/User');
-const verifyToken = require('./middleware/auth');
-const uniqueString = require('./models/Token')
 const bcrypt = require('bcrypt');
 
 
@@ -20,43 +18,6 @@ app.use(cors())
 app.use("/auth", authRoutes)
 
 app.use("/notes", notesRoutes)
-
-
-app.get("/auth/:id/verify/:token", async (req, res) => {
-
-	// Log the request URL or any unique identifier
-
-	try {
-		const user = await User.findOne({ _id: req.params.id });
-		if (!user) return res.status(400).send({ message: "Invalid link" });
-
-		const secret = await uniqueString.findOne({
-			userId: user._id,
-			eToken: req.params.token,
-		});
-
-		
-
-		//   if (!secret) {
-		// 	return res.status(400).json({ error: "Invalid link" });
-		//   }
-
-		
-		await User.updateOne({ _id: user._id, verified: true });
-		await user.save();
-		
-
-		if (secret) {
-			await uniqueString.deleteOne({ _id: secret._id });
-		}
-
-		res.status(200).send({ message: "Email verified successfully" });
-	} catch (error) {
-		res.status(500).send({ message: error.message });
-	}
-});
-
-
 
 app.post("/auth/resetPassword", async (req, res) => {
 	// const { resetToken } = req.params;

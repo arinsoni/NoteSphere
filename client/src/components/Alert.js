@@ -12,7 +12,7 @@ import Typography from "@mui/joy/Typography";
 // context
 import appContext from "../context/app/appContext";
 
-export default function MyAlert( props ) {
+export default function MyAlert(props) {
   const AppContext = React.useContext(appContext);
 
   const list = [
@@ -26,10 +26,9 @@ export default function MyAlert( props ) {
   const msg = props.alert && props.alert.msg;
   const items = [list[index]];
 
-
   return (
     <>
-{props.alert  &&
+      {props.alert && (
         <Box
           sx={{
             display: "flex",
@@ -60,13 +59,13 @@ export default function MyAlert( props ) {
                   {title}
                 </Typography>
                 <Typography fontSize="sm" sx={{ opacity: 0.8 }}>
-                   {msg}
+                  {msg}
                 </Typography>
               </div>
             </Alert>
           ))}
         </Box>
-}
+      )}
     </>
   );
 }
