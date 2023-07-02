@@ -5,7 +5,6 @@ const Notes = require("../models/Notes");
 const crypto = require("crypto");
 const sendEmail = require("../sendEmails");
 
-
 // REGISTER - OTP
 const registerOTP = async (req, res) => {
   let success = false;
@@ -41,8 +40,8 @@ const registerOTP = async (req, res) => {
 
     setTimeout(async () => {
       newUser.registerOTP = ""; // Clear the OTP value
-      await User.findByIdAndDelete(newUser._id);
-    }, 90000);
+      await newUser.save();
+    }, 40000);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -64,13 +63,42 @@ const registerVerification = async (req, res) => {
     if (otp !== user.registerOTP) {
       return res.status(400).json({ message: "OTP is wrong" });
     }
-    console.log(user);
     await User.updateOne({ _id: user._id, verified: true });
     success = true;
     res.status(200).json({ success, user });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+//resend otp
+const resendOTP = async (req, res) => {
+  let success = false;
+  try {
+    const { email } = req.body;
+    console.log("Email: " + email)
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+    console.log("resend: " + user)
+
+    const otp = generateOTP();
+    user.registerOTP = otp;
+    await user.save();
+
+    await sendEmail(user.email, "Register OTP", otp);
+    success = true;
+
+    res
+      .status(200)
+      .json({ success: true, message: "OTP resent successfully." });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -104,6 +132,7 @@ const login = async (req, res) => {
         id: user.id,
       },
     };
+
     const token = JWT.sign(data, process.env.JWT_SECRET);
     delete user.password;
     success = true;
@@ -278,4 +307,5 @@ module.exports = {
   info,
   registerOTP,
   registerVerification,
+  resendOTP,
 };

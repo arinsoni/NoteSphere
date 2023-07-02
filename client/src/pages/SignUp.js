@@ -50,6 +50,8 @@ const SignUp = () => {
   const handleMouseDownCPassword = (event) => {
     event.preventDefault();
   };
+  const [resendOTPDisplay, setResendOTPDisplay] = useState("none");
+  const [verificationDisplay, setVerificationDisplay] = useState("block");
 
   // formik Schema
   const registerSchema = Yup.object().shape({
@@ -99,7 +101,7 @@ const SignUp = () => {
     validationSchema: registerSchema,
     onSubmit: async (values) => {
       setProgress(30);
-      const { name, email, password, cpassword } = values;
+      const { name, email, password } = values;
       const response = await fetch("http://localhost:5000/auth/register-otp", {
         method: "POST",
         headers: {
@@ -115,7 +117,7 @@ const SignUp = () => {
         setEmail(email);
         handleOpen();
         setStart(true);
-        setTime(90)
+        setTime(40);
       } else {
         showAlert(2, json.message);
       }
@@ -179,32 +181,56 @@ const SignUp = () => {
       inputRefs.current[index - 1].focus();
     }
   };
+  const handleResend = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/auth/register-resend-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      const json = await response.json();
+
+      if (json.success) {
+        showAlert(0, json.message);
+        setResendOTPDisplay("none")
+        setVerificationDisplay("block")
+      } else {
+        showAlert(2, json.message);
+      }
+    } catch (error) {
+      showAlert(2, error)
+    }
+  };
 
   // Live timer
   const [time, setTime] = useState(90);
-  const [start, setStart] = useState(false)
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
     if (time >= 0 && start) {
       const timer = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
-      if(time === 30){
-        showAlert(1, `Only ${time} seconds left`)
+      if (time === 30) {
+        showAlert(1, `Only ${time} seconds left`);
       }
-      if(time === 0){
-        showAlert(2, "OTP expired, Sign-Up again")
-        setOpen(false)
-        setStart(false)
+      if (time === 0) {
+        showAlert(2, "OTP expired, Sign-Up again");
+        setResendOTPDisplay("block")
+        setVerificationDisplay("none")
+        setStart(false);
       }
 
       return () => {
         clearInterval(timer);
       };
     }
-    
-    
   }, [time, open]);
+
+  
 
   return (
     <>
@@ -377,10 +403,26 @@ const SignUp = () => {
                         )
                       )}
                     </div>
+                    
+                    <SubmitButton
+                      type="submit"
+                      variant="contained"
+                      onClick={handleResend}
+                      sx={{
+                        display: resendOTPDisplay
+                      }}
+                    >
+                      Resend OTP
+                    </SubmitButton>
+              
+                    
                     <SubmitButton
                       type="submit"
                       variant="contained"
                       onClick={handelOTP}
+                      sx={{
+                        display: verificationDisplay
+                      }}
                     >
                       Submit
                     </SubmitButton>

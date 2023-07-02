@@ -33,6 +33,10 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false
   },
+  isRegistered: {
+    type: Boolean,
+    default: false
+  },
   resetPasswordToken: String,
   requestForgotPassword: String,
   resetPasswordOTP: String,

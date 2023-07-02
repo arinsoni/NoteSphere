@@ -9,7 +9,8 @@ const {
   updateMail,
   info,
   registerOTP,
-  registerVerification
+  registerVerification,
+  resendOTP
 } = require("../controllers/auth");
 const verifyToken = require("../middleware/auth");
 
@@ -18,6 +19,7 @@ const router = express.Router();
 router.use("/login", login);
 router.use("/register-otp", registerOTP);
 router.use("/register-verification", registerVerification);
+router.use("/register-resend-otp", resendOTP);
 
 router.use("/getuser", verifyToken, getUser);
 router.delete("/deleteuser", verifyToken, deleteUser);

@@ -7,8 +7,6 @@ import {
   Grid,
   Divider,
   createTheme,
-  CircularProgress,
-  Modal,
 } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 //icons
@@ -17,11 +15,6 @@ import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 
 //My Components
 import StyleBox from "./StyleBox";
-import {
-  StyledTextField,
-  RootContainer,
-  SubmitButton,
-} from "../../Notes/Components/NotesComponents";
 
 //context
 import app_context from "../../../context/app/appContext";
@@ -35,7 +28,7 @@ const ProfileInfoCard = () => {
 
   //user context
   const UserContext = useContext(userContext);
-  const { user, setUser } = UserContext;
+  const { user } = UserContext;
 
   //user credentials
   const [email, setEmail] = useState("");
@@ -44,7 +37,7 @@ const ProfileInfoCard = () => {
       setEmail(user.email);
     }
   });
-  console.log(email);
+  
 
   // icon style
   let iconStyle = {
@@ -222,7 +215,7 @@ const ProfileInfoCard = () => {
           <Divider />
           <InfoCard label="Name: " info={updatedInfo.initialName} />
           <InfoCard label="Mobile: " info="76658-52977" />
-          <InfoCard label="Email: " info={user.email} />
+          <InfoCard label="Email: " info={user && user.email} />
           <InfoCard label="Location: " info="Kota, Rajasthan" />
           <InfoCard label="Social: " info={<FacebookRoundedIcon />} />
         </Box>

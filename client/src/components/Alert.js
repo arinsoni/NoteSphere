@@ -9,11 +9,9 @@ import Alert from "@mui/joy/Alert";
 import IconButton from "@mui/joy/IconButton";
 import Typography from "@mui/joy/Typography";
 
-// context
-import appContext from "../context/app/appContext";
+
 
 export default function MyAlert(props) {
-  const AppContext = React.useContext(appContext);
 
   const list = [
     { title: "Success", color: "success", icon: <CheckCircleIcon /> },

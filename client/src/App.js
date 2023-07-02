@@ -6,22 +6,18 @@ import "./App.css";
 
 //My Components
 import NavBar from "./components/NavBar";
-import Alert from "./components/Alert";
 
 //Pages
 import About from "../src/pages/About";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
-import EmailVerify from "./pages/EmailVerify";
 import ForgotPassword from "./pages/ForgotPassword";
-import CreatePassword from "./pages/createPassword";
 import NoteBoard from "./pages/Notes/NoteBoard";
 
 //context
 import appContext from "./context/app/appContext";
 
 // State
-import NoteState from "./context/notes/NoteState";
 import UserState from "./context/user/UserState";
 import { useContext } from "react";
 import Dashboard from "./pages/Dashboard";
@@ -60,18 +56,8 @@ const App = () => {
             <Route exact path="/signup" element={<SignUp />} />
             <Route
               exact
-              path="/auth/:id/verify/:token"
-              element={<EmailVerify />}
-            />
-            <Route
-              exact
               path="/auth/forgot-password"
               element={<ForgotPassword />}
-            />
-            <Route
-              exact
-              path="/auth/create-password/:createPasswordToken"
-              element={<CreatePassword />}
             />
             <Route exact path="/:id/dashboard" element={<Dashboard />} />
           </Routes>

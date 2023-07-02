@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // Mui Components
 import AppBar from "@mui/material/AppBar";
@@ -15,7 +14,7 @@ import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
 //comtext
 import app_context from "../context/app/appContext";
 import StyleBox from "../pages/Profile/components/StyleBox";
-import { Icon, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 const NavBar = () => {
   //context
@@ -79,7 +78,7 @@ const NavBar = () => {
         top: 0,
         right: 0,
         bottom: 0,
-        left: isSideNavOpen ? "280px" : 0,
+        left: isSideNavOpen ? "290px" : 0,
         margin: "9px",
       }}
     >
@@ -128,7 +127,7 @@ const NavBar = () => {
             <StyleBox
               sx={{
                 paddingTop: "0",
-                display: "flex",
+                
                 alignItems: "center",
                 color: "white",
                 display: !isSideNavOpen ? "block" : "none",
