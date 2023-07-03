@@ -8,11 +8,13 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 
 //Pages
-import About from "../src/pages/About";
+import About from "./pages/About/About";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import NoteBoard from "./pages/Notes/NoteBoard";
+import Profile from "./pages/Profile/Profile";
+
 
 //context
 import appContext from "./context/app/appContext";
@@ -20,7 +22,6 @@ import appContext from "./context/app/appContext";
 // State
 import UserState from "./context/user/UserState";
 import { useContext } from "react";
-import Dashboard from "./pages/Dashboard";
 import MyAlert from "./components/Alert";
 import { Box } from "@mui/system";
 
@@ -59,7 +60,7 @@ const App = () => {
               path="/auth/forgot-password"
               element={<ForgotPassword />}
             />
-            <Route exact path="/:id/dashboard" element={<Dashboard />} />
+            <Route exact path="/:id/dashboard" element={<Profile />} />
           </Routes>
         </div>
       </UserState>

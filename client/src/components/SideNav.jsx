@@ -38,6 +38,8 @@ const SideNav = () => {
   //user credentials
   const [id, setId] = useState(null);
 
+
+
   // icon style
   let iconStyle = {
     verticalAlign: "middle",
@@ -142,7 +144,7 @@ const SideNav = () => {
     if (user && user._id) {
       setId(user._id);
     }
-  }, []);
+  }, [user]);
 
   const handleLogout = () => {
     setProgress(50);

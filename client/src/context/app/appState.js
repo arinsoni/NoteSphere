@@ -15,6 +15,9 @@ const AppState = ({ children }) => {
 
   //Alert
   const [alert, setAlert] = useState(null);
+
+  // tabs
+  const [value, setValue] = useState(0);
   const showAlert = (index, message) => {
     setAlert({
       index: index,
@@ -102,7 +105,10 @@ const AppState = ({ children }) => {
         setAlert,
         //progress
         progress, 
-        setProgress
+        setProgress,
+        //tabs
+        value,
+        setValue
       }}
     >
       {children}
