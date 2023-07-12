@@ -148,7 +148,7 @@ const SignUp = () => {
           body: JSON.stringify({ email, otp: otp.join("") }),
         }
       );
-      console.log(response);
+      // console.log(response);
 
       const json = await response.json();
 

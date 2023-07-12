@@ -8,7 +8,7 @@ const AppState = ({ children }) => {
   const [themeMode, setThemeMode] = useState("light");
 
   //hiding navbar
-  const [showNav, setShowNav] = useState(true);
+  const [showNav, setShowNav] = useState(false);
 
   //progress
   const [progress, setProgress] = useState(0);

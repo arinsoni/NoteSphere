@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // My Components
 import MyBox from "../components/MyBox";
 
@@ -12,7 +12,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box, Divider } from "@mui/material";
-
 
 // My assets
 import dp from "../assets/images/dp.jpeg";
@@ -30,22 +29,38 @@ import userContext from "../context/user/userContext";
 
 //alert
 import Footer from "../components/Footer";
-import About from "./About/About";
-import Profile from "./Profile/Profile";
+import AccountSettings from "./Profile/components/AccountSettings";
+import MyBio from "./About/components/MyBio";
+import FutureGoals from "./About/components/FutureGoals";
+import ProfileInfoCard from "./Profile/components/ProfileInfoCard";
+import AboutWebsite from "./About/components/AboutWebsite";
+import AdditionalFeatures from "./Profile/components/AdditionalFeatures";
+import MainPage from "./mainPage";
 
-const Dashboard = ({child_1, child_2, child_3}) => {
+const Dashboard = () => {
   //navigation
   let navigate = useNavigate();
 
   //app context
   const AppContext = useContext(appContext);
-  const { theme, value } = AppContext;
+  const { theme, setShowNav } = AppContext;
+
+  useEffect(() => {
+    setShowNav(true);
+  },);
+
+  //params
+  const { tab } = useParams();
+  // console.log("params : " + tab);
 
   // user context
-  const { getUser } = useContext(userContext);
+  const { getUser, user, isLogin } = useContext(userContext);
   // tabs
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(tab ? parseInt(tab, 10) : 1);
+
+  // user credentials
+  const [id, setId] = useState(null);
 
   // divider
   const [showDivider, setShowDivider] = useState(true);
@@ -76,10 +91,15 @@ const Dashboard = ({child_1, child_2, child_3}) => {
 
   //authentication
   useEffect(() => {
+    if (user && user._id) {
+      setId(user._id);
+    }
+  }, [user, setId]);
+  useEffect(() => {
     if (localStorage.getItem("token")) {
       getUser();
     } else {
-      navigate("/");
+      navigate(`/`);
     }
     // eslint-disable-next-line
   }, []);
@@ -99,7 +119,6 @@ const Dashboard = ({child_1, child_2, child_3}) => {
   };
 
   //styels
-
 
   const myStyle = createTheme({
     components: {
@@ -132,186 +151,233 @@ const Dashboard = ({child_1, child_2, child_3}) => {
     },
   });
 
+  // console.log("login: " + isLogin)
+
   // change body bg
 
   return (
-    <ThemeProvider theme={myStyle}>
-      <MyBox
-        width="100%"
-        height="400px"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        position="relative"
-        borderRadius="15px"
-        sx={{
-          backgroundImage: `url(${bg})`,
-          backgroundSize: "cover", // to cover the given area
-          backgroundPosition: "center", // to show image completely
-        }}
-      />
-      <Card
-        sx={{
-          position: "relative",
-          mt: -7,
-          mx: 3, // margin left and margin right
-          px: 2,
-          py: 2,
-          backgroundColor: theme.palette.primary.main,
-          border: `1px solid ${theme.palette.font.dark}`,
-        }}
-      >
-        {/* container for all grid items with spacing between them 3 and vertically centered */}
-        <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <Avatar alt="Profile Pic" src={dp} />
-          </Grid>
-
-          <Grid item>
-            <MyBox
-              color={theme.palette.font.main}
-              fontSize={theme.typography.h4.fontSize}
-              fontFamily={theme.typography.h4.fontFamily}
-              fontWeight={theme.typography.h4.fontWeight}
+    <MainPage>
+      <ThemeProvider theme={myStyle}>
+        <MyBox
+          width="100%"
+          height="400px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          position="relative"
+          borderRadius="15px"
+          sx={{
+            backgroundImage: `url(${bg})`,
+            backgroundSize: "cover", // to cover the given area
+            backgroundPosition: "center", // to show image completely
+          }}
+        />
+        <Card
+          sx={{
+            position: "relative",
+            mt: -7,
+            mx: 3, // margin left and margin right
+            px: 2,
+            py: 2,
+            backgroundColor: theme.palette.primary.main,
+            border: `1px solid ${theme.palette.font.dark}`,
+          }}
+        >
+          {/* container for all grid items with spacing between them 3 and vertically centered */}
+          {!isLogin && 
+          <Box>
+            <Box
+              xs={12}
+              md={6}
+              xl={4}
+              sx={{ ml: "auto", textAlign: "center" }}
+              id="name"
             >
-              Arin Soni
-            </MyBox>
-            <MyBox
-              color={theme.palette.font.light}
-              fontSize={theme.typography.h5.fontSize}
-              fontFamily={theme.typography.h5.fontFamily}
-              fontWeight={theme.typography.h5.fontWeight}
-            >
-              CTO
-            </MyBox>
-          </Grid>
-
-          {/* For header */}
-
-          {/* For Extra Small: 12 cls, medium: 6 clms, large: 4 clms*/}
-          <Grid item xs={12} md={6} xl={4} sx={{ ml: "auto" }}>
-            {/* Static: scroll with the content */}
-            <AppBar
-              position="static"
-              sx={{
-                backgroundColor: theme.palette.alt.light,
-                borderRadius: "8px",
-                boxShadow: "none",
-
-                // boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
-              }}
-            >
-              <Tabs
-                orientation={tabsOrientation}
-                value={tabValue}
-                onChange={handleSetTabValue}
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                  boxSizing: "border-box",
-                  minHeight: "100%",
-                }}
-                TabIndicatorProps={{
-                  style: {
-                    backgroundColor: theme.palette.secondary.dark,
-                    borderColor: theme.palette.font.main,
-                    borderRadius: "100px",
-                  },
-                }}
+              {/* Centered grid item */}
+              <MyBox
+                color={theme.palette.font.main}
+                fontSize={theme.typography.h1.fontSize}
+                fontFamily={theme.typography.h4.fontFamily}
+                fontWeight={theme.typography.h4.fontWeight}
               >
-                <Tab
+                About Us
+              </MyBox>
+            </Box>
+          </Box>
+}
+ {isLogin && 
+          <Grid
+            container
+            spacing={3}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Grid item>
+              <Avatar alt="Profile Pic" src={dp} />
+            </Grid>
+
+            <Grid item>
+              <MyBox
+                color={theme.palette.font.main}
+                fontSize={theme.typography.h4.fontSize}
+                fontFamily={theme.typography.h4.fontFamily}
+                fontWeight={theme.typography.h4.fontWeight}
+              >
+                Arin Soni
+              </MyBox>
+              <MyBox
+                color={theme.palette.font.light}
+                fontSize={theme.typography.h5.fontSize}
+                fontFamily={theme.typography.h5.fontFamily}
+                fontWeight={theme.typography.h5.fontWeight}
+              >
+                CTO
+              </MyBox>
+            </Grid>
+
+            {/* For header */}
+
+            {/* For Extra Small: 12 cls, medium: 6 clms, large: 4 clms*/}
+            <Grid item xs={12} md={6} xl={4} sx={{ ml: "auto" }}>
+              {/* Static: scroll with the content */}
+              {isLogin && (
+                <AppBar
+                  position="static"
                   sx={{
-                    ...tabStyle,
-                    flexGrow: 1,
+                    backgroundColor: theme.palette.alt.light,
+                    borderRadius: "8px",
+                    boxShadow: "none",
+
+                    // boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
                   }}
-                  
-                  label={
-                    <div style={{ display: "inline-block" }}>
-                      <HomeRoundedIcon style={iconStyle} />
-                      <span
-                        style={{
-                          verticalAlign: "middle",
-                          color: theme.palette.font.main,
-                        }}
-                      >
-                        Home
-                      </span>
-                    </div>
-                  }
-                />
+                >
+                  <Tabs
+                    orientation={tabsOrientation}
+                    value={tabValue}
+                    onChange={handleSetTabValue}
+                    sx={{
+                      alignItems: "center",
+                      display: "flex",
+                      boxSizing: "border-box",
+                      minHeight: "100%",
+                    }}
+                    TabIndicatorProps={{
+                      style: {
+                        backgroundColor: theme.palette.secondary.dark,
+                        borderColor: theme.palette.font.main,
+                        borderRadius: "100px",
+                      },
+                    }}
+                  >
+                    <Tab
+                      sx={{
+                        ...tabStyle,
+                        flexGrow: 1,
+                      }}
+                      label={
+                        <div style={{ display: "inline-block" }}>
+                          <HomeRoundedIcon style={iconStyle} />
+                          <span
+                            style={{
+                              verticalAlign: "middle",
+                              color: theme.palette.font.main,
+                            }}
+                          >
+                            Home
+                          </span>
+                        </div>
+                      }
+                    />
 
-                <Tab
-                  style={{ ...tabStyle, flexGrow: 1 }}
-                  
-                  label={
-                    <div style={{ display: "inline-block" }}>
-                      <EmailRoundedIcon style={iconStyle} />
-                      <span
-                        style={{
-                          verticalAlign: "middle",
-                          color: theme.palette.font.main,
-                        }}
-                      >
-                        Messages
-                      </span>
-                    </div>
-                  }
-                />
-                <Tab
-                  style={{ ...tabStyle, flexGrow: 1 }}
-                  label={
-                    <div style={{ display: "inline-block" }}>
-                      <SettingsRoundedIcon style={iconStyle} />
-                      <span
-                        style={{
-                          verticalAlign: "middle",
-                          color: theme.palette.font.main,
-                        }}
-                      >
-                        Settings
-                      </span>
-                    </div>
-                  }
-                />
-              </Tabs>
-              {tabValue === 0 && <Profile/>}
-      {tabValue === 1 && <About />}
-      {/* {tabValue === 2 && <SettingsComponent />} */}
-            </AppBar>
-          </Grid>
-        </Grid>
-
-        <Box mt={5} mb={3}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={6} xl={4}>
-              {child_1}
-            </Grid>
-
-            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
-              {showDivider && (
-                <Divider
-                  orientation="vertical"
-                  color={theme.palette.alt.main}
-                />
+                    <Tab
+                      style={{ ...tabStyle, flexGrow: 1 }}
+                      label={
+                        <div style={{ display: "inline-block" }}>
+                          <EmailRoundedIcon style={iconStyle} />
+                          <span
+                            style={{
+                              verticalAlign: "middle",
+                              color: theme.palette.font.main,
+                            }}
+                          >
+                            Messages
+                          </span>
+                        </div>
+                      }
+                    />
+                    <Tab
+                      style={{ ...tabStyle, flexGrow: 1 }}
+                      label={
+                        <div style={{ display: "inline-block" }}>
+                          <SettingsRoundedIcon style={iconStyle} />
+                          <span
+                            style={{
+                              verticalAlign: "middle",
+                              color: theme.palette.font.main,
+                            }}
+                          >
+                            Settings
+                          </span>
+                        </div>
+                      }
+                    />
+                  </Tabs>
+                </AppBar>
               )}
-              {child_2}
-            </Grid>
-
-            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
-              {showDivider && (
-                <Divider
-                  orientation="vertical"
-                  color={theme.palette.alt.main}
-                />
-              )}
-
-              {child_3}
             </Grid>
           </Grid>
-        </Box>
-      </Card>
-      <Footer />
-    </ThemeProvider>
+}
+
+
+
+          <Box mt={5} mb={3}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6} xl={4}>
+                {!isLogin  ? (<MyBio />)  :tabValue === 0 ? (
+                  <AccountSettings />
+                ) : tabValue === 1? (
+                  <MyBio />
+                ) : null}
+              </Grid>
+
+              <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
+                {showDivider && (
+                  <Divider
+                    orientation="vertical"
+                    color={theme.palette.alt.main}
+                  />
+                )}
+                { !isLogin  ? (<AboutWebsite />)  : tabValue === 0 ? (
+                  <ProfileInfoCard />
+                ) : tabValue === 1  ? (
+                  <AboutWebsite />
+                ) : null}
+              </Grid>
+
+              <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
+                {showDivider && (
+                  <Divider
+                    orientation="vertical"
+                    color={theme.palette.alt.main}
+                  />
+                )}
+
+                {
+                  !isLogin ? (<FutureGoals />) : 
+                tabValue === 0 ? (
+
+                  <AdditionalFeatures />
+                ) : tabValue === 1  ? (
+                  <FutureGoals />
+                ) : null}
+              </Grid>
+            </Grid>
+          </Box>
+          
+        </Card>
+        <Footer />
+      </ThemeProvider>
+    </MainPage>
   );
 };
 

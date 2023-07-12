@@ -10,8 +10,10 @@ import { Box, Divider, ThemeProvider, createTheme } from "@mui/material";
 import NoteAltRoundedIcon from "@mui/icons-material/NoteAltRounded";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import AppRegistrationRoundedIcon from '@mui/icons-material/AppRegistrationRounded';
+
 
 //context
 import app_context from "../context/app/appContext";
@@ -33,18 +35,17 @@ const SideNav = () => {
   } = AppContext;
 
   const UserContext = useContext(user_conetxt);
-  const { user, setIsLogin } = UserContext;
+  const { user, setIsLogin, isLogin } = UserContext;
 
   //user credentials
   const [id, setId] = useState(null);
-
-
 
   // icon style
   let iconStyle = {
     verticalAlign: "middle",
     marginRight: "0.5rem",
   };
+
 
   const NavItem = ({ label, icon, redirectTo, active, onClick, ...rest }) => {
     const SelectedIcon = icon;
@@ -189,28 +190,47 @@ const SideNav = () => {
           label="NoteBoard"
           icon={DashboardRoundedIcon}
           pt={-1}
-          redirectTo={`/${id}/noteboard`}
+          redirectTo={ isLogin &&  `/${id}/noteboard` }
           active={window.location.pathname === `/${id}/noteboard`}
         />
         <NavItem
-          label="Profile"
+          label="Dashboard"
           icon={PersonRoundedIcon}
-          redirectTo={`/${id}/dashboard`}
-          active={window.location.pathname === `/${id}/dashboard`}
+          redirectTo={`/`}
+          active={window.location.pathname === `/`}
         />
-        <NavItem
+        {/* <NavItem
           label="About Us"
           icon={InfoRoundedIcon}
-          redirectTo="/"
-          active={window.location.pathname === "/"}
-        />
-        <NavItem
-          label="Log Out"
-          icon={LogoutRoundedIcon}
-          active={false}
-          onClick={handleLogout}
-          redirectTo="/login"
-        />
+          redirectTo={`/${id}/dashboard/${1}`}
+          active={window.location.pathname === `/${id}/dashboard/${1}`}
+        /> */}
+        {!isLogin && (
+          <>
+            <NavItem
+              label="Log In"
+              icon={LoginRoundedIcon}
+              active={false}
+              redirectTo="/login"
+            />
+
+            <NavItem
+              label="Sign-Up"
+              icon={AppRegistrationRoundedIcon}
+              active={false}
+              redirectTo="/signup"
+            />
+          </>
+        )}
+        {isLogin && (
+          <NavItem
+            label="Log Out"
+            icon={LogoutRoundedIcon}
+            active={false}
+            onClick={handleLogout}
+            redirectTo="/login"
+          />
+        )}
         <div>{count}</div>
       </Box>
     </ThemeProvider>

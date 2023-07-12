@@ -4,9 +4,9 @@ import MainPage from "../mainPage";
 
 import appContext from "../../context/app/appContext";
 import Dashboard from "../Dashboard";
-// import MyBio from "./components/MyBio";
-// import AboutWebsite from "../About/components/AboutWebsite";
-// import FutureGoals from "./components/FutureGoals";
+import MyBio from "./components/MyBio";
+import AboutWebsite from "../About/components/AboutWebsite";
+import FutureGoals from "./components/FutureGoals";
 
 const About = () => {
   
@@ -17,7 +17,7 @@ const About = () => {
   })
   return (
     <MainPage>
-      {/* <Dashboard child_1={<MyBio/>} child_2={<AboutWebsite/>} child_3={<FutureGoals/>} /> */}
+      "Arin"
     </MainPage>
   );
 };

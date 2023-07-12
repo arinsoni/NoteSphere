@@ -52,11 +52,19 @@ const Notes = (props) => {
     edescription: "",
     etag: "",
   });
+
+  // user credentials
+  const [id, setId] = useState(null);
+  useEffect(() => {
+    if (user && user._id) {
+      setId(user._id);
+    }
+  }, [user]);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getNotes();
     } else {
-      navigate("/");
+      navigate(`/`);
     }
     // eslint-disable-next-line
   }, []);
@@ -86,7 +94,7 @@ const Notes = (props) => {
         navigate("/signup"); // Redirect to the about page if user status is not successful
       }
     } catch (error) {
-      console.log("Error checking user status:", error);
+      // console.log("Error checking user status:", error);
     }
   };
   useEffect(() => {
@@ -118,7 +126,7 @@ const Notes = (props) => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.name);
+    // console.log(e.target.name);
     setNote({ ...note, [e.target.name]: e.target.value });
   };
   const handleClose = () => {

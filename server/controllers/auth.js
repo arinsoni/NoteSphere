@@ -30,7 +30,7 @@ const registerOTP = async (req, res) => {
     const savedUser = await newUser.save();
 
     const otp = generateOTP();
-    console.log("otp: " + otp, newUser.name, newUser.registerOTP);
+    // console.log("otp: " + otp, newUser.name, newUser.registerOTP);
     newUser.registerOTP = otp;
     await newUser.save();
 
@@ -77,7 +77,7 @@ const resendOTP = async (req, res) => {
   let success = false;
   try {
     const { email } = req.body;
-    console.log("Email: " + email)
+    // console.log("Email: " + email)
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({
@@ -85,7 +85,7 @@ const resendOTP = async (req, res) => {
         message: "User not found.",
       });
     }
-    console.log("resend: " + user)
+    // console.log("resend: " + user)
 
     const otp = generateOTP();
     user.registerOTP = otp;
@@ -109,7 +109,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    console.log("login: " + user);
+    // console.log("login: " + user);
     if (!user) {
       return res.status(400).json({ message: "User doesn't exist" });
     }
@@ -121,7 +121,7 @@ const login = async (req, res) => {
     }
 
     if (!user.verified) {
-      console.log("False hai");
+      // console.log("False hai");
       return res
         .status(400)
         .send({ message: "An Email sent to your account please verify" });
@@ -285,7 +285,7 @@ const info = async (req, res) => {
 
     user.bio = newBio;
     user.name = newName;
-    console.log("name: " + newName, user.name, newBio, user.bio);
+    // console.log("name: " + newName, user.name, newBio, user.bio);
     await user.save();
     success = true;
     return res

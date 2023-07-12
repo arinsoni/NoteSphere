@@ -34,7 +34,7 @@ const UserState = (props) => {
       setUser(json);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      // console.error("Error fetching user data:", error);
       setIsLoading(false);
       // Show an alert with the error message
       showAlert(2, "Failed to fetch user data. Please try again later.");

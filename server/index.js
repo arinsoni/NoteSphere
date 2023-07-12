@@ -37,7 +37,7 @@ app.post("/auth/resetPassword", async (req, res) => {
         if (!isCorrect) {
             return res.status(400).json({ message: "Sorry your password is incorrect" });
         }
-		console.log(`user before : ${user}`)
+		// console.log(`user before : ${user}`)
 		if (!user) {
 			return res.status(400).json({
 				success: false,
@@ -49,14 +49,14 @@ app.post("/auth/resetPassword", async (req, res) => {
         const passwordHash = await bcrypt.hash(confirmPassword, salt);
 		user.password = passwordHash;
 		user.resetPasswordToken = undefined;
-		console.log(`user after : ${user}`)
+		// console.log(`user after : ${user}`)
 		await user.save();
 		return res.json({
 			success: true,
 			message: "Password reset successfully",
 		});
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 		return res.status(500).json({ success: false, message: "Server error" });
 	}
 });
@@ -82,14 +82,14 @@ app.post("/auth/createPassword/:createPasswordToken", async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 		user.password = passwordHash;
 		user.requestForgotPassword = undefined;
-		console.log(`user after : ${user}`)
+		// console.log(`user after : ${user}`)
 		await user.save();
 		return res.json({
 			success: true,
 			message: "Password reset successfully",
 		});
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 		return res.status(500).json({ success: false, message: "Server error" });
 	}
 });
@@ -102,6 +102,6 @@ mongoose.connect(process.env.MONGO_URL, {
 }).then(() => {
 	app.listen(PORT, () => console.log(`Server PORT ${PORT}`))
 }).catch((err) => {
-	console.log(`${err}: did not connect`)
+	// console.log(`${err}: did not connect`)
 })
 

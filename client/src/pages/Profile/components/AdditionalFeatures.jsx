@@ -18,7 +18,7 @@ const AdditionalFeatures = () => {
 
   useEffect(() => {
     const isDarkMode = themeMode === "dark";
-    console.log("is dark mode set:", isDarkMode, themeMode);
+    // console.log("is dark mode set:", isDarkMode, themeMode);
   }, [themeMode]);
 
   const myTheme = createTheme({
