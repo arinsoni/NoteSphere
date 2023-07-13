@@ -46,7 +46,7 @@ const App = () => {
         }}
       >
         {" "}
-        {isLogin && <MyAlert alert={alert} />}
+         <MyAlert alert={alert} />
       </Box>
 
       <div className="container">
