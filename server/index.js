@@ -12,6 +12,10 @@ dotenv.config();
 
 const PORT = process.env.PORT || 6001
 const app = express();
+
+app.get("/", (req, res) =>{
+	res.send("Hi")
+})
 app.use(express.json()); // parses incoming data (instructions and informations) coming from request.body
 app.use(cors())
 //Routes
