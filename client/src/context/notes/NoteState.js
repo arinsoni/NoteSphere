@@ -4,7 +4,7 @@ import appContext from "../app/appContext";
 
 const NoteState = (props) => {
   const { showAlert, setProgress } = useContext(appContext);
-  const host = "http://localhost:5000";
+  const host = "https://note-sphere.vercel.app";
   const notesInitial = [];
 
   // Update Note opening and closing
