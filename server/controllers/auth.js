@@ -136,7 +136,8 @@ const login = async (req, res) => {
     success = true;
     // let secret = await uniqueString.findOne({ userId: user._id });
 
-    res.status(200).json({ success, token, data });
+    // res.status(200).json({ success, token, data });
+    res.send("hiji")
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
