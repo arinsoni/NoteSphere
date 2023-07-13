@@ -115,7 +115,9 @@ const login = async (req, res) => {
     }
     const isCorrect = await bcrypt.compare(password, user.password);
     if (!isCorrect) {
-      return res.send("hiji")
+      return res
+        .status(400)
+        .json({ message: "Please try to login with correct credentials" });
     }
 
     if (!user.verified) {
@@ -136,8 +138,7 @@ const login = async (req, res) => {
     success = true;
     // let secret = await uniqueString.findOne({ userId: user._id });
 
-    // res.status(200).json({ success, token, data });
-    res.send("hiji")
+    res.status(200).json({ success, token, data });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

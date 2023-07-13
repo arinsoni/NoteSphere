@@ -17,7 +17,12 @@ app.get("/", (req, res) =>{
 	res.send("Hi")
 })
 app.use(express.json()); // parses incoming data (instructions and informations) coming from request.body
-app.use(cors())
+const corsOptions = {
+	origin: 'http://localhost:3000',
+  };
+  
+app.use(cors(corsOptions));
+  
 //Routes
 app.use("/auth", authRoutes)
 
