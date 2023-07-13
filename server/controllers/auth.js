@@ -3,7 +3,7 @@ const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Notes = require("../models/Notes");
 const crypto = require("crypto");
-const sendEmail = require("../sendEmails");
+const sendEmail = require("../utils/sendEmails");
 
 // REGISTER - OTP
 const registerOTP = async (req, res) => {
