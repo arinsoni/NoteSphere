@@ -115,9 +115,7 @@ const login = async (req, res) => {
     }
     const isCorrect = await bcrypt.compare(password, user.password);
     if (!isCorrect) {
-      return res
-        .status(400)
-        .json({ message: "Please try to login with correct credentials" });
+      return res.send("hiji")
     }
 
     if (!user.verified) {
