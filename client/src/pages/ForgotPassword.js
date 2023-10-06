@@ -13,7 +13,7 @@ const ForgotPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log("forgotinng")
-        const response = await fetch("https://note-sphere.vercel.app/auth/forgot-password", {
+        const response = await fetch("http://localhost:5000/auth/forgot-password", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

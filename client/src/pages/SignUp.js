@@ -102,7 +102,7 @@ const SignUp = () => {
     onSubmit: async (values) => {
       setProgress(30);
       const { name, email, password } = values;
-      const response = await fetch("https://note-sphere.vercel.app/auth/register-otp", {
+      const response = await fetch("http://localhost:5000/auth/register-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +139,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://note-sphere.vercel.app/auth/register-verification",
+        "http://localhost:5000/auth/register-verification",
         {
           method: "POST",
           headers: {
@@ -184,7 +184,7 @@ const SignUp = () => {
   const handleResend = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://note-sphere.vercel.app/auth/register-resend-otp", {
+      const response = await fetch("http://localhost:5000/auth/register-resend-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

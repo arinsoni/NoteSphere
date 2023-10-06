@@ -77,7 +77,7 @@ const Notes = (props) => {
   const checkUserStatus = async (e) => {
     try {
       const response = await fetch(
-        "https://note-sphere.vercel.app/auth/checkuserstatus",
+        "http://localhost:5000/auth/checkuserstatus",
         {
           method: "GET",
           headers: {

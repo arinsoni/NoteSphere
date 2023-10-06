@@ -132,7 +132,7 @@ const AccountSettings = () => {
 
     setProgress(40);
     // Send the password change request to the backend
-    const response = await fetch("https://note-sphere.vercel.app/auth/reset-password", {
+    const response = await fetch("http://localhost:5000/auth/reset-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -159,7 +159,7 @@ const AccountSettings = () => {
     setProgress(30);
     // console.log(`${localStorage.getItem('token')} - reset`)
     // Send the password reset request to the backend
-    const response = await fetch("https://note-sphere.vercel.app/auth/resetPassword", {
+    const response = await fetch("http://localhost:5000/auth/resetPassword", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -207,7 +207,7 @@ const AccountSettings = () => {
   const handleAccDelete = async () => {
     try {
       setProgress(20);
-      const response = await fetch("https://note-sphere.vercel.app/auth/deleteUser", {
+      const response = await fetch("http://localhost:5000/auth/deleteUser", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -261,7 +261,7 @@ const AccountSettings = () => {
   const handleUpdateMailId = async () => {
     try {
       setProgress(20);
-      const response = await fetch("https://note-sphere.vercel.app/auth/update-mail", {
+      const response = await fetch("http://localhost:5000/auth/update-mail", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -81,7 +81,7 @@ const LogIn = (props) => {
       setProgress(30);
 
       const { email, password } = values;
-      const response = await fetch("https://note-sphere.vercel.app/auth/login", {
+      const response = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

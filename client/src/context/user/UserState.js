@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 //context
 import appContext from "../app/appContext";
 
-const host = "https://note-sphere.vercel.app";
+const host = "http://localhost:5000";
 const userInitial = {};
 
 
@@ -46,7 +46,7 @@ const UserState = (props) => {
     // Make an API request to your backend server to delete orphaned notes
     try {
       const response = await fetch(
-        "https://note-sphere.vercel.app/notes/deleteorphanednotes",
+        "http://localhost:5000/notes/deleteorphanednotes",
         {
           method: "DELETE",
           headers: {

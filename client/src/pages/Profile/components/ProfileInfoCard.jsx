@@ -130,7 +130,7 @@ const ProfileInfoCard = () => {
   const handleBioFormSubmit = async (newBio, newName) => {
     try {
       setProgress(20);
-      const response = await fetch("https://note-sphere.vercel.app/auth/info", {
+      const response = await fetch("http://localhost:5000/auth/info", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
